@@ -1,0 +1,113 @@
+/*
+ * Copyright 2016 Martin Kamp Jensen
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.mkjensen.tv.model;
+
+import com.google.auto.value.AutoValue;
+
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @see <a href="http://www.dr.dk/mu-online/Help/1.3/Api/GET-api-apiVersion-schedule-nownext-id">Gets
+ * scheduled Now and Next programs for a given id, i.e. channel dr1</a>
+ */
+@AutoValue
+public abstract class DrSchedule {
+
+  @CheckResult
+  @NonNull
+  public static JsonAdapter<DrSchedule> jsonAdapter(@NonNull Moshi moshi) {
+
+    return new AutoValue_DrSchedule.MoshiJsonAdapter(moshi);
+  }
+
+  @CheckResult
+  @Json(name = "ChannelSlug")
+  @NonNull
+  public abstract String getChannelId();
+
+  @CheckResult
+  @NonNull
+  public List<DrProgram> getProgrammes() {
+
+    List<DrProgram> programs = new ArrayList<>();
+
+    DrProgram currentProgram = getCurrentProgram();
+
+    if (currentProgram != null) {
+      programs.add(currentProgram);
+    }
+
+    List<DrProgram> nextPrograms = getNextPrograms();
+
+    if (nextPrograms != null) {
+      programs.addAll(nextPrograms);
+    }
+
+    return programs;
+  }
+
+  @CheckResult
+  @Json(name = "Now")
+  @Nullable
+  abstract DrProgram getCurrentProgram();
+
+  @CheckResult
+  @Json(name = "Next")
+  @Nullable
+  abstract List<DrProgram> getNextPrograms();
+
+  @AutoValue
+  public static abstract class DrProgram {
+
+    @CheckResult
+    @NonNull
+    public static JsonAdapter<DrProgram> jsonAdapter(@NonNull Moshi moshi) {
+
+      return new AutoValue_DrSchedule_DrProgram.MoshiJsonAdapter(moshi);
+    }
+
+    @CheckResult
+    @Json(name = "Description")
+    @NonNull
+    public abstract String getDescription();
+
+    @CheckResult
+    @Json(name = "EndTime")
+    @NonNull
+    public abstract Date getEndTime();
+
+    @CheckResult
+    @Json(name = "StartTime")
+    @NonNull
+    public abstract Date getStartTime();
+
+    @CheckResult
+    @Json(name = "Title")
+    @NonNull
+    public abstract String getTitle();
+  }
+}
