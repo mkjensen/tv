@@ -22,9 +22,13 @@ import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.media.tv.companionlibrary.TvPlayer;
 
 import android.content.Context;
@@ -32,7 +36,6 @@ import android.media.PlaybackParams;
 import android.media.tv.TvInputManager;
 import android.media.tv.TvInputService;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -47,6 +50,9 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
   private static final String TAG = "Player";
 
   @Inject
+  DefaultBandwidthMeter bandwidthMeter;
+
+  @Inject
   DataSource.Factory dataSourceFactory;
 
   private final TvInputService.Session session;
@@ -55,10 +61,11 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
 
   public Player(@NonNull Context context, @NonNull TvInputService.Session session) {
 
+    ((TvApplication) context.getApplicationContext()).getBackendComponent().inject(this);
+
     this.session = session;
     this.simpleExoPlayer = createSimpleExoPlayer(context);
 
-    ((TvApplication) context.getApplicationContext()).getBackendComponent().inject(this);
   }
 
   @NonNull
@@ -66,7 +73,7 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
 
     SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
         context,
-        new DefaultTrackSelector(new Handler()),
+        new DefaultTrackSelector(new AdaptiveVideoTrackSelection.Factory(bandwidthMeter)),
         new DefaultLoadControl()
     );
     player.addListener(this);
@@ -190,6 +197,13 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
   public void onTimelineChanged(@Nullable Timeline timeline, @Nullable Object manifest) {
 
     Log.d(TAG, "onTimelineChanged " + timeline + ", " + manifest);
+    // Do nothing.
+  }
+
+  @Override
+  public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+    Log.d(TAG, "onTracksChanged " + trackGroups + ", " + trackSelections);
     // Do nothing.
   }
 
