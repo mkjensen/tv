@@ -17,8 +17,10 @@
 package com.github.mkjensen.tv.inject;
 
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.TransferListener;
 
 import android.app.Application;
 import android.support.annotation.CheckResult;
@@ -59,7 +61,26 @@ public class BackendModule {
   @NonNull
   @Provides
   @Singleton
-  DefaultBandwidthMeter exoPlayerBandwidthMeter() {
+  BandwidthMeter exoPlayerBandwidthMeter(@NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
+
+    return defaultBandwidthMeter;
+  }
+
+  @CheckResult
+  @NonNull
+  @Provides
+  @Singleton
+  DataSource.Factory exoPlayerDataSourceFactory(@NonNull OkHttpClient okHttpClient,
+                                                @NonNull TransferListener<? super DataSource> transferListener) {
+
+    return new OkHttpDataSourceFactory(okHttpClient, Version.userAgent(), transferListener);
+  }
+
+  @CheckResult
+  @NonNull
+  @Provides
+  @Singleton
+  DefaultBandwidthMeter exoPlayerDefaultBandwidthMeter() {
 
     return new DefaultBandwidthMeter();
   }
@@ -68,10 +89,9 @@ public class BackendModule {
   @NonNull
   @Provides
   @Singleton
-  DataSource.Factory exoPlayerDataSourceFactory(@NonNull OkHttpClient okHttpClient,
-                                                @NonNull DefaultBandwidthMeter bandwidthMeter) {
+  TransferListener<? super DataSource> exoPlayerTransferListener(@NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
 
-    return new OkHttpDataSourceFactory(okHttpClient, Version.userAgent(), bandwidthMeter);
+    return defaultBandwidthMeter;
   }
 
   @CheckResult

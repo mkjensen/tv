@@ -27,8 +27,8 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.media.tv.companionlibrary.TvPlayer;
 
 import android.content.Context;
@@ -50,7 +50,7 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
   private static final String TAG = "Player";
 
   @Inject
-  DefaultBandwidthMeter bandwidthMeter;
+  BandwidthMeter bandwidthMeter;
 
   @Inject
   DataSource.Factory dataSourceFactory;
@@ -65,7 +65,6 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
 
     this.session = session;
     this.simpleExoPlayer = createSimpleExoPlayer(context);
-
   }
 
   @NonNull
