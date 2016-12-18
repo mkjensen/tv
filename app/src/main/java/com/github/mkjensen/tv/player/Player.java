@@ -49,6 +49,12 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
 
   private static final String TAG = "Player";
 
+  /**
+   * The maximum bitrate in bits per second that should be assumed when a bandwidth estimate is
+   * unavailable.
+   */
+  private static final int MAX_INITIAL_BITRATE = 10 * 1024 * 1024;
+
   @Inject
   BandwidthMeter bandwidthMeter;
 
@@ -70,12 +76,23 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
   @NonNull
   private SimpleExoPlayer createSimpleExoPlayer(@NonNull Context context) {
 
+    AdaptiveVideoTrackSelection.Factory avtsFactory = new AdaptiveVideoTrackSelection.Factory(
+        bandwidthMeter,
+        MAX_INITIAL_BITRATE,
+        AdaptiveVideoTrackSelection.DEFAULT_MIN_DURATION_FOR_QUALITY_INCREASE_MS,
+        AdaptiveVideoTrackSelection.DEFAULT_MAX_DURATION_FOR_QUALITY_DECREASE_MS,
+        AdaptiveVideoTrackSelection.DEFAULT_MIN_DURATION_TO_RETAIN_AFTER_DISCARD_MS,
+        AdaptiveVideoTrackSelection.DEFAULT_BANDWIDTH_FRACTION
+    );
+
     SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
         context,
-        new DefaultTrackSelector(new AdaptiveVideoTrackSelection.Factory(bandwidthMeter)),
+        new DefaultTrackSelector(avtsFactory),
         new DefaultLoadControl()
     );
+
     player.addListener(this);
+
     return player;
   }
 
