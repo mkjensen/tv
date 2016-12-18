@@ -27,6 +27,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface DrService {
 
@@ -49,7 +50,8 @@ public interface DrService {
    * scheduled Now and Next programs for a given id, i.e. channel dr1</a>
    */
   @CheckResult
-  @GET("schedule/nownext/{channelId}")
+  @GET("schedule/{channelId}")
   @NonNull
-  Call<DrSchedule> getScheduleForChannel(@Path("channelId") String channelId);
+  Call<DrSchedule> getScheduleForChannel(@Path("channelId") String channelId,
+                                         @Query("broadcastdate") String date);
 }

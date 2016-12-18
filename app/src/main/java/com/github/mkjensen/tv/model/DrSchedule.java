@@ -26,13 +26,12 @@ import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * @see <a href="http://www.dr.dk/mu-online/Help/1.3/Api/GET-api-apiVersion-schedule-nownext-id">Gets
- * scheduled Now and Next programs for a given id, i.e. channel dr1</a>
+ * @see <a href="http://www.dr.dk/mu-online/Help/1.3/Api/GET-api-apiVersion-schedule-id_broadcastDate_onlinegenretext">Gets
+ * a schedule for a given channel and broadcast date.</a>
  */
 @AutoValue
 public abstract class DrSchedule {
@@ -45,40 +44,9 @@ public abstract class DrSchedule {
   }
 
   @CheckResult
-  @Json(name = "ChannelSlug")
+  @Json(name = "Broadcasts")
   @NonNull
-  public abstract String getChannelId();
-
-  @CheckResult
-  @NonNull
-  public List<DrProgram> getProgrammes() {
-
-    List<DrProgram> programs = new ArrayList<>();
-
-    DrProgram currentProgram = getCurrentProgram();
-
-    if (currentProgram != null) {
-      programs.add(currentProgram);
-    }
-
-    List<DrProgram> nextPrograms = getNextPrograms();
-
-    if (nextPrograms != null) {
-      programs.addAll(nextPrograms);
-    }
-
-    return programs;
-  }
-
-  @CheckResult
-  @Json(name = "Now")
-  @Nullable
-  abstract DrProgram getCurrentProgram();
-
-  @CheckResult
-  @Json(name = "Next")
-  @Nullable
-  abstract List<DrProgram> getNextPrograms();
+  public abstract List<DrProgram> getProgrammes();
 
   @AutoValue
   public static abstract class DrProgram {
@@ -96,6 +64,11 @@ public abstract class DrSchedule {
     public abstract String getDescription();
 
     @CheckResult
+    @Json(name = "ProgramCard")
+    @Nullable
+    public abstract DrProgramDetails getDetails();
+
+    @CheckResult
     @Json(name = "EndTime")
     @NonNull
     public abstract Date getEndTime();
@@ -109,5 +82,21 @@ public abstract class DrSchedule {
     @Json(name = "Title")
     @NonNull
     public abstract String getTitle();
+
+    @AutoValue
+    public static abstract class DrProgramDetails {
+
+      @CheckResult
+      @NonNull
+      public static JsonAdapter<DrProgramDetails> jsonAdapter(@NonNull Moshi moshi) {
+
+        return new AutoValue_DrSchedule_DrProgram_DrProgramDetails.MoshiJsonAdapter(moshi);
+      }
+
+      @CheckResult
+      @Json(name = "PrimaryImageUri")
+      @NonNull
+      public abstract String getImageUrl();
+    }
   }
 }

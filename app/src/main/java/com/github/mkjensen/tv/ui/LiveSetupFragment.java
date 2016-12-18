@@ -71,6 +71,7 @@ public class LiveSetupFragment extends ChannelSetupFragment {
     EpgSyncJobService.requestImmediateSync(
         activity,
         inputId,
+        TimeUnit.DAYS.toMillis(1),
         new ComponentName(activity, EpgSyncJobServiceImpl.class)
     );
   }
@@ -96,8 +97,8 @@ public class LiveSetupFragment extends ChannelSetupFragment {
         activity,
         inputId,
         new ComponentName(activity, EpgSyncJobServiceImpl.class),
-        TimeUnit.MINUTES.toMillis(30),
-        TimeUnit.HOURS.toMillis(1)
+        TimeUnit.HOURS.toMillis(6),
+        TimeUnit.DAYS.toMillis(1)
     );
 
     activity.setResult(Activity.RESULT_OK);

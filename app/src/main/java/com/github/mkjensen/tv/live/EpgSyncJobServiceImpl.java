@@ -33,10 +33,14 @@ import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -47,6 +51,8 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
   private static final String TAG = "EpgSyncJobServiceImpl";
 
   private static final String DR_CHANNEL_ID = "drChannelId";
+
+  private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
   @Inject
   DrService drService;
@@ -153,10 +159,15 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
       return Collections.emptyList();
     }
 
+    Date startDate = new Date(startMs);
+    String formattedStartDate = DATE_FORMAT.format(startDate);
+    Log.d(TAG, String.format("getProgramsForChannel for channel [%s] and start date [%s]",
+        channelUri, formattedStartDate));
+
     Response<DrSchedule> response;
 
     try {
-      response = drService.getScheduleForChannel(drChannelId).execute();
+      response = drService.getScheduleForChannel(drChannelId, formattedStartDate).execute();
 
     } catch (IOException ex) {
       Log.e(TAG, String.format("Error while fetching schedule for channel [%s]: %s", channel, ex));
@@ -173,14 +184,22 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     for (DrSchedule.DrProgram drProgram : response.body().getProgrammes()) {
 
-      programs.add(new Program.Builder()
+      Program.Builder builder = new Program.Builder()
           .setChannelId(channel.getId())
           .setDescription(drProgram.getDescription())
           .setEndTimeUtcMillis(drProgram.getEndTime().getTime())
           .setInternalProviderData(channel.getInternalProviderData())
           .setStartTimeUtcMillis(drProgram.getStartTime().getTime())
-          .setTitle(drProgram.getTitle())
-          .build());
+          .setTitle(drProgram.getTitle());
+
+      DrSchedule.DrProgram.DrProgramDetails details = drProgram.getDetails();
+
+      if (details != null) {
+        builder
+            .setPosterArtUri(drProgram.getDetails().getImageUrl());
+      }
+
+      programs.add(builder.build());
     }
 
     return programs;
