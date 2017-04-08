@@ -61,8 +61,6 @@ android {
       signingConfig signingConfigs.release
     }
   }
-
-  return void // Avoid Android Lint issue: "Not all execution paths return a value"
 }
 
 dependencies {
