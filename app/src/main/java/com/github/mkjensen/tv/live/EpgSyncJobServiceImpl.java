@@ -69,6 +69,8 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
   @Override
   public List<Channel> getChannels() {
 
+    Log.d(TAG, "Getting channels");
+
     Response<List<DrChannel>> response;
 
     try {
@@ -121,6 +123,8 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
           .build());
     }
 
+    Log.d(TAG, "Finished getting channels");
+
     return channels;
   }
 
@@ -153,6 +157,8 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
   public List<Program> getProgramsForChannel(@NonNull Uri channelUri, @NonNull Channel channel,
                                              long startMs, long endMs) {
 
+    Log.d(TAG, String.format("Getting programs for channel [%s]", channel));
+
     String drChannelId = getDrChannelId(channel);
 
     if (drChannelId == null) {
@@ -163,7 +169,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
     String formattedStartDate = DATE_FORMAT.format(startDate);
     Log.d(TAG, String.format("getProgramsForChannel for channel [%s] and start date [%s]",
         channelUri, formattedStartDate));
-
+    Log.d(TAG, String.format("Getting programs for channel [%s]", channel));
     Response<DrSchedule> response;
 
     try {
@@ -201,6 +207,8 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
       programs.add(builder.build());
     }
+
+    Log.d(TAG, String.format("Finished getting programs for channel [%s]", channel));
 
     return programs;
   }
