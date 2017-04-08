@@ -29,6 +29,8 @@ import android.support.v17.leanback.widget.GuidedAction;
 import com.github.mkjensen.tv.BuildConfig;
 import com.github.mkjensen.tv.R;
 
+import de.psdev.licensesdialog.LicensesDialog;
+
 import java.util.List;
 
 public class AboutFragment extends GuidedStepFragment {
@@ -85,8 +87,11 @@ public class AboutFragment extends GuidedStepFragment {
       OkDialogFragment.newInstance(R.string.about_content_title, R.string.about_content_text)
           .show(getFragmentManager(), null);
     } else if (actionId == THIRD_PARTY_ID) {
-      OkDialogFragment.newInstance(R.string.about_thirdparty_title, R.string.about_thirdparty_text)
-          .show(getFragmentManager(), null);
+      new LicensesDialog.Builder(getActivity())
+          .setNotices(R.raw.notices)
+          .setTitle(R.string.about_thirdparty_title)
+          .build()
+          .show();
     }
   }
 }
