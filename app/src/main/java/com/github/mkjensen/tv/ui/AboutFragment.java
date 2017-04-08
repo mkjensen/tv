@@ -17,6 +17,7 @@
 package com.github.mkjensen.tv.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -29,7 +30,9 @@ import android.support.v17.leanback.widget.GuidedAction;
 import com.github.mkjensen.tv.BuildConfig;
 import com.github.mkjensen.tv.R;
 
+import de.psdev.licensesdialog.LicenseResolver;
 import de.psdev.licensesdialog.LicensesDialog;
+import de.psdev.licensesdialog.licenses.License;
 
 import java.util.List;
 
@@ -84,14 +87,46 @@ public class AboutFragment extends GuidedStepFragment {
     long actionId = action.getId();
 
     if (actionId == CONTENT_ID) {
-      OkDialogFragment.newInstance(R.string.about_content_title, R.string.about_content_text)
-          .show(getFragmentManager(), null);
+      LicenseResolver.registerLicense(new MediaLicence());
+      new LicensesDialog.Builder(getActivity())
+          .setNotices(R.raw.content_licenses)
+          .setTitle(R.string.about_content_title)
+          .build()
+          .show();
     } else if (actionId == THIRD_PARTY_ID) {
       new LicensesDialog.Builder(getActivity())
-          .setNotices(R.raw.notices)
+          .setNotices(R.raw.thirdparty_licenses)
           .setTitle(R.string.about_thirdparty_title)
           .build()
           .show();
+    }
+  }
+
+  private static final class MediaLicence extends License {
+
+    @Override
+    public String getName() {
+      return "Media licence";
+    }
+
+    @Override
+    public String readSummaryTextFromResources(Context context) {
+      return readFullTextFromResources(context);
+    }
+
+    @Override
+    public String readFullTextFromResources(Context context) {
+      return context.getString(R.string.about_content_text);
+    }
+
+    @Override
+    public String getVersion() {
+      return "1.0";
+    }
+
+    @Override
+    public String getUrl() {
+      return "http://www.dr.dk/om-dr/licens";
     }
   }
 }
