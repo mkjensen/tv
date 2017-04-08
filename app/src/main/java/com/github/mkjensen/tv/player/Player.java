@@ -108,11 +108,6 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
     simpleExoPlayer.setPlayWhenReady(true);
   }
 
-  public void stop() {
-
-    simpleExoPlayer.stop();
-  }
-
   public void release() {
 
     simpleExoPlayer.release();

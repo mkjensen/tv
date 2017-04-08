@@ -31,6 +31,8 @@ import android.util.Log;
 
 import com.github.mkjensen.tv.player.Player;
 
+import java.util.Objects;
+
 public class TvInputServiceImpl extends BaseTvInputService {
 
   private static final String TAG = "TvInputServiceImpl";
@@ -45,6 +47,8 @@ public class TvInputServiceImpl extends BaseTvInputService {
   private class SessionImpl extends BaseTvInputService.Session {
 
     private final Player player;
+
+    private String currentUrl;
 
     public SessionImpl(@NonNull Context context, @NonNull String inputId) {
 
@@ -79,11 +83,14 @@ public class TvInputServiceImpl extends BaseTvInputService {
         return false;
       }
 
-      notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_TUNING);
-      player.stop();
-
       String url = internalProviderData.getVideoUrl();
+
+      if (Objects.equals(currentUrl, url)) {
+        return true;
+      }
+
       player.play(url);
+      currentUrl = url;
 
       return true;
     }
