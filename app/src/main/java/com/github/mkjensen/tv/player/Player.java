@@ -24,7 +24,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
@@ -76,18 +76,18 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
   @NonNull
   private SimpleExoPlayer createSimpleExoPlayer(@NonNull Context context) {
 
-    AdaptiveVideoTrackSelection.Factory avtsFactory = new AdaptiveVideoTrackSelection.Factory(
+    AdaptiveTrackSelection.Factory atsFactory = new AdaptiveTrackSelection.Factory(
         bandwidthMeter,
         MAX_INITIAL_BITRATE,
-        AdaptiveVideoTrackSelection.DEFAULT_MIN_DURATION_FOR_QUALITY_INCREASE_MS,
-        AdaptiveVideoTrackSelection.DEFAULT_MAX_DURATION_FOR_QUALITY_DECREASE_MS,
-        AdaptiveVideoTrackSelection.DEFAULT_MIN_DURATION_TO_RETAIN_AFTER_DISCARD_MS,
-        AdaptiveVideoTrackSelection.DEFAULT_BANDWIDTH_FRACTION
+        AdaptiveTrackSelection.DEFAULT_MIN_DURATION_FOR_QUALITY_INCREASE_MS,
+        AdaptiveTrackSelection.DEFAULT_MAX_DURATION_FOR_QUALITY_DECREASE_MS,
+        AdaptiveTrackSelection.DEFAULT_MIN_DURATION_TO_RETAIN_AFTER_DISCARD_MS,
+        AdaptiveTrackSelection.DEFAULT_BANDWIDTH_FRACTION
     );
 
     SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
         context,
-        new DefaultTrackSelector(avtsFactory),
+        new DefaultTrackSelector(atsFactory),
         new DefaultLoadControl()
     );
 
