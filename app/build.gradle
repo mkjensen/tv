@@ -74,7 +74,8 @@ dependencies {
 
   compile 'com.android.support:leanback-v17:26.1.0'
   compile 'com.android.support:support-annotations:26.1.0'
-  compile 'com.google.android.exoplayer:exoplayer:r2.5.3'
+  compile 'com.google.android.exoplayer:exoplayer-core:r2.5.3'
+  compile 'com.google.android.exoplayer:exoplayer-hls:r2.5.3'
   compile 'com.google.android.exoplayer:extension-okhttp:r2.5.3'
   compile 'com.google.android.libraries.tv:companionlibrary:0.2'
   compile 'com.google.dagger:dagger:2.11'
