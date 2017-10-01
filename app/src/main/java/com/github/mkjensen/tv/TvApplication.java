@@ -24,10 +24,15 @@ import com.github.mkjensen.tv.inject.ApplicationModule;
 import com.github.mkjensen.tv.inject.BackendComponent;
 import com.github.mkjensen.tv.inject.BackendModule;
 import com.github.mkjensen.tv.inject.DaggerBackendComponent;
+import com.github.mkjensen.tv.inject.DaggerPlaybackComponent;
+import com.github.mkjensen.tv.inject.PlaybackComponent;
+import com.github.mkjensen.tv.inject.PlaybackModule;
 
 public class TvApplication extends Application {
 
   private BackendComponent backendComponent;
+
+  private PlaybackComponent playbackComponent;
 
   @Override
   public void onCreate() {
@@ -39,9 +44,18 @@ public class TvApplication extends Application {
 
   private void initDagger() {
 
+    ApplicationModule applicationModule = new ApplicationModule(this);
+    BackendModule backendModule = new BackendModule();
+
     backendComponent = DaggerBackendComponent.builder()
-        .applicationModule(new ApplicationModule(this))
-        .backendModule(new BackendModule())
+        .applicationModule(applicationModule)
+        .backendModule(backendModule)
+        .build();
+
+    playbackComponent = DaggerPlaybackComponent.builder()
+        .applicationModule(applicationModule)
+        .backendModule(backendModule)
+        .playbackModule(new PlaybackModule())
         .build();
   }
 
@@ -50,5 +64,12 @@ public class TvApplication extends Application {
   public BackendComponent getBackendComponent() {
 
     return backendComponent;
+  }
+
+  @CheckResult
+  @NonNull
+  public PlaybackComponent getPlaybackComponent() {
+
+    return playbackComponent;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Martin Kamp Jensen
+ * Copyright 2017 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,15 @@
 
 package com.github.mkjensen.tv.inject;
 
-import com.github.mkjensen.tv.live.EpgSyncJobServiceImpl;
+import com.github.mkjensen.tv.player.Player;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 
-@Component(modules = {ApplicationModule.class, BackendModule.class})
+@Component(modules = {ApplicationModule.class, BackendModule.class, PlaybackModule.class})
 @Singleton
-public interface BackendComponent {
+public interface PlaybackComponent {
 
-  void inject(EpgSyncJobServiceImpl epgSyncJobService);
+  void inject(Player player);
 }

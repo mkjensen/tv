@@ -16,12 +16,6 @@
 
 package com.github.mkjensen.tv.inject;
 
-import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.TransferListener;
-
 import android.app.Application;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
@@ -40,7 +34,6 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.internal.Version;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
@@ -55,43 +48,6 @@ public class BackendModule {
   DrService drService(@NonNull Retrofit retrofit) {
 
     return retrofit.create(DrService.class);
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  BandwidthMeter exoPlayerBandwidthMeter(@NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
-
-    return defaultBandwidthMeter;
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  DataSource.Factory exoPlayerDataSourceFactory(@NonNull OkHttpClient okHttpClient,
-                                                @NonNull TransferListener<? super DataSource> transferListener) {
-
-    return new OkHttpDataSourceFactory(okHttpClient, Version.userAgent(), transferListener);
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  DefaultBandwidthMeter exoPlayerDefaultBandwidthMeter() {
-
-    return new DefaultBandwidthMeter();
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  TransferListener<? super DataSource> exoPlayerTransferListener(@NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
-
-    return defaultBandwidthMeter;
   }
 
   @CheckResult

@@ -16,20 +16,15 @@
 
 package com.github.mkjensen.tv.player;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player.EventListener;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.media.tv.companionlibrary.TvPlayer;
 
@@ -51,51 +46,20 @@ public class Player implements TvPlayer, EventListener {
 
   private static final String TAG = "Player";
 
-  /**
-   * The maximum bitrate in bits per second that should be assumed when a bandwidth estimate is
-   * unavailable.
-   */
-  private static final int MAX_INITIAL_BITRATE = 10 * 1024 * 1024;
-
-  @Inject
-  BandwidthMeter bandwidthMeter;
-
   @Inject
   DataSource.Factory dataSourceFactory;
 
-  private final TvInputService.Session session;
+  @Inject
+  SimpleExoPlayer simpleExoPlayer;
 
-  private final SimpleExoPlayer simpleExoPlayer;
+  private final TvInputService.Session session;
 
   public Player(@NonNull Context context, @NonNull TvInputService.Session session) {
 
-    ((TvApplication) context.getApplicationContext()).getBackendComponent().inject(this);
+    ((TvApplication) context.getApplicationContext()).getPlaybackComponent().inject(this);
 
     this.session = session;
-    this.simpleExoPlayer = createSimpleExoPlayer(context);
-  }
-
-  @NonNull
-  private SimpleExoPlayer createSimpleExoPlayer(@NonNull Context context) {
-
-    AdaptiveTrackSelection.Factory atsFactory = new AdaptiveTrackSelection.Factory(
-        bandwidthMeter,
-        MAX_INITIAL_BITRATE,
-        AdaptiveTrackSelection.DEFAULT_MIN_DURATION_FOR_QUALITY_INCREASE_MS,
-        AdaptiveTrackSelection.DEFAULT_MAX_DURATION_FOR_QUALITY_DECREASE_MS,
-        AdaptiveTrackSelection.DEFAULT_MIN_DURATION_TO_RETAIN_AFTER_DISCARD_MS,
-        AdaptiveTrackSelection.DEFAULT_BANDWIDTH_FRACTION
-    );
-
-    SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
-        context,
-        new DefaultTrackSelector(atsFactory),
-        new DefaultLoadControl()
-    );
-
-    player.addListener(this);
-
-    return player;
+    this.simpleExoPlayer.addListener(this);
   }
 
   public void play(@NonNull String url) {
