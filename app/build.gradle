@@ -81,7 +81,7 @@ dependencies {
   compile 'com.google.firebase:firebase-crash:11.4.0'
   compile 'com.squareup.moshi:moshi:1.4.0'
   compile 'com.squareup.moshi:moshi-adapters:1.4.0'
-  compile 'com.squareup.okhttp3:okhttp:3.6.0'
+  compile 'com.squareup.okhttp3:okhttp:3.9.0'
   compile 'com.squareup.retrofit2:converter-moshi:2.3.0'
   compile 'com.squareup.retrofit2:retrofit:2.3.0'
   compile('de.psdev.licensesdialog:licensesdialog:1.8.3')
