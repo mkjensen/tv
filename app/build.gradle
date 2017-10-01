@@ -84,7 +84,7 @@ dependencies {
   compile 'com.squareup.okhttp3:okhttp:3.9.0'
   compile 'com.squareup.retrofit2:converter-moshi:2.3.0'
   compile 'com.squareup.retrofit2:retrofit:2.3.0'
-  compile('de.psdev.licensesdialog:licensesdialog:1.8.3')
+  compile 'de.psdev.licensesdialog:licensesdialog:1.8.3'
 
   // Overwrite TIF Companion Library dependencies to avoid bugs
   compile 'com.android.support:appcompat-v7:25.4.0'
