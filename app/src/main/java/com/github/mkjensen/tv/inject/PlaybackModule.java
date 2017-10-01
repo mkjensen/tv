@@ -17,8 +17,10 @@
 package com.github.mkjensen.tv.inject;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
@@ -54,10 +56,10 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  SimpleExoPlayer exoPlayer(@NonNull Context context, @NonNull LoadControl loadControl,
-                            @NonNull TrackSelector trackSelector) {
+  SimpleExoPlayer exoPlayer(@NonNull RenderersFactory renderersFactory,
+                            @NonNull LoadControl loadControl, @NonNull TrackSelector trackSelector) {
 
-    return ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);
+    return ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector, loadControl);
   }
 
   @CheckResult
@@ -95,6 +97,15 @@ public class PlaybackModule {
   LoadControl exoPlayerLoadControl() {
 
     return new DefaultLoadControl();
+  }
+
+  @CheckResult
+  @NonNull
+  @Provides
+  @Singleton
+  RenderersFactory exoPlayerRenderersFactory(@NonNull Context context) {
+
+    return new DefaultRenderersFactory(context);
   }
 
   @CheckResult
