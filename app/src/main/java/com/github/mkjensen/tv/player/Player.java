@@ -17,7 +17,6 @@
 package com.github.mkjensen.tv.player;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player.EventListener;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -41,6 +40,9 @@ import android.view.Surface;
 import com.github.mkjensen.tv.TvApplication;
 
 import javax.inject.Inject;
+
+import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
+import static com.google.android.exoplayer2.Player.STATE_READY;
 
 public class Player implements TvPlayer, EventListener {
 
@@ -160,11 +162,11 @@ public class Player implements TvPlayer, EventListener {
 
     switch (playbackState) {
 
-      case ExoPlayer.STATE_BUFFERING:
+      case STATE_BUFFERING:
         session.notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_BUFFERING);
         break;
 
-      case ExoPlayer.STATE_READY:
+      case STATE_READY:
         session.notifyVideoAvailable();
         break;
     }
