@@ -65,11 +65,11 @@ android {
 
 dependencies {
 
-  annotationProcessor 'com.google.auto.value:auto-value:1.4.1'
+  annotationProcessor 'com.google.auto.value:auto-value:1.5.1'
   annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
   annotationProcessor 'com.ryanharter.auto.value:auto-value-moshi:0.4.3'
 
-  provided 'com.google.auto.value:auto-value:1.4.1'
+  provided 'com.google.auto.value:auto-value:1.5.1'
   provided 'com.ryanharter.auto.value:auto-value-moshi-annotations:0.4.3'
 
   compile 'com.android.support:leanback-v17:25.3.1'
