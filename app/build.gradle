@@ -72,10 +72,10 @@ dependencies {
   provided 'com.google.auto.value:auto-value:1.5.1'
   provided 'com.ryanharter.auto.value:auto-value-moshi-annotations:0.4.3'
 
-  compile 'com.android.support:leanback-v17:25.3.1'
-  compile 'com.android.support:support-annotations:25.3.1'
-  compile 'com.google.android.exoplayer:exoplayer:r2.3.1'
-  compile 'com.google.android.exoplayer:extension-okhttp:r2.3.1'
+  compile 'com.android.support:leanback-v17:25.4.0'
+  compile 'com.android.support:support-annotations:25.4.0'
+  compile 'com.google.android.exoplayer:exoplayer:r2.5.3'
+  compile 'com.google.android.exoplayer:extension-okhttp:r2.5.3'
   compile 'com.google.android.libraries.tv:companionlibrary:0.2'
   compile 'com.google.dagger:dagger:2.11'
   compile 'com.google.firebase:firebase-crash:11.4.0'
@@ -87,7 +87,7 @@ dependencies {
   compile('de.psdev.licensesdialog:licensesdialog:1.8.3')
 
   // Overwrite TIF Companion Library dependencies to avoid bugs
-  compile 'com.android.support:appcompat-v7:25.3.1'
+  compile 'com.android.support:appcompat-v7:25.4.0'
   compile 'com.google.ads.interactivemedia.v3:interactivemedia:3.7.4'
   compile 'com.google.android.gms:play-services-ads:11.4.0'
 }

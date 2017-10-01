@@ -20,6 +20,8 @@ import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player.EventListener;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.TrackGroupArray;
@@ -45,7 +47,7 @@ import com.github.mkjensen.tv.TvApplication;
 
 import javax.inject.Inject;
 
-public class Player implements TvPlayer, ExoPlayer.EventListener {
+public class Player implements TvPlayer, EventListener {
 
   private static final String TAG = "Player";
 
@@ -205,6 +207,13 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
   }
 
   @Override
+  public void onRepeatModeChanged(int repeatMode) {
+
+    Log.d(TAG, "onRepeatModeChanged " + repeatMode);
+    // Do nothing.
+  }
+
+  @Override
   public void onTimelineChanged(@Nullable Timeline timeline, @Nullable Object manifest) {
 
     Log.d(TAG, "onTimelineChanged " + timeline + ", " + manifest);
@@ -229,6 +238,13 @@ public class Player implements TvPlayer, ExoPlayer.EventListener {
   public void onPositionDiscontinuity() {
 
     Log.d(TAG, "onPositionDiscontinuity");
+    // Do nothing.
+  }
+
+  @Override
+  public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    Log.d(TAG, "onPlaybackParametersChanged " + playbackParameters);
     // Do nothing.
   }
 }
