@@ -26,8 +26,8 @@ android {
     applicationId "com.github.mkjensen.tv"
     minSdkVersion 21
     targetSdkVersion 26
-    versionCode 6
-    versionName "0.0.6"
+    versionCode 7
+    versionName "0.0.7"
   }
 
   signingConfigs {
