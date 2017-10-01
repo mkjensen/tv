@@ -121,7 +121,6 @@ public class Player implements TvPlayer, EventListener {
   public void pause() {
 
     simpleExoPlayer.setPlayWhenReady(false);
-
   }
 
   @Override

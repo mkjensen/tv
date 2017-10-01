@@ -55,7 +55,7 @@ public class PlaybackModule {
   @CheckResult
   @NonNull
   @Provides
-  @Singleton
+  // Not a singleton because the player cannot be used after release() has been called.
   SimpleExoPlayer exoPlayer(@NonNull RenderersFactory renderersFactory,
                             @NonNull LoadControl loadControl, @NonNull TrackSelector trackSelector) {
 
