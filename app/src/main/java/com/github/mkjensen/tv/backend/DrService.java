@@ -32,12 +32,12 @@ import retrofit2.http.Query;
 public interface DrService {
 
   /**
-   * @see <a href="https://www.dr.dk/mu-online/api/1.3">DR MU-online API documentation - v. 1.3</a>
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4">DR MU-online API documentation - v. 1.4</a>
    */
-  String BASE_URL = "https://www.dr.dk/mu-online/api/1.3/";
+  String BASE_URL = "https://www.dr.dk/mu-online/api/1.4/";
 
   /**
-   * @see <a href="http://www.dr.dk/mu-online/Help/1.3/Api/GET-api-apiVersion-channel-all-active-dr-tv-channels">Gets
+   * @see <a href="http://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-channel-all-active-dr-tv-channels">Gets
    * all active tv channels. DR1, DR2, DR3, DR Ramasjang, DR Ultra and DR K</a>
    */
   @CheckResult
@@ -46,7 +46,7 @@ public interface DrService {
   Call<List<DrChannel>> getChannels();
 
   /**
-   * @see <a href="http://www.dr.dk/mu-online/Help/1.3/Api/GET-api-apiVersion-schedule-nownext-id">Gets
+   * @see <a href="http://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-schedule-nownext-id">Gets
    * scheduled Now and Next programs for a given id, i.e. channel dr1</a>
    */
   @CheckResult

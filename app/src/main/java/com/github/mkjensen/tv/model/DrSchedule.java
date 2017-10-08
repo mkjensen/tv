@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @see <a href="http://www.dr.dk/mu-online/Help/1.3/Api/GET-api-apiVersion-schedule-id_broadcastDate_onlinegenretext">Gets
+ * @see <a href="http://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-schedule-id_broadcastDate_onlinegenretext">Gets
  * a schedule for a given channel and broadcast date.</a>
  */
 @AutoValue
