@@ -71,7 +71,7 @@ ext {
   companionlibraryVersion = "0.2"
   daggerVersion = "2.11"
   exoplayerVersion = "r2.5.3"
-  googlePlayServicesVersion = "11.4.0"
+  googlePlayServicesVersion = "11.4.2"
   interactivemediaVersion = "3.7.4"
   licensesDialogVersion = "1.8.3"
   moshiVersion = "1.5.0"
