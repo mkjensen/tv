@@ -21,6 +21,7 @@ import com.google.auto.value.AutoValue;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
@@ -35,6 +36,8 @@ import java.util.List;
  */
 @AutoValue
 public abstract class DrSchedule {
+
+  private static final String TAG = "DrSchedule";
 
   @CheckResult
   @NonNull
@@ -59,6 +62,26 @@ public abstract class DrSchedule {
     }
 
     @CheckResult
+    @Json(name = "EndTime")
+    @Nullable
+    abstract Date getActualEndTime();
+
+    @CheckResult
+    @Json(name = "StartTime")
+    @Nullable
+    abstract Date getActualStartTime();
+
+    @CheckResult
+    @Json(name = "AnnouncedEndTime")
+    @Nullable
+    abstract Date getAnnouncedEndTime();
+
+    @CheckResult
+    @Json(name = "AnnouncedStartTime")
+    @Nullable
+    abstract Date getAnnouncedStartTime();
+
+    @CheckResult
     @Json(name = "Description")
     @NonNull
     public abstract String getDescription();
@@ -69,14 +92,44 @@ public abstract class DrSchedule {
     public abstract DrProgramDetails getDetails();
 
     @CheckResult
-    @Json(name = "EndTime")
     @NonNull
-    public abstract Date getEndTime();
+    public Date getEndTime() {
+
+      Date actualEndTime = getActualEndTime();
+
+      if (actualEndTime != null) {
+        return actualEndTime;
+      }
+
+      Date announcedEndTime = getAnnouncedEndTime();
+
+      if (announcedEndTime != null) {
+        return announcedEndTime;
+      }
+
+      Log.e(TAG, "Both actual and announced end times are null for: " + getTitle());
+      return new Date();
+    }
 
     @CheckResult
-    @Json(name = "StartTime")
     @NonNull
-    public abstract Date getStartTime();
+    public Date getStartTime() {
+
+      Date actualStartTime = getActualStartTime();
+
+      if (actualStartTime != null) {
+        return actualStartTime;
+      }
+
+      Date announcedStartTime = getAnnouncedStartTime();
+
+      if (announcedStartTime != null) {
+        return announcedStartTime;
+      }
+
+      Log.e(TAG, "Both actual and announced start times are null for: " + getTitle());
+      return new Date();
+    }
 
     @CheckResult
     @Json(name = "Title")
