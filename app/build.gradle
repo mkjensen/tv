@@ -40,7 +40,7 @@ android {
         storeFile file(STORE_FILE)
         storePassword STORE_PASSWORD
       } catch (ex) {
-        throw new InvalidUserDataException("You must define signing properties in gradle.properties.", ex)
+        throw new RuntimeException("You must define signing properties in gradle.properties.", ex)
       }
     }
   }
