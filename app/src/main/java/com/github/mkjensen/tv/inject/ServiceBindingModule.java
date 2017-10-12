@@ -16,15 +16,18 @@
 
 package com.github.mkjensen.tv.inject;
 
-import com.github.mkjensen.tv.player.Player;
+import com.github.mkjensen.tv.live.EpgSyncJobServiceImpl;
+import com.github.mkjensen.tv.live.TvInputServiceImpl;
 
-import javax.inject.Singleton;
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
 
-import dagger.Component;
+@Module
+interface ServiceBindingModule {
 
-@Component(modules = {ApplicationModule.class, BackendModule.class, PlaybackModule.class})
-@Singleton
-public interface PlaybackComponent {
+  @ContributesAndroidInjector
+  EpgSyncJobServiceImpl epgSyncJobServiceImpl();
 
-  void inject(Player player);
+  @ContributesAndroidInjector
+  TvInputServiceImpl tvInputServiceImpl();
 }

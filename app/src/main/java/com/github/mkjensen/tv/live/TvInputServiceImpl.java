@@ -29,13 +29,27 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.github.mkjensen.tv.player.Player;
-
 import java.util.Objects;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import dagger.android.AndroidInjection;
 
 public class TvInputServiceImpl extends BaseTvInputService {
 
   private static final String TAG = "TvInputServiceImpl";
+
+  @Inject
+  Provider<TvPlayerImpl> playerProvider;
+
+  @Override
+  public void onCreate() {
+
+    AndroidInjection.inject(this);
+
+    super.onCreate();
+  }
 
   @Nullable
   @Override
@@ -46,15 +60,16 @@ public class TvInputServiceImpl extends BaseTvInputService {
 
   private class SessionImpl extends BaseTvInputService.Session {
 
-    private final Player player;
+    private final TvPlayerImpl player;
 
     private String currentUrl;
 
-    public SessionImpl(@NonNull Context context, @NonNull String inputId) {
+    SessionImpl(@NonNull Context context, @NonNull String inputId) {
 
       super(context, inputId);
 
-      player = new Player(context, this);
+      player = playerProvider.get();
+      player.setSession(this);
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         notifyTimeShiftStatusChanged(TvInputManager.TIME_SHIFT_STATUS_UNSUPPORTED);

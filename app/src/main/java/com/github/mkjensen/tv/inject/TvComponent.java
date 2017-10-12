@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Martin Kamp Jensen
+ * Copyright 2017 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,25 @@
 
 package com.github.mkjensen.tv.inject;
 
-import com.github.mkjensen.tv.live.EpgSyncJobServiceImpl;
+import com.github.mkjensen.tv.TvApplication;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dagger.android.AndroidInjector;
+import dagger.android.support.AndroidSupportInjectionModule;
 
-@Component(modules = {ApplicationModule.class, BackendModule.class})
+@Component(modules = {
+    AndroidSupportInjectionModule.class,
+    ApplicationModule.class,
+    BackendModule.class,
+    PlaybackModule.class,
+    ServiceBindingModule.class
+})
 @Singleton
-public interface BackendComponent {
+interface TvComponent extends AndroidInjector<TvApplication> {
 
-  void inject(EpgSyncJobServiceImpl epgSyncJobService);
+  @Component.Builder
+  abstract class Builder extends AndroidInjector.Builder<TvApplication> {
+  }
 }

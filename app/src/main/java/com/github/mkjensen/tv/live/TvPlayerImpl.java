@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Martin Kamp Jensen
+ * Copyright 2017 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.player;
+package com.github.mkjensen.tv.live;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -27,7 +27,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.media.tv.companionlibrary.TvPlayer;
 
-import android.content.Context;
 import android.media.PlaybackParams;
 import android.media.tv.TvInputManager;
 import android.media.tv.TvInputService;
@@ -37,34 +36,35 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Surface;
 
-import com.github.mkjensen.tv.TvApplication;
-
 import javax.inject.Inject;
 
 import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
 import static com.google.android.exoplayer2.Player.STATE_READY;
 
-public class Player implements TvPlayer, EventListener {
+class TvPlayerImpl implements TvPlayer, EventListener {
 
-  private static final String TAG = "Player";
+  private static final String TAG = "TvPlayerImpl";
+
+  private final DataSource.Factory dataSourceFactory;
+
+  private final SimpleExoPlayer simpleExoPlayer;
+
+  private TvInputService.Session session;
 
   @Inject
-  DataSource.Factory dataSourceFactory;
+  TvPlayerImpl(@NonNull DataSource.Factory dataSourceFactory, @NonNull SimpleExoPlayer simpleExoPlayer) {
 
-  @Inject
-  SimpleExoPlayer simpleExoPlayer;
-
-  private final TvInputService.Session session;
-
-  public Player(@NonNull Context context, @NonNull TvInputService.Session session) {
-
-    ((TvApplication) context.getApplicationContext()).getPlaybackComponent().inject(this);
-
-    this.session = session;
+    this.dataSourceFactory = dataSourceFactory;
+    this.simpleExoPlayer = simpleExoPlayer;
     this.simpleExoPlayer.addListener(this);
   }
 
-  public void play(@NonNull String url) {
+  void setSession(@NonNull TvInputService.Session session) {
+
+    this.session = session;
+  }
+
+  void play(@NonNull String url) {
 
     HlsMediaSource hlsMediaSource = new HlsMediaSource(
         Uri.parse(url),
@@ -76,7 +76,7 @@ public class Player implements TvPlayer, EventListener {
     simpleExoPlayer.setPlayWhenReady(true);
   }
 
-  public void release() {
+  void release() {
 
     simpleExoPlayer.release();
   }

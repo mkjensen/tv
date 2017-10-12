@@ -39,7 +39,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 @Module
-public class BackendModule {
+final class BackendModule {
 
   @CheckResult
   @NonNull

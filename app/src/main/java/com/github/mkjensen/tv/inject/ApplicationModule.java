@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Martin Kamp Jensen
+ * Copyright 2017 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,39 +18,18 @@ package com.github.mkjensen.tv.inject;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
 
-import javax.inject.Singleton;
+import com.github.mkjensen.tv.TvApplication;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
 @Module
-public class ApplicationModule {
+interface ApplicationModule {
 
-  private final Application application;
+  @Binds
+  Application application(TvApplication tvApplication);
 
-  public ApplicationModule(@NonNull Application application) {
-
-    this.application = application;
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  Application application() {
-
-    return application;
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  Context context() {
-
-    return application;
-  }
+  @Binds
+  Context context(TvApplication tvApplication);
 }

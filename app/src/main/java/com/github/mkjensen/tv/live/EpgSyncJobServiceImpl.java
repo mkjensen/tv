@@ -27,7 +27,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.github.mkjensen.tv.TvApplication;
 import com.github.mkjensen.tv.backend.DrService;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
@@ -44,6 +43,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
 import retrofit2.Response;
 
 public class EpgSyncJobServiceImpl extends EpgSyncJobService {
@@ -60,9 +60,9 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
   @Override
   public void onCreate() {
 
-    super.onCreate();
+    AndroidInjection.inject(this);
 
-    ((TvApplication) getApplicationContext()).getBackendComponent().inject(this);
+    super.onCreate();
   }
 
   @NonNull

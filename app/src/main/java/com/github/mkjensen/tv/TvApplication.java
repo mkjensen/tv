@@ -16,60 +16,16 @@
 
 package com.github.mkjensen.tv;
 
-import android.app.Application;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
+import com.github.mkjensen.tv.inject.DaggerTvComponent;
 
-import com.github.mkjensen.tv.inject.ApplicationModule;
-import com.github.mkjensen.tv.inject.BackendComponent;
-import com.github.mkjensen.tv.inject.BackendModule;
-import com.github.mkjensen.tv.inject.DaggerBackendComponent;
-import com.github.mkjensen.tv.inject.DaggerPlaybackComponent;
-import com.github.mkjensen.tv.inject.PlaybackComponent;
-import com.github.mkjensen.tv.inject.PlaybackModule;
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 
-public class TvApplication extends Application {
-
-  private BackendComponent backendComponent;
-
-  private PlaybackComponent playbackComponent;
+public class TvApplication extends DaggerApplication {
 
   @Override
-  public void onCreate() {
+  protected AndroidInjector<TvApplication> applicationInjector() {
 
-    super.onCreate();
-
-    initDagger();
-  }
-
-  private void initDagger() {
-
-    ApplicationModule applicationModule = new ApplicationModule(this);
-    BackendModule backendModule = new BackendModule();
-
-    backendComponent = DaggerBackendComponent.builder()
-        .applicationModule(applicationModule)
-        .backendModule(backendModule)
-        .build();
-
-    playbackComponent = DaggerPlaybackComponent.builder()
-        .applicationModule(applicationModule)
-        .backendModule(backendModule)
-        .playbackModule(new PlaybackModule())
-        .build();
-  }
-
-  @CheckResult
-  @NonNull
-  public BackendComponent getBackendComponent() {
-
-    return backendComponent;
-  }
-
-  @CheckResult
-  @NonNull
-  public PlaybackComponent getPlaybackComponent() {
-
-    return playbackComponent;
+    return DaggerTvComponent.builder().create(this);
   }
 }
