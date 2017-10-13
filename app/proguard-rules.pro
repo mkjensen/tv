@@ -11,6 +11,9 @@
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
 
+# Dagger: https://github.com/google/dagger/issues/645
+-dontwarn com.google.errorprone.annotations.*
+
 # Fabric: https://docs.fabric.io/android/crashlytics/dex-and-proguard.html
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
