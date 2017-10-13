@@ -25,6 +25,7 @@ import dagger.Binds;
 import dagger.Module;
 
 @Module
+@SuppressWarnings("unused") // Used by Dagger.
 interface ApplicationModule {
 
   @Binds

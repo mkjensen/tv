@@ -23,6 +23,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
+@SuppressWarnings("unused") // Used by Dagger.
 interface ServiceBindingModule {
 
   @ContributesAndroidInjector
