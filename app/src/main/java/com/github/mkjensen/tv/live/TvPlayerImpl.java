@@ -90,6 +90,7 @@ class TvPlayerImpl implements TvPlayer, EventListener {
   @Override
   public void setPlaybackParams(@Nullable PlaybackParams params) {
 
+    //noinspection deprecation
     simpleExoPlayer.setPlaybackParams(params);
   }
 
