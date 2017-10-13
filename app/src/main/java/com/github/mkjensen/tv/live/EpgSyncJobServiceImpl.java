@@ -88,13 +88,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     List<DrChannel> drChannels = response.body();
 
-    Collections.sort(drChannels, new Comparator<DrChannel>() {
-
-      @Override
-      public int compare(DrChannel o1, DrChannel o2) {
-        return o1.getTitle().compareTo(o2.getTitle());
-      }
-    });
+    Collections.sort(drChannels, (o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
 
     List<Channel> channels = new ArrayList<>(drChannels.size());
 
