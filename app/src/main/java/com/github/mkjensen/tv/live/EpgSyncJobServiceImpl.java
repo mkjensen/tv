@@ -25,11 +25,11 @@ import android.media.tv.TvContract;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.github.mkjensen.tv.backend.DrService;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
+import com.github.mkjensen.tv.util.Log;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -134,7 +134,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
     String streamUrl = drChannel.getStreamUrl();
 
     if (streamUrl == null) {
-      Log.w(TAG, String.format("Did not find stream URL for channel [%s]", drChannel.getId()));
+      Log.w(TAG, "Did not find stream URL for channel: " + drChannel.getId());
       return null;
     }
 
@@ -155,7 +155,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
   public List<Program> getProgramsForChannel(@NonNull Uri channelUri, @NonNull Channel channel,
                                              long startMs, long endMs) {
 
-    Log.d(TAG, String.format("Getting programs for channel [%s]", channel));
+    Log.d(TAG, "Getting programs for channel: " + channel);
 
     String drChannelId = getDrChannelId(channel);
 
@@ -167,14 +167,14 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
     String formattedStartDate = DATE_FORMAT.format(startDate);
     Log.d(TAG, String.format("getProgramsForChannel for channel [%s] and start date [%s]",
         channelUri, formattedStartDate));
-    Log.d(TAG, String.format("Getting programs for channel [%s]", channel));
+    Log.d(TAG, "Getting programs for channel: " + channel);
     Response<DrSchedule> response;
 
     try {
       response = drService.getScheduleForChannel(drChannelId, formattedStartDate).execute();
 
     } catch (IOException ex) {
-      Log.e(TAG, String.format("Error while fetching schedule for channel [%s]: %s", channel, ex));
+      Log.e(TAG, "Error while fetching schedule for channel: " + channel, ex);
       return Collections.emptyList();
     }
 
@@ -210,7 +210,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
       }
     }
 
-    Log.d(TAG, String.format("Finished getting programs for channel [%s]", channel));
+    Log.d(TAG, "Finished getting programs for channel: " + channel);
 
     return programs;
   }

@@ -33,8 +33,9 @@ import android.media.tv.TvInputService;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Surface;
+
+import com.github.mkjensen.tv.util.Log;
 
 import javax.inject.Inject;
 
