@@ -36,7 +36,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -88,7 +87,11 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     List<DrChannel> drChannels = response.body();
 
-    Collections.sort(drChannels, (o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
+    if (drChannels != null) {
+      Collections.sort(drChannels, (o1, o2) -> o1.getTitle().compareTo(o2.getTitle()));
+    } else {
+      drChannels = Collections.emptyList();
+    }
 
     List<Channel> channels = new ArrayList<>(drChannels.size());
 
