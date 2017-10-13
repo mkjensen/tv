@@ -185,24 +185,28 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     List<Program> programs = new ArrayList<>();
 
-    for (DrSchedule.DrProgram drProgram : response.body().getProgrammes()) {
+    DrSchedule drSchedule = response.body();
 
-      Program.Builder builder = new Program.Builder()
-          .setChannelId(channel.getId())
-          .setDescription(drProgram.getDescription())
-          .setEndTimeUtcMillis(drProgram.getEndTime().getTime())
-          .setInternalProviderData(channel.getInternalProviderData())
-          .setStartTimeUtcMillis(drProgram.getStartTime().getTime())
-          .setTitle(drProgram.getTitle());
+    if (drSchedule != null) {
+      for (DrSchedule.DrProgram drProgram : drSchedule.getProgrammes()) {
 
-      DrSchedule.DrProgram.DrProgramDetails details = drProgram.getDetails();
+        Program.Builder builder = new Program.Builder()
+            .setChannelId(channel.getId())
+            .setDescription(drProgram.getDescription())
+            .setEndTimeUtcMillis(drProgram.getEndTime().getTime())
+            .setInternalProviderData(channel.getInternalProviderData())
+            .setStartTimeUtcMillis(drProgram.getStartTime().getTime())
+            .setTitle(drProgram.getTitle());
 
-      if (details != null) {
-        builder
-            .setPosterArtUri(drProgram.getDetails().getImageUrl());
+        DrSchedule.DrProgram.DrProgramDetails details = drProgram.getDetails();
+
+        if (details != null) {
+          builder
+              .setPosterArtUri(drProgram.getDetails().getImageUrl());
+        }
+
+        programs.add(builder.build());
       }
-
-      programs.add(builder.build());
     }
 
     Log.d(TAG, String.format("Finished getting programs for channel [%s]", channel));
