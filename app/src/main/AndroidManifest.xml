@@ -46,6 +46,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="cd179272d10d855792901db4beafe5dc826e8c6e" />
+
         <activity android:name=".ui.AboutActivity">
 
             <intent-filter>

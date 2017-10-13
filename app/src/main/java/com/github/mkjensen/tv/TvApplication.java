@@ -16,12 +16,22 @@
 
 package com.github.mkjensen.tv;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.mkjensen.tv.inject.DaggerTvComponent;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
+import io.fabric.sdk.android.Fabric;
 
 public class TvApplication extends DaggerApplication {
+
+  @Override
+  public void onCreate() {
+
+    Fabric.with(this, new Crashlytics());
+
+    super.onCreate();
+  }
 
   @Override
   protected AndroidInjector<TvApplication> applicationInjector() {
