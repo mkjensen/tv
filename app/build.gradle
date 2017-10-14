@@ -17,6 +17,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
+apply from: rootProject.file('signing.gradle')
+
 android {
 
   compileSdkVersion 26
@@ -37,21 +39,6 @@ android {
     targetCompatibility JavaVersion.VERSION_1_8
   }
 
-  signingConfigs {
-
-    release {
-
-      try {
-        keyAlias KEY_ALIAS
-        keyPassword KEY_PASSWORD
-        storeFile file(STORE_FILE)
-        storePassword STORE_PASSWORD
-      } catch (ex) {
-        throw new RuntimeException("You must define signing properties in gradle.properties.", ex)
-      }
-    }
-  }
-
   buildTypes {
 
     debug {
@@ -65,7 +52,6 @@ android {
 
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-      signingConfig signingConfigs.release
     }
   }
 
