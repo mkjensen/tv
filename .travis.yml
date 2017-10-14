@@ -14,6 +14,7 @@ android:
     - platform-tools
     - build-tools-26.0.2
     - android-26
+    - sys-img-x86-android-tv-26
 
 script:
    - ./gradlew build connectedCheck
