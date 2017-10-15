@@ -28,7 +28,7 @@ public class LiveSetupActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     if (savedInstanceState == null) {
-      LiveSetupFragment fragment = new LiveSetupFragment();
+      ChannelSetupFragmentImpl fragment = new ChannelSetupFragmentImpl();
       fragment.setArguments(getIntent().getExtras());
       getFragmentManager().beginTransaction().add(android.R.id.content, fragment).commit();
     }

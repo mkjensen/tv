@@ -33,7 +33,7 @@ import com.github.mkjensen.tv.R;
 
 import java.util.concurrent.TimeUnit;
 
-public class LiveSetupFragment extends ChannelSetupFragment {
+public class ChannelSetupFragmentImpl extends ChannelSetupFragment {
 
   private String inputId;
 
