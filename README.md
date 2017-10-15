@@ -1,6 +1,6 @@
 # Dansk TV
 
-[![Dependency Status](https://www.versioneye.com/user/projects/5831b12a182815003cfd941b/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5831b12a182815003cfd941b)
+[![Build Status](https://travis-ci.org/mkjensen/tv.svg?branch=master)](https://travis-ci.org/mkjensen/tv) [![Dependency Status](https://www.versioneye.com/user/projects/5831b12a182815003cfd941b/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5831b12a182815003cfd941b)
 
 Dansk TV is an app for [Android TV](https://android.com/tv) that provides access to TV channels available to everyone that pays the [Danish media licence](https://en.wikipedia.org/wiki/Television_licence#Denmark). For more information about the media licence including, but not limited to, rules and how to pay, read the [media licence page](https://www.dr.dk/om-dr/licens/licens-english) maintained by the Danish Broadcasting Corporation.
 
