@@ -60,7 +60,7 @@
 
         </activity>
 
-        <activity android:name=".live.LiveSetupActivity">
+        <activity android:name=".live.ChannelSetupActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
