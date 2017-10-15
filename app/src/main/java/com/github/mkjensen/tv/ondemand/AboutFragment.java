@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ui;
+package com.github.mkjensen.tv.ondemand;
 
 import android.app.Activity;
 import android.content.Context;
