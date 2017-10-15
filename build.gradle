@@ -14,6 +14,39 @@
  * limitations under the License.
  */
 
+buildscript {
+
+  repositories {
+
+    google()
+    jcenter()
+    maven { url 'https://maven.fabric.io/public' }
+  }
+
+  dependencies {
+
+    classpath 'com.android.tools.build:gradle:3.0.0-beta7'
+    classpath 'io.fabric.tools:gradle:1.24.2'
+  }
+}
+
+allprojects {
+
+  repositories {
+
+    google()
+    jcenter()
+    maven { url 'https://maven.fabric.io/public' }
+  }
+}
+
+ext {
+
+  // Travis CI: https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI
+  travisBuild = System.getenv("TRAVIS") == "true"
+  preDexEnabled = "true" == System.getProperty("pre-dex", "true")
+}
+
 task clean(type: Delete) {
 
   delete rootProject.buildDir

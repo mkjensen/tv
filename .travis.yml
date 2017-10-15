@@ -1,0 +1,32 @@
+# https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI
+
+language: android
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+android:
+  components:
+    - tools
+    - tools # https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943
+    - platform-tools
+    - build-tools-26.0.2
+    - android-26
+    - sys-img-x86-android-tv-26
+
+script:
+   - ./gradlew build connectedCheck
+
+after_failure:
+   - "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
