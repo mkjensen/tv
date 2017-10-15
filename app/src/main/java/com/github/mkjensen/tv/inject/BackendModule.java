@@ -45,9 +45,15 @@ final class BackendModule {
   @NonNull
   @Provides
   @Singleton
-  DrService drService(@NonNull Retrofit retrofit) {
+  DrService drService(@NonNull Converter.Factory converterFactory,
+                      @NonNull OkHttpClient okHttpClient) {
 
-    return retrofit.create(DrService.class);
+    return new Retrofit.Builder()
+        .addConverterFactory(converterFactory)
+        .baseUrl(DrService.BASE_URL)
+        .client(okHttpClient)
+        .build()
+        .create(DrService.class);
   }
 
   @CheckResult
@@ -89,20 +95,6 @@ final class BackendModule {
 
     return new OkHttpClient.Builder()
         .cache(cache)
-        .build();
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  Retrofit retrofit(@NonNull Converter.Factory converterFactory,
-                    @NonNull OkHttpClient okHttpClient) {
-
-    return new Retrofit.Builder()
-        .addConverterFactory(converterFactory)
-        .baseUrl(DrService.BASE_URL)
-        .client(okHttpClient)
         .build();
   }
 
