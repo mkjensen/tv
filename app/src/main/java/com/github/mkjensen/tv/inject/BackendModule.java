@@ -41,6 +41,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 @Module
 final class BackendModule {
 
+  /**
+   * The maximum cache size in bytes for {@link OkHttpClient}.
+   */
+  private static final int OK_HTTP_CACHE_MAX_SIZE = 10 * 1024 * 1024;
+
   @CheckResult
   @NonNull
   @Provides
@@ -83,8 +88,7 @@ final class BackendModule {
   @Singleton
   Cache okHttpCache(@NonNull Application application) {
 
-    int maxSize = 10 * 1024 * 1024;
-    return new Cache(application.getCacheDir(), maxSize);
+    return new Cache(application.getCacheDir(), OK_HTTP_CACHE_MAX_SIZE);
   }
 
   @CheckResult
