@@ -51,7 +51,9 @@
             android:name="io.fabric.ApiKey"
             android:value="cd179272d10d855792901db4beafe5dc826e8c6e" />
 
-        <activity android:name=".ondemand.AboutActivity">
+        <activity
+            android:name=".ondemand.AboutActivity"
+            android:theme="@style/Theme.Leanback.GuidedStep.Half">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,6 +71,10 @@
         </activity>
 
         <service
+            android:name=".live.EpgSyncJobServiceImpl"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
             android:name=".live.TvInputServiceImpl"
             android:permission="android.permission.BIND_TV_INPUT">
 
@@ -81,10 +87,6 @@
                 android:resource="@xml/tv_input" />
 
         </service>
-
-        <service
-            android:name=".live.EpgSyncJobServiceImpl"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

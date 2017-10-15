@@ -21,14 +21,17 @@ import com.google.android.media.tv.companionlibrary.model.Channel;
 import com.google.android.media.tv.companionlibrary.model.InternalProviderData;
 import com.google.android.media.tv.companionlibrary.model.Program;
 
+import android.content.Intent;
 import android.media.tv.TvContract;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.github.mkjensen.tv.R;
 import com.github.mkjensen.tv.backend.DrService;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
+import com.github.mkjensen.tv.ondemand.AboutActivity;
 import com.github.mkjensen.tv.util.Log;
 
 import java.io.IOException;
@@ -96,6 +99,9 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     List<Channel> channels = new ArrayList<>(drChannels.size());
 
+    String appLinkIntentUri = new Intent(this, AboutActivity.class)
+        .toUri(Intent.URI_INTENT_SCHEME);
+    String appLinkText = getString(R.string.about_breadcrumb);
     int displayNumber = 1;
 
     for (DrChannel drChannel : drChannels) {
@@ -111,6 +117,8 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
       }
 
       channels.add(new Channel.Builder()
+          .setAppLinkIntentUri(appLinkIntentUri)
+          .setAppLinkText(appLinkText)
           .setChannelLogo(drChannel.getImageUrl())
           .setDisplayName(drChannel.getTitle())
           .setDisplayNumber(Integer.toString(displayNumber++))
