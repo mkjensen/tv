@@ -48,7 +48,7 @@ final class PlaybackModule {
 
   /**
    * The maximum bitrate in bits per second that should be assumed when a bandwidth estimate is
-   * unavailable.
+   * unavailable for {@link AdaptiveTrackSelection}.
    */
   private static final int ADAPTIVE_TRACK_SELECTION_MAX_INITIAL_BITRATE = 10 * 1024 * 1024;
 
