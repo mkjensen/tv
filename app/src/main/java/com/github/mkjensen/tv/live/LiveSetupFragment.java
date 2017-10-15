@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Martin Kamp Jensen
+ * Copyright 2017 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ui;
+package com.github.mkjensen.tv.live;
 
 import com.google.android.media.tv.companionlibrary.ChannelSetupFragment;
 import com.google.android.media.tv.companionlibrary.EpgSyncJobService;
@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mkjensen.tv.R;
-import com.github.mkjensen.tv.live.EpgSyncJobServiceImpl;
 
 import java.util.concurrent.TimeUnit;
 
