@@ -17,4 +17,4 @@
   -->
 
 <tv-input xmlns:android="http://schemas.android.com/apk/res/android"
-    android:setupActivity="com.github.mkjensen.tv.ui.LiveSetupActivity" />
+    android:setupActivity="com.github.mkjensen.tv.live.ChannelSetupActivity" />
