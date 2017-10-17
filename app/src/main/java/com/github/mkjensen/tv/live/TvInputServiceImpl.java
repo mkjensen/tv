@@ -41,7 +41,7 @@ public class TvInputServiceImpl extends BaseTvInputService {
 
   private static final String TAG = "TvInputServiceImpl";
 
-  @SuppressWarnings("WeakerAccess") // Cannot be private because Dagger needs to inject.
+  @SuppressWarnings("WeakerAccess")
   @Inject
   Provider<TvPlayerImpl> playerProvider;
 

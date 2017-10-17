@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Martin Kamp Jensen
+ * Copyright 2017 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
+package com.github.mkjensen.tv.backend;
 
 import android.app.Application;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
-import com.github.mkjensen.tv.backend.DrService;
 import com.github.mkjensen.tv.model.JsonAdapterFactory;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -39,7 +38,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 @Module
-final class BackendModule {
+public class BackendModule {
 
   /**
    * The maximum cache size in bytes for {@link OkHttpClient}.

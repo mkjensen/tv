@@ -14,23 +14,24 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
+package com.github.mkjensen.tv.inject.viewmodel;
 
-import android.app.Application;
-import android.content.Context;
+import android.arch.lifecycle.ViewModel;
 
-import com.github.mkjensen.tv.TvApplication;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import dagger.Binds;
-import dagger.Module;
+import dagger.MapKey;
 
-@Module
-@SuppressWarnings("unused")
-interface ApplicationModule {
+@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@MapKey
+public @interface ViewModelKey {
 
-  @Binds
-  Application application(TvApplication tvApplication);
-
-  @Binds
-  Context context(TvApplication tvApplication);
+  @SuppressWarnings("unused")
+  Class<? extends ViewModel> value();
 }

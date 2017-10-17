@@ -56,7 +56,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
   private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
-  @SuppressWarnings("WeakerAccess") // Cannot be private because Dagger needs to inject.
+  @SuppressWarnings("WeakerAccess")
   @Inject
   DrService drService;
 

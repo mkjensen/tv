@@ -44,7 +44,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.internal.Version;
 
 @Module
-final class PlaybackModule {
+class PlaybackModule {
 
   /**
    * The maximum bitrate in bits per second that should be assumed when a bandwidth estimate is

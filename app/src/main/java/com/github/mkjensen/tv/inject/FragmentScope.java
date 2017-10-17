@@ -16,21 +16,17 @@
 
 package com.github.mkjensen.tv.inject;
 
-import android.app.Application;
-import android.content.Context;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import com.github.mkjensen.tv.TvApplication;
+import javax.inject.Scope;
 
-import dagger.Binds;
-import dagger.Module;
-
-@Module
-@SuppressWarnings("unused")
-interface ApplicationModule {
-
-  @Binds
-  Application application(TvApplication tvApplication);
-
-  @Binds
-  Context context(TvApplication tvApplication);
+@Documented
+@Scope
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD})
+public @interface FragmentScope {
 }

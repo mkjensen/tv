@@ -14,23 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
+package com.github.mkjensen.tv.ondemand.browse;
 
-import android.app.Application;
-import android.content.Context;
-
-import com.github.mkjensen.tv.TvApplication;
-
-import dagger.Binds;
 import dagger.Module;
 
 @Module
-@SuppressWarnings("unused")
-interface ApplicationModule {
-
-  @Binds
-  Application application(TvApplication tvApplication);
-
-  @Binds
-  Context context(TvApplication tvApplication);
+public class BrowseModule {
 }

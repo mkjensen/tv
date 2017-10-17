@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
+package com.github.mkjensen.tv.ondemand.browse;
 
-import android.app.Application;
-import android.content.Context;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
-import com.github.mkjensen.tv.TvApplication;
+import com.github.mkjensen.tv.backend.DrRepository;
+import com.github.mkjensen.tv.model.DrChannel;
 
-import dagger.Binds;
-import dagger.Module;
+import java.util.Collection;
 
-@Module
-@SuppressWarnings("unused")
-interface ApplicationModule {
+import javax.inject.Inject;
 
-  @Binds
-  Application application(TvApplication tvApplication);
+public class BrowseViewModel extends ViewModel {
 
-  @Binds
-  Context context(TvApplication tvApplication);
+  @SuppressWarnings("WeakerAccess")
+  @Inject
+  DrRepository drRepository;
+
+  @Inject
+  BrowseViewModel() {
+  }
+
+  LiveData<Collection<DrChannel>> getChannels() {
+
+    return drRepository.getChannels();
+  }
 }

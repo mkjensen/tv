@@ -26,7 +26,9 @@
 
     <uses-feature android:name="android.software.leanback" />
 
-    <uses-feature android:name="android.software.live_tv" />
+    <uses-feature
+        android:name="android.software.live_tv"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -51,16 +53,7 @@
             android:name="io.fabric.ApiKey"
             android:value="cd179272d10d855792901db4beafe5dc826e8c6e" />
 
-        <activity
-            android:name=".ondemand.AboutActivity"
-            android:theme="@style/Theme.Leanback.GuidedStep.Half">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+        <!-- Live -->
 
         <activity android:name=".live.ChannelSetupActivity">
 
@@ -87,6 +80,29 @@
                 android:resource="@xml/tv_input" />
 
         </service>
+
+        <!-- On-demand -->
+
+        <activity
+            android:name=".ondemand.AboutActivity"
+            android:theme="@style/Theme.Leanback.GuidedStep.Half">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".ondemand.browse.BrowseActivity"
+            android:theme="@style/Theme.Leanback.Browse">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
     </application>
 

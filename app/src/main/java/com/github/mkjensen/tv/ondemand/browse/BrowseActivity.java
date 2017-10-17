@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
+package com.github.mkjensen.tv.ondemand.browse;
 
-import android.app.Application;
-import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 
-import com.github.mkjensen.tv.TvApplication;
+import com.github.mkjensen.tv.R;
 
-import dagger.Binds;
-import dagger.Module;
+public class BrowseActivity extends FragmentActivity {
 
-@Module
-@SuppressWarnings("unused")
-interface ApplicationModule {
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-  @Binds
-  Application application(TvApplication tvApplication);
+    super.onCreate(savedInstanceState);
 
-  @Binds
-  Context context(TvApplication tvApplication);
+    setContentView(R.layout.ondemand_browse);
+  }
 }

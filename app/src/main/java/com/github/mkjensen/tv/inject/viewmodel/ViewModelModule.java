@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
+package com.github.mkjensen.tv.inject.viewmodel;
 
-import android.app.Application;
-import android.content.Context;
-
-import com.github.mkjensen.tv.TvApplication;
+import javax.inject.Singleton;
 
 import dagger.Binds;
 import dagger.Module;
 
 @Module
 @SuppressWarnings("unused")
-interface ApplicationModule {
+public interface ViewModelModule {
 
+  @Singleton
   @Binds
-  Application application(TvApplication tvApplication);
-
-  @Binds
-  Context context(TvApplication tvApplication);
+  android.arch.lifecycle.ViewModelProvider.Factory viewModelFactory(ViewModelFactory factory);
 }

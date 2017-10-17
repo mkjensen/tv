@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
-
-import com.github.mkjensen.tv.live.EpgSyncJobServiceImpl;
-import com.github.mkjensen.tv.live.TvInputServiceImpl;
+package com.github.mkjensen.tv.live;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-@SuppressWarnings("unused") // Used by Dagger.
-interface ServiceBindingModule {
+@SuppressWarnings("unused")
+public interface LiveModule {
 
   @ContributesAndroidInjector
   EpgSyncJobServiceImpl epgSyncJobServiceImpl();
