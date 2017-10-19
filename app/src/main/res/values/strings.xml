@@ -36,4 +36,6 @@
     <string name="ondemand_browse_content_latestnews">Seneste nyheder</string>
     <string name="ondemand_browse_content_top">Særligt udvalgte</string>
 
+    <string name="ondemand_details_play">Afspil</string>
+
 </resources>

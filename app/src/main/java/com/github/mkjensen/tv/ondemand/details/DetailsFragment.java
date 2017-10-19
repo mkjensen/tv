@@ -17,15 +17,19 @@
 package com.github.mkjensen.tv.ondemand.details;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.DetailsSupportFragment;
+import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.DetailsOverviewRow;
 import android.support.v17.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 
+import com.github.mkjensen.tv.R;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
 import com.github.mkjensen.tv.model.Broadcast;
+import com.github.mkjensen.tv.ondemand.playback.PlaybackActivity;
 import com.github.mkjensen.tv.ondemand.presenter.BroadcastDetailsDescriptionPresenter;
 
 import javax.inject.Inject;
@@ -41,6 +45,8 @@ public class DetailsFragment extends DetailsSupportFragment {
   private Broadcast broadcast;
 
   private DetailsOverviewRow detailsOverviewRow;
+
+  private ArrayObjectAdapter detailsOverviewRowActionsAdapter;
 
   @Override
   public void onAttach(Context context) {
@@ -76,17 +82,29 @@ public class DetailsFragment extends DetailsSupportFragment {
       }
 
       broadcast = broadcastDetails.getBroadcast();
+
       detailsOverviewRow.setItem(broadcast);
+      detailsOverviewRow.setActionsAdapter(detailsOverviewRowActionsAdapter);
     });
   }
 
   private void createAdapters() {
 
+    FullWidthDetailsOverviewRowPresenter rowsAdapterPresenter =
+        new FullWidthDetailsOverviewRowPresenter(new BroadcastDetailsDescriptionPresenter());
+    rowsAdapterPresenter.setOnActionClickedListener(action -> {
+      Intent intent = new Intent(getActivity(), PlaybackActivity.class);
+      intent.putExtra(PlaybackActivity.BROADCAST, broadcast);
+      startActivity(intent);
+    });
+
     detailsOverviewRow = new DetailsOverviewRow(broadcast);
 
-    ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new FullWidthDetailsOverviewRowPresenter(
-        new BroadcastDetailsDescriptionPresenter()));
+    ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(rowsAdapterPresenter);
     rowsAdapter.add(detailsOverviewRow);
     setAdapter(rowsAdapter);
+
+    detailsOverviewRowActionsAdapter = new ArrayObjectAdapter();
+    detailsOverviewRowActionsAdapter.add(new Action(0, getString(R.string.ondemand_details_play)));
   }
 }

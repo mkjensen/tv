@@ -27,6 +27,8 @@ import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
+import timber.log.Timber;
+
 /**
  * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuListItem">MuListItem</a>
  * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuPublicationListItem">MuPublicationListItem</a>
@@ -68,4 +70,43 @@ public abstract class Broadcast implements Parcelable {
   @Json(name = "Title")
   @NonNull
   public abstract String getTitle();
+
+  @CheckResult
+  @NonNull
+  public String getVideoDetailsUrl() {
+
+    Asset asset = getAsset();
+
+    if (asset == null) {
+      Timber.e("No video details URL for broadcast: " + getId());
+      return "";
+    }
+
+    return asset.getVideoDetailsUrl();
+  }
+
+  @CheckResult
+  @Json(name = "PrimaryAsset")
+  @Nullable
+  abstract Asset getAsset();
+
+  /**
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuAsset">MuAsset</a>
+   */
+  @AutoValue
+  static abstract class Asset implements Parcelable {
+
+    @SuppressWarnings("WeakerAccess")
+    @CheckResult
+    @NonNull
+    public static JsonAdapter<Asset> jsonAdapter(@NonNull Moshi moshi) {
+
+      return new AutoValue_Broadcast_Asset.MoshiJsonAdapter(moshi);
+    }
+
+    @CheckResult
+    @Json(name = "Uri")
+    @NonNull
+    abstract String getVideoDetailsUrl();
+  }
 }

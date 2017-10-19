@@ -23,6 +23,7 @@ import com.github.mkjensen.tv.model.BroadcastDetails;
 import com.github.mkjensen.tv.model.Broadcasts;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
+import com.github.mkjensen.tv.model.Video;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface DrService {
 
@@ -74,4 +76,12 @@ public interface DrService {
   @GET("page/tv/player/{broadcastId}")
   @NonNull
   Call<BroadcastDetails> getBroadcastDetails(@Path("broadcastId") String broadcastId);
+
+  /**
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuAsset">MuAsset</a>
+   */
+  @CheckResult
+  @GET
+  @NonNull
+  Call<Video> getVideo(@Url String videoUrl);
 }
