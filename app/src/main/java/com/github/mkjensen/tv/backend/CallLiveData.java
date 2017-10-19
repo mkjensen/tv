@@ -41,7 +41,7 @@ class CallLiveData<T> extends LiveData<T> implements Callback<T> {
    *
    * @param call the non-{@code null} {@link Call} to wrap
    */
-  public static <T> CallLiveData<T> wrap(@NonNull Call<T> call) {
+  static <T> CallLiveData<T> wrap(@NonNull Call<T> call) {
 
     return new CallLiveData<>(call);
   }
