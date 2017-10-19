@@ -50,18 +50,20 @@ class CallLiveData<T> extends LiveData<T> implements Callback<T> {
   public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
 
     if (!response.isSuccessful()) {
-      Timber.e("Unsuccessful response for call to [" + call.request().url() + "]: "
-          + response.code() + ", " + response.message());
+      Timber.e("onResponse: Call [%s] unsuccessful: %s, %s", call.request().url(), response.code(),
+          response.message());
       // TODO: Forward error
+      return;
     }
 
+    Timber.d("onResponse: Call [%s] successful", call.request().url());
     setValue(response.body());
   }
 
   @Override
   public void onFailure(@NonNull Call<T> call, @NonNull Throwable throwable) {
 
-    Timber.e(throwable, "Failure for call: " + call.request().url());
+    Timber.e(throwable, "Call [%s] failed", call.request().url());
     // TODO: Forward error
   }
 
@@ -70,9 +72,11 @@ class CallLiveData<T> extends LiveData<T> implements Callback<T> {
   protected void onActive() {
 
     if (call.isCanceled() || call.isExecuted()) {
+      Timber.d("onActive: Call [%s] is cancelled or has already been executed", call.request().url());
       return;
     }
 
+    Timber.d("onActive: Enqueuing call [%s]", call.request().url());
     call.enqueue(this);
   }
 }
