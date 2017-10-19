@@ -21,7 +21,6 @@ import android.arch.lifecycle.ViewModel;
 import com.github.mkjensen.tv.inject.FragmentScope;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelKey;
 import com.github.mkjensen.tv.ondemand.browse.BrowseFragment;
-import com.github.mkjensen.tv.ondemand.browse.BrowseModule;
 import com.github.mkjensen.tv.ondemand.browse.BrowseViewModel;
 
 import javax.inject.Singleton;
@@ -36,7 +35,7 @@ import dagger.multibindings.IntoMap;
 public interface OnDemandModule {
 
   @FragmentScope
-  @ContributesAndroidInjector(modules = BrowseModule.class)
+  @ContributesAndroidInjector
   BrowseFragment browseFragment();
 
   @Singleton

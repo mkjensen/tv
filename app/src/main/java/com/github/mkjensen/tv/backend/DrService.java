@@ -19,6 +19,7 @@ package com.github.mkjensen.tv.backend;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
+import com.github.mkjensen.tv.model.Broadcasts;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
 
@@ -54,4 +55,13 @@ public interface DrService {
   @NonNull
   Call<DrSchedule> getScheduleForChannel(@Path("channelId") String channelId,
                                          @Query("broadcastdate") String date);
+
+  /**
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-1.4-page-tv-front">Endpoint for
+   * data necessary to build a DRTV Frontpage</a>
+   */
+  @CheckResult
+  @GET("page/tv/front")
+  @NonNull
+  Call<Broadcasts> getBroadcasts();
 }

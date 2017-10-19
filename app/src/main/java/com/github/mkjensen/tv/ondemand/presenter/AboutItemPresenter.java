@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.browse;
+package com.github.mkjensen.tv.ondemand.presenter;
 
-import dagger.Module;
+import android.content.Context;
+import android.support.v17.leanback.widget.ImageCardView;
 
-@Module
-public class BrowseModule {
+import com.github.mkjensen.tv.ondemand.browse.about.AboutItem;
+
+public class AboutItemPresenter extends AbstractImageCardViewPresenter<AboutItem> {
+
+  @Override
+  protected void onBindViewHolder(ImageCardView view, AboutItem item) {
+
+    Context context = view.getContext();
+    view.setContentText(item.getSubtitle(context));
+    view.setMainImage(item.getIcon(context));
+    view.setTitleText(item.getTitle(context));
+  }
 }

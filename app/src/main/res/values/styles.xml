@@ -18,14 +18,30 @@
 
 <resources>
 
-    <style name="AppTheme" parent="@style/Theme.Leanback">
+    <style name="Tv.Theme.Leanback" parent="Theme.Leanback">
 
         <item name="android:colorAccent">@color/accent</item>
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
 
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="imageCardViewImageStyle">@style/tv.imageCardViewImageStyle</item>
+
+    </style>
+
+    <style name="Tv.Theme.Leanback.Browse" parent="Theme.Leanback.Browse">
+
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+
+        <item name="imageCardViewImageStyle">@style/tv.imageCardViewImageStyle</item>
+
+    </style>
+
+    <style name="tv.imageCardViewImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
+
+        <item name="android:layout_width">@dimen/image_card_width</item>
+        <item name="android:layout_height">@dimen/image_card_height</item>
 
     </style>
 

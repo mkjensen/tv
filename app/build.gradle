@@ -71,6 +71,7 @@ ext {
   companionlibraryVersion = "0.2"
   daggerVersion = "2.11"
   exoplayerVersion = "r2.5.3"
+  glideVersion = "4.2.0"
   googlePlayServicesVersion = "11.4.2"
   interactivemediaVersion = "3.7.4"
   licensesDialogVersion = "1.8.3"
@@ -82,6 +83,7 @@ ext {
 
 dependencies {
 
+  annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
   annotationProcessor "com.google.auto.value:auto-value:$autoValueVersion"
   annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
   annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -97,6 +99,8 @@ dependencies {
   implementation("com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion") {
     transitive = true
   }
+  implementation "com.github.bumptech.glide:glide:$glideVersion"
+  implementation "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
   implementation "com.google.android.exoplayer:exoplayer-core:$exoplayerVersion"
   implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayerVersion"
   implementation "com.google.android.exoplayer:extension-okhttp:$exoplayerVersion"

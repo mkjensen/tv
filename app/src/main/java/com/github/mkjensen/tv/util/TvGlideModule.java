@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Martin Kamp Jensen
+ * Copyright 2017 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand;
+package com.github.mkjensen.tv.util;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 
-public class AboutActivity extends Activity {
+/**
+ * @see <a href="https://bumptech.github.io/glide/doc/generatedapi.html">Generated API</a>
+ */
+@SuppressWarnings("WeakerAccess")
+@GlideModule
+public class TvGlideModule extends AppGlideModule {
 
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
+  public boolean isManifestParsingEnabled() {
 
-    super.onCreate(savedInstanceState);
-
-    if (savedInstanceState == null) {
-      GuidedStepFragment.addAsRoot(this, new AboutFragment(), android.R.id.content);
-    }
+    return false;
   }
 }

@@ -17,27 +17,53 @@
 package com.github.mkjensen.tv.ondemand.browse;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
-import com.github.mkjensen.tv.backend.DrRepository;
-import com.github.mkjensen.tv.model.DrChannel;
+import com.github.mkjensen.tv.backend.OnDemandRepository;
+import com.github.mkjensen.tv.model.Broadcast;
+import com.github.mkjensen.tv.model.Broadcasts;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class BrowseViewModel extends ViewModel {
 
-  @SuppressWarnings("WeakerAccess")
-  @Inject
-  DrRepository drRepository;
+  private final LiveData<List<Broadcast>> lastChanceBroadcasts;
+
+  private final LiveData<List<Broadcast>> latestNewsBroadcasts;
+
+  private final LiveData<List<Broadcast>> topBroadcasts;
 
   @Inject
-  BrowseViewModel() {
+  BrowseViewModel(@NonNull OnDemandRepository onDemandRepository) {
+
+    LiveData<Broadcasts> broadcasts = onDemandRepository.getBroadcasts();
+
+    this.lastChanceBroadcasts = Transformations.map(broadcasts,
+        b -> b.getLastChanceBroadcasts().getBroadcasts());
+
+    this.latestNewsBroadcasts = Transformations.map(broadcasts,
+        b -> b.getLatestNewsBroadcasts().getBroadcasts());
+
+    this.topBroadcasts = Transformations.map(broadcasts,
+        b -> b.getTopBroadcasts().getBroadcasts());
   }
 
-  LiveData<Collection<DrChannel>> getChannels() {
+  LiveData<List<Broadcast>> getLastChanceBroadcasts() {
 
-    return drRepository.getChannels();
+    return lastChanceBroadcasts;
+  }
+
+  LiveData<List<Broadcast>> getLatestNewsBroadcasts() {
+
+    return latestNewsBroadcasts;
+  }
+
+  LiveData<List<Broadcast>> getTopBroadcasts() {
+
+    return topBroadcasts;
   }
 }
