@@ -102,4 +102,11 @@
         <license>Apache Software License 2.0</license>
     </notice>
 
+    <notice>
+        <name>Timber</name>
+        <url>https://github.com/JakeWharton/timber</url>
+        <copyright>Copyright 2013 Jake Wharton</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+
 </notices>

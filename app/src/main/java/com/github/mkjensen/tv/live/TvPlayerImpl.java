@@ -35,16 +35,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Surface;
 
-import com.github.mkjensen.tv.util.Log;
-
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
 import static com.google.android.exoplayer2.Player.STATE_READY;
 
 class TvPlayerImpl implements TvPlayer, EventListener {
-
-  private static final String TAG = "TvPlayerImpl";
 
   private final DataSource.Factory dataSourceFactory;
 
@@ -134,28 +132,28 @@ class TvPlayerImpl implements TvPlayer, EventListener {
   @Override
   public void registerCallback(@NonNull Callback callback) {
 
-    Log.d(TAG, "registerCallback " + callback);
+    Timber.d("registerCallback: " + callback);
     // Do nothing.
   }
 
   @Override
   public void unregisterCallback(@NonNull Callback callback) {
 
-    Log.d(TAG, "unregisterCallback " + callback);
+    Timber.d("unregisterCallback: " + callback);
     // Do nothing.
   }
 
   @Override
   public void onLoadingChanged(boolean isLoading) {
 
-    Log.d(TAG, "onLoadingChanged " + isLoading);
+    Timber.d("onLoadingChanged: " + isLoading);
     // Do nothing.
   }
 
   @Override
   public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 
-    Log.d(TAG, "onPlayerStateChanged " + playWhenReady + ", " + playbackState);
+    Timber.d("onPlayerStateChanged: " + playWhenReady + ", " + playbackState);
 
     if (!playWhenReady) {
       return;
@@ -176,42 +174,42 @@ class TvPlayerImpl implements TvPlayer, EventListener {
   @Override
   public void onRepeatModeChanged(int repeatMode) {
 
-    Log.d(TAG, "onRepeatModeChanged " + repeatMode);
+    Timber.d("onRepeatModeChanged: " + repeatMode);
     // Do nothing.
   }
 
   @Override
   public void onTimelineChanged(@Nullable Timeline timeline, @Nullable Object manifest) {
 
-    Log.d(TAG, "onTimelineChanged " + timeline + ", " + manifest);
+    Timber.d("onTimelineChanged: " + timeline + ", " + manifest);
     // Do nothing.
   }
 
   @Override
   public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
 
-    Log.d(TAG, "onTracksChanged " + trackGroups + ", " + trackSelections);
+    Timber.d("onTracksChanged: " + trackGroups + ", " + trackSelections);
     // Do nothing.
   }
 
   @Override
   public void onPlayerError(@NonNull ExoPlaybackException error) {
 
-    Log.e(TAG, "An error occurred during playback", error);
+    Timber.e(error, "An error occurred during playback");
     session.notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_UNKNOWN);
   }
 
   @Override
   public void onPositionDiscontinuity() {
 
-    Log.d(TAG, "onPositionDiscontinuity");
+    Timber.d("onPositionDiscontinuity");
     // Do nothing.
   }
 
   @Override
   public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
 
-    Log.d(TAG, "onPlaybackParametersChanged " + playbackParameters);
+    Timber.d("onPlaybackParametersChanged: " + playbackParameters);
     // Do nothing.
   }
 }

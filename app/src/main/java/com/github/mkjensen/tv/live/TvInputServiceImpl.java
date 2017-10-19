@@ -28,18 +28,15 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.github.mkjensen.tv.util.Log;
-
 import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
 import dagger.android.AndroidInjection;
+import timber.log.Timber;
 
 public class TvInputServiceImpl extends BaseTvInputService {
-
-  private static final String TAG = "TvInputServiceImpl";
 
   @SuppressWarnings("WeakerAccess")
   @Inject
@@ -88,7 +85,7 @@ public class TvInputServiceImpl extends BaseTvInputService {
     @Override
     public boolean onPlayProgram(@Nullable Program program, long startPosMs) {
 
-      Log.d(TAG, "onPlayProgram " + program + ", " + startPosMs);
+      Timber.d("onPlayProgram: " + program + ", " + startPosMs);
 
       if (program == null) {
         return false;

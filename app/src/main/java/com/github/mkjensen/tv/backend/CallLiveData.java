@@ -19,18 +19,15 @@ package com.github.mkjensen.tv.backend;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
-import com.github.mkjensen.tv.util.Log;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 /**
  * Wraps Retrofit's {@link Call} as {@link LiveData}.
  */
 class CallLiveData<T> extends LiveData<T> implements Callback<T> {
-
-  private static final String TAG = "CallLiveData";
 
   private final Call<T> call;
 
@@ -53,7 +50,7 @@ class CallLiveData<T> extends LiveData<T> implements Callback<T> {
   public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
 
     if (!response.isSuccessful()) {
-      Log.e(TAG, "Unsuccessful response for call to [" + call.request().url() + "]: "
+      Timber.e("Unsuccessful response for call to [" + call.request().url() + "]: "
           + response.code() + ", " + response.message());
       // TODO: Forward error
     }
@@ -64,7 +61,7 @@ class CallLiveData<T> extends LiveData<T> implements Callback<T> {
   @Override
   public void onFailure(@NonNull Call<T> call, @NonNull Throwable throwable) {
 
-    Log.e(TAG, "Failure for call: " + call.request().url(), throwable);
+    Timber.e(throwable, "Failure for call: " + call.request().url());
     // TODO: Forward error
   }
 

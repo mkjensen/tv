@@ -17,18 +17,23 @@
 package com.github.mkjensen.tv;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.github.mkjensen.tv.inject.DaggerTvComponent;
+import com.github.mkjensen.tv.util.CrashlyticsTimberTree;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 public class TvApplication extends DaggerApplication {
 
   @Override
   public void onCreate() {
 
-    Fabric.with(this, new Crashlytics());
+    initializeCrashlytics();
+
+    initializeTimber();
 
     super.onCreate();
   }
@@ -37,5 +42,27 @@ public class TvApplication extends DaggerApplication {
   protected AndroidInjector<TvApplication> applicationInjector() {
 
     return DaggerTvComponent.builder().create(this);
+  }
+
+  private void initializeCrashlytics() {
+
+    CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+        .disabled(BuildConfig.DEBUG)
+        .build();
+
+    Crashlytics crashlytics = new Crashlytics.Builder()
+        .core(crashlyticsCore)
+        .build();
+
+    Fabric.with(this, crashlytics);
+  }
+
+  private static void initializeTimber() {
+
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree());
+    } else {
+      Timber.plant(new CrashlyticsTimberTree());
+    }
   }
 }

@@ -22,7 +22,6 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.github.mkjensen.tv.util.Log;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -30,14 +29,14 @@ import com.squareup.moshi.Moshi;
 import java.util.Date;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * @see <a href="http://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-schedule-id_broadcastDate_onlinegenretext">Gets
  * a schedule for a given channel and broadcast date.</a>
  */
 @AutoValue
 public abstract class DrSchedule {
-
-  private static final String TAG = "DrSchedule";
 
   @CheckResult
   @NonNull
@@ -107,7 +106,7 @@ public abstract class DrSchedule {
         return announcedEndTime;
       }
 
-      Log.e(TAG, "Both actual and announced end times are null for: " + getTitle());
+      Timber.e("Both actual and announced end times are null for: " + getTitle());
       return new Date();
     }
 
@@ -127,7 +126,7 @@ public abstract class DrSchedule {
         return announcedStartTime;
       }
 
-      Log.e(TAG, "Both actual and announced start times are null for: " + getTitle());
+      Timber.e("Both actual and announced start times are null for: " + getTitle());
       return new Date();
     }
 
