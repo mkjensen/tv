@@ -38,6 +38,14 @@
 
     </style>
 
+    <style name="Tv.Theme.Leanback.Details" parent="Theme.Leanback.Details">
+
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+
+    </style>
+
     <style name="tv.imageCardViewImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
 
         <item name="android:layout_width">@dimen/image_card_width</item>

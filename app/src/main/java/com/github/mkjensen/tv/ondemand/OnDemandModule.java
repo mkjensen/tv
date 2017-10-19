@@ -22,6 +22,8 @@ import com.github.mkjensen.tv.inject.FragmentScope;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelKey;
 import com.github.mkjensen.tv.ondemand.browse.BrowseFragment;
 import com.github.mkjensen.tv.ondemand.browse.BrowseViewModel;
+import com.github.mkjensen.tv.ondemand.details.DetailsFragment;
+import com.github.mkjensen.tv.ondemand.details.DetailsViewModel;
 
 import javax.inject.Singleton;
 
@@ -42,5 +44,15 @@ public interface OnDemandModule {
   @Binds
   @IntoMap
   @ViewModelKey(BrowseViewModel.class)
-  ViewModel browseViewModel(BrowseViewModel model);
+  ViewModel browseViewModel(BrowseViewModel browseViewModel);
+
+  @FragmentScope
+  @ContributesAndroidInjector
+  DetailsFragment detailsFragment();
+
+  @Singleton
+  @Binds
+  @IntoMap
+  @ViewModelKey(DetailsViewModel.class)
+  ViewModel detailsViewModel(DetailsViewModel detailsViewModel);
 }

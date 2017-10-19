@@ -18,6 +18,7 @@ package com.github.mkjensen.tv.ondemand.browse;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -29,7 +30,6 @@ import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.PageRow;
 import android.support.v17.leanback.widget.Row;
-import android.widget.Toast;
 
 import com.github.mkjensen.tv.R;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
@@ -38,6 +38,7 @@ import com.github.mkjensen.tv.ondemand.browse.about.AboutItem;
 import com.github.mkjensen.tv.ondemand.browse.about.ContentLicensesAboutItem;
 import com.github.mkjensen.tv.ondemand.browse.about.ThirdPartyLicensesAboutItem;
 import com.github.mkjensen.tv.ondemand.browse.about.VersionAboutItem;
+import com.github.mkjensen.tv.ondemand.details.DetailsActivity;
 import com.github.mkjensen.tv.ondemand.presenter.AboutItemPresenter;
 import com.github.mkjensen.tv.ondemand.presenter.BroadcastPresenter;
 
@@ -187,7 +188,10 @@ public class BrowseFragment extends BrowseSupportFragment {
       setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> {
 
         Broadcast broadcast = (Broadcast) item;
-        Toast.makeText(getActivity(), broadcast.getTitle(), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getActivity(), DetailsActivity.class);
+        intent.putExtra(DetailsActivity.BROADCAST, broadcast);
+        getActivity().startActivity(intent);
       });
     }
 

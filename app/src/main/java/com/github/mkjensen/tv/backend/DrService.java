@@ -19,6 +19,7 @@ package com.github.mkjensen.tv.backend;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
+import com.github.mkjensen.tv.model.BroadcastDetails;
 import com.github.mkjensen.tv.model.Broadcasts;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
@@ -64,4 +65,13 @@ public interface DrService {
   @GET("page/tv/front")
   @NonNull
   Call<Broadcasts> getBroadcasts();
+
+  /**
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-1.4-page-tv-player-programcardId_seriesId_seasonId_includeitemsWithoutPublicPrimaryAsset_onlyIncludeItemsFromSameSeason">Endpoint
+   * for data necessary to build a DRTV Playerpage for a specific episode</a>
+   */
+  @CheckResult
+  @GET("page/tv/player/{broadcastId}")
+  @NonNull
+  Call<BroadcastDetails> getBroadcastDetails(@Path("broadcastId") String broadcastId);
 }

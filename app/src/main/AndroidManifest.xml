@@ -94,6 +94,16 @@
 
         </activity>
 
+        <activity
+            android:name=".ondemand.details.DetailsActivity"
+            android:theme="@style/Tv.Theme.Leanback.Details">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+
+        </activity>
+
     </application>
 
 </manifest>

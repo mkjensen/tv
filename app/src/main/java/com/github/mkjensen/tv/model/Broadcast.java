@@ -18,18 +18,23 @@ package com.github.mkjensen.tv.model;
 
 import com.google.auto.value.AutoValue;
 
+import android.os.Parcelable;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
 /**
+ * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuListItem">MuListItem</a>
+ * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuPublicationListItem">MuPublicationListItem</a>
+ * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuProgramCardListItem">MuProgramCardListItem</a>
  * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuProgramCard">MuProgramCard</a>
  */
 @AutoValue
-public abstract class Broadcast {
+public abstract class Broadcast implements Parcelable {
 
   @SuppressWarnings("WeakerAccess")
   @CheckResult
@@ -40,9 +45,24 @@ public abstract class Broadcast {
   }
 
   @CheckResult
+  @Json(name = "Description")
+  @Nullable
+  public abstract String getDescription();
+
+  @CheckResult
+  @Json(name = "Slug")
+  @NonNull
+  public abstract String getId();
+
+  @CheckResult
   @Json(name = "PrimaryImageUri")
   @NonNull
   public abstract String getImageUri();
+
+  @CheckResult
+  @Json(name = "Subtitle")
+  @Nullable
+  public abstract String getSubtitle();
 
   @CheckResult
   @Json(name = "Title")

@@ -18,7 +18,9 @@ package com.github.mkjensen.tv.backend;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.support.v4.util.LruCache;
 
+import com.github.mkjensen.tv.model.BroadcastDetails;
 import com.github.mkjensen.tv.model.Broadcasts;
 
 import javax.inject.Inject;
@@ -29,14 +31,39 @@ public class OnDemandRepository {
 
   private final LiveData<Broadcasts> broadcasts;
 
+  private final BroadcastDetailsCache broadcastDetailsCache;
+
+  private final DrService drService;
+
   @Inject
   OnDemandRepository(@NonNull DrService drService) {
 
     this.broadcasts = CallLiveData.wrap(drService.getBroadcasts());
+    this.broadcastDetailsCache = new BroadcastDetailsCache();
+    this.drService = drService;
   }
 
   public LiveData<Broadcasts> getBroadcasts() {
 
     return broadcasts;
+  }
+
+  public LiveData<BroadcastDetails> getBroadcastDetails(String broadcastId) {
+
+    return broadcastDetailsCache.get(broadcastId);
+  }
+
+  private final class BroadcastDetailsCache extends LruCache<String, LiveData<BroadcastDetails>> {
+
+    BroadcastDetailsCache() {
+
+      super(10);
+    }
+
+    @Override
+    protected LiveData<BroadcastDetails> create(String key) {
+
+      return CallLiveData.wrap(drService.getBroadcastDetails(key));
+    }
   }
 }

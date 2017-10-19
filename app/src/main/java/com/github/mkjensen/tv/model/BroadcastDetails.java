@@ -25,24 +25,22 @@ import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
-import java.util.List;
-
 /**
- * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuList">MuList</a>
+ * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=PlayerpageViewModel">PlayerpageViewModel</a>
  */
 @AutoValue
-public abstract class BroadcastList {
+public abstract class BroadcastDetails {
 
   @SuppressWarnings("WeakerAccess")
   @CheckResult
   @NonNull
-  public static JsonAdapter<BroadcastList> jsonAdapter(@NonNull Moshi moshi) {
+  public static JsonAdapter<BroadcastDetails> jsonAdapter(@NonNull Moshi moshi) {
 
-    return new AutoValue_BroadcastList.MoshiJsonAdapter(moshi);
+    return new AutoValue_BroadcastDetails.MoshiJsonAdapter(moshi);
   }
 
   @CheckResult
-  @Json(name = "Items")
+  @Json(name = "ProgramCard")
   @NonNull
-  public abstract List<Broadcast> getBroadcasts();
+  public abstract Broadcast getBroadcast();
 }
