@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.inject;
+package com.github.mkjensen.tv.playback;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -44,7 +44,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.internal.Version;
 
 @Module
-class PlaybackModule {
+public class PlaybackModule {
 
   /**
    * The maximum bitrate in bits per second that should be assumed when a bandwidth estimate is

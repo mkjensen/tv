@@ -17,18 +17,17 @@
 package com.github.mkjensen.tv.ondemand.playback;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.VideoSupportFragment;
 import android.support.v17.leanback.app.VideoSupportFragmentGlueHost;
-import android.support.v17.leanback.media.MediaPlayerAdapter;
 import android.support.v17.leanback.media.PlaybackGlue;
 import android.support.v17.leanback.media.PlaybackGlue.PlayerCallback;
-import android.support.v17.leanback.media.PlaybackTransportControlGlue;
 
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
 import com.github.mkjensen.tv.model.Broadcast;
+import com.github.mkjensen.tv.playback.ExoPlayerAdapter;
+import com.github.mkjensen.tv.playback.ExoPlayerAdapterPlaybackTransportControlGlue;
 
 import javax.inject.Inject;
 
@@ -40,11 +39,13 @@ public class PlaybackFragment extends VideoSupportFragment {
   @Inject
   ViewModelProvider viewModelProvider;
 
+  @SuppressWarnings("WeakerAccess")
+  @Inject
+  ExoPlayerAdapter exoPlayerAdapter;
+
   private Broadcast broadcast;
 
-  private PlaybackTransportControlGlue<MediaPlayerAdapter> glue;
-
-  private String videoUrl;
+  private ExoPlayerAdapterPlaybackTransportControlGlue glue;
 
   @Override
   public void onAttach(Context context) {
@@ -61,7 +62,7 @@ public class PlaybackFragment extends VideoSupportFragment {
 
     broadcast = getActivity().getIntent().getParcelableExtra(PlaybackActivity.BROADCAST);
 
-    createGlue();
+    initializeGlue();
   }
 
   @Override
@@ -77,15 +78,22 @@ public class PlaybackFragment extends VideoSupportFragment {
         return;
       }
 
-      videoUrl = video.getUrl();
-      glue.getPlayerAdapter().setDataSource(Uri.parse(videoUrl));
+      glue.getPlayerAdapter().prepare(video.getUrl());
     });
   }
 
-  private void createGlue() {
+  @Override
+  public void onPause() {
 
-    // TODO: Use ExoPlayer
-    glue = new PlaybackTransportControlGlue<>(getActivity(), new MediaPlayerAdapter(getActivity()));
+    super.onPause();
+
+    glue.pause();
+  }
+
+  private void initializeGlue() {
+
+    // TODO: Handle via dependency injection
+    glue = new ExoPlayerAdapterPlaybackTransportControlGlue(getActivity(), exoPlayerAdapter);
     glue.setHost(new VideoSupportFragmentGlueHost(this));
     glue.addPlayerCallback(new PlayerCallback() {
 
@@ -93,10 +101,12 @@ public class PlaybackFragment extends VideoSupportFragment {
       public void onPreparedStateChanged(PlaybackGlue glue) {
 
         if (glue.isPrepared()) {
+          glue.removePlayerCallback(this);
           glue.play();
         }
       }
     });
+
     glue.setSubtitle(broadcast.getSubtitle());
     glue.setTitle(broadcast.getTitle());
   }

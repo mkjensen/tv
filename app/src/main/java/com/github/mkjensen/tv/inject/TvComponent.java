@@ -21,6 +21,7 @@ import com.github.mkjensen.tv.backend.BackendModule;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelModule;
 import com.github.mkjensen.tv.live.LiveModule;
 import com.github.mkjensen.tv.ondemand.OnDemandModule;
+import com.github.mkjensen.tv.playback.PlaybackModule;
 
 import javax.inject.Singleton;
 
