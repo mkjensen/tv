@@ -65,6 +65,7 @@ android {
 ext {
 
   androidSupportVersion = "26.1.0"
+  archVersion = "1.0.0-rc1"
   autoValueVersion = "1.5.1"
   autoValueMoshiVersion = "0.4.4"
   autoValueParcelVersion = "0.2.5"
@@ -76,7 +77,6 @@ ext {
   googlePlayServicesVersion = "11.4.2"
   interactivemediaVersion = "3.7.4"
   licensesDialogVersion = "1.8.3"
-  lifecycleVersion = "1.0.0-beta2"
   moshiVersion = "1.5.0"
   okhttpVersion = "3.9.0"
   retrofitVersion = "2.3.0"
@@ -95,8 +95,8 @@ dependencies {
   compileOnly "com.google.auto.value:auto-value:$autoValueVersion"
   compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$autoValueMoshiVersion"
 
-  implementation "android.arch.lifecycle:common-java8:$lifecycleVersion"
-  implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
+  implementation "android.arch.lifecycle:common-java8:$archVersion"
+  implementation "android.arch.lifecycle:extensions:$archVersion"
   implementation "com.android.support:leanback-v17:$androidSupportVersion"
   implementation "com.android.support:support-annotations:$androidSupportVersion"
   implementation("com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion") {
