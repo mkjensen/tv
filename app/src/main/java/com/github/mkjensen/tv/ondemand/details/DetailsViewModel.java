@@ -17,8 +17,6 @@
 package com.github.mkjensen.tv.ondemand.details;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
@@ -29,25 +27,16 @@ import javax.inject.Inject;
 
 public class DetailsViewModel extends ViewModel {
 
-  private final MutableLiveData<String> broadcastId;
-
-  private final LiveData<BroadcastDetails> broadcastDetails;
+  private final OnDemandRepository onDemandRepository;
 
   @Inject
   DetailsViewModel(@NonNull OnDemandRepository onDemandRepository) {
 
-    this.broadcastId = new MutableLiveData<>();
-
-    this.broadcastDetails = Transformations.switchMap(broadcastId, onDemandRepository::getBroadcastDetails);
+    this.onDemandRepository = onDemandRepository;
   }
 
-  LiveData<BroadcastDetails> getBroadcastDetails() {
+  LiveData<BroadcastDetails> getBroadcastDetails(String broadcastId) {
 
-    return broadcastDetails;
-  }
-
-  void setBroadcastId(String broadcastId) {
-
-    this.broadcastId.setValue(broadcastId);
+    return onDemandRepository.getBroadcastDetails(broadcastId);
   }
 }

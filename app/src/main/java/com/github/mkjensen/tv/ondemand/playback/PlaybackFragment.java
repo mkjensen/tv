@@ -71,9 +71,7 @@ public class PlaybackFragment extends VideoSupportFragment {
 
     PlaybackViewModel viewModel = viewModelProvider.get(this, PlaybackViewModel.class);
 
-    viewModel.setVideoUrl(broadcast.getVideoDetailsUrl());
-
-    viewModel.getVideo().observe(this, video -> {
+    viewModel.getVideo(broadcast.getVideoDetailsUrl()).observe(this, video -> {
 
       if (video == null) {
         return;

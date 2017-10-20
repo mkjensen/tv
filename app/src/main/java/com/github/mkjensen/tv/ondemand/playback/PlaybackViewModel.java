@@ -17,8 +17,6 @@
 package com.github.mkjensen.tv.ondemand.playback;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
@@ -29,25 +27,16 @@ import javax.inject.Inject;
 
 public class PlaybackViewModel extends ViewModel {
 
-  private final MutableLiveData<String> videoUrl;
-
-  private final LiveData<Video> video;
+  private final OnDemandRepository onDemandRepository;
 
   @Inject
   PlaybackViewModel(@NonNull OnDemandRepository onDemandRepository) {
 
-    this.videoUrl = new MutableLiveData<>();
-
-    this.video = Transformations.switchMap(videoUrl, onDemandRepository::getVideo);
+    this.onDemandRepository = onDemandRepository;
   }
 
-  LiveData<Video> getVideo() {
+  LiveData<Video> getVideo(String videoUrl) {
 
-    return video;
-  }
-
-  void setVideoUrl(String videoUrl) {
-
-    this.videoUrl.setValue(videoUrl);
+    return onDemandRepository.getVideo(videoUrl);
   }
 }

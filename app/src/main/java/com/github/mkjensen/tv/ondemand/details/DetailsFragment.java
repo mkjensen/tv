@@ -73,9 +73,7 @@ public class DetailsFragment extends DetailsSupportFragment {
 
     DetailsViewModel viewModel = viewModelProvider.get(this, DetailsViewModel.class);
 
-    viewModel.setBroadcastId(broadcast.getId());
-
-    viewModel.getBroadcastDetails().observe(this, broadcastDetails -> {
+    viewModel.getBroadcastDetails(broadcast.getId()).observe(this, broadcastDetails -> {
 
       if (broadcastDetails == null) {
         return;
