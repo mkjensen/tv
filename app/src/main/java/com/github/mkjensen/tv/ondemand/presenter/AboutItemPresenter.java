@@ -19,7 +19,7 @@ package com.github.mkjensen.tv.ondemand.presenter;
 import android.content.Context;
 import android.support.v17.leanback.widget.ImageCardView;
 
-import com.github.mkjensen.tv.ondemand.browse.about.AboutItem;
+import com.github.mkjensen.tv.ondemand.about.AboutItem;
 
 public class AboutItemPresenter extends AbstractImageCardViewPresenter<AboutItem> {
 

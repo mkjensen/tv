@@ -14,23 +14,39 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.browse.about;
+package com.github.mkjensen.tv.ondemand.about;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.widget.Toast;
 
-public abstract class AboutItem {
+import com.github.mkjensen.tv.BuildConfig;
+import com.github.mkjensen.tv.R;
 
-  public abstract void execute(@NonNull Context context);
+public class VersionAboutItem extends AboutItem {
 
-  @Nullable
-  public abstract Drawable getIcon(@NonNull Context context);
+  @Override
+  public void execute(@NonNull Context context) {
 
-  @Nullable
-  public abstract String getSubtitle(@NonNull Context context);
+    Toast.makeText(context, BuildConfig.VERSION_NAME, Toast.LENGTH_SHORT).show();
+  }
 
-  @Nullable
-  public abstract String getTitle(@NonNull Context context);
+  @Override
+  public Drawable getIcon(@NonNull Context context) {
+
+    return context.getDrawable(R.drawable.ic_about);
+  }
+
+  @Override
+  public String getSubtitle(@NonNull Context context) {
+
+    return null;
+  }
+
+  @Override
+  public String getTitle(@NonNull Context context) {
+
+    return context.getString(R.string.ondemand_browse_about_version_title);
+  }
 }

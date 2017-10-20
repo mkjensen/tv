@@ -83,9 +83,7 @@
 
         <!-- On-demand -->
 
-        <activity
-            android:name=".ondemand.browse.BrowseActivity"
-            android:theme="@style/Tv.Theme.Leanback.Browse">
+        <activity android:name=".ondemand.OnDemandActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -94,22 +92,11 @@
 
         </activity>
 
-        <activity
-            android:name=".ondemand.details.DetailsActivity"
-            android:theme="@style/Tv.Theme.Leanback.Details">
+        <activity android:name=".ondemand.PlaybackActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
-
-        </activity>
-
-        <activity android:name=".ondemand.playback.PlaybackActivity">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-
         </activity>
 
     </application>

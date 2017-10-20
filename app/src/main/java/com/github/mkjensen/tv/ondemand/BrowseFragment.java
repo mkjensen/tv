@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.browse;
+package com.github.mkjensen.tv.ondemand;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -34,11 +33,10 @@ import android.support.v17.leanback.widget.Row;
 import com.github.mkjensen.tv.R;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
 import com.github.mkjensen.tv.model.Broadcast;
-import com.github.mkjensen.tv.ondemand.browse.about.AboutItem;
-import com.github.mkjensen.tv.ondemand.browse.about.ContentLicensesAboutItem;
-import com.github.mkjensen.tv.ondemand.browse.about.ThirdPartyLicensesAboutItem;
-import com.github.mkjensen.tv.ondemand.browse.about.VersionAboutItem;
-import com.github.mkjensen.tv.ondemand.details.DetailsActivity;
+import com.github.mkjensen.tv.ondemand.about.AboutItem;
+import com.github.mkjensen.tv.ondemand.about.ContentLicensesAboutItem;
+import com.github.mkjensen.tv.ondemand.about.ThirdPartyLicensesAboutItem;
+import com.github.mkjensen.tv.ondemand.about.VersionAboutItem;
 import com.github.mkjensen.tv.ondemand.presenter.AboutItemPresenter;
 import com.github.mkjensen.tv.ondemand.presenter.BroadcastPresenter;
 
@@ -58,7 +56,7 @@ public class BrowseFragment extends BrowseSupportFragment {
   @Inject
   ViewModelProvider viewModelProvider;
 
-  private BrowseViewModel viewModel;
+  private OnDemandViewModel viewModel;
 
   @Override
   public void onAttach(Context context) {
@@ -84,7 +82,7 @@ public class BrowseFragment extends BrowseSupportFragment {
 
     super.onActivityCreated(savedInstanceState);
 
-    viewModel = viewModelProvider.get(this, BrowseViewModel.class);
+    viewModel = viewModelProvider.get(this, OnDemandViewModel.class);
   }
 
   private void createAdapter() {
@@ -139,6 +137,8 @@ public class BrowseFragment extends BrowseSupportFragment {
 
     private ArrayObjectAdapter topBroadcastsAdapter;
 
+    private OnDemandViewModel viewModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -153,7 +153,7 @@ public class BrowseFragment extends BrowseSupportFragment {
 
       super.onActivityCreated(savedInstanceState);
 
-      BrowseViewModel viewModel = ((BrowseFragment) getParentFragment()).viewModel;
+      viewModel = ((BrowseFragment) getParentFragment()).viewModel;
 
       viewModel.getLastChanceBroadcasts().observe(this, createBroadcastsObserver(lastChanceBroadcastsAdapter));
       viewModel.getLatestNewsBroadcasts().observe(this, createBroadcastsObserver(latestNewsBroadcastsAdapter));
@@ -187,11 +187,12 @@ public class BrowseFragment extends BrowseSupportFragment {
 
       setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> {
 
-        Broadcast broadcast = (Broadcast) item;
+        viewModel.setSelectedBroadcast((Broadcast) item);
 
-        Intent intent = new Intent(getActivity(), DetailsActivity.class);
-        intent.putExtra(DetailsActivity.BROADCAST, broadcast);
-        getActivity().startActivity(intent);
+        getActivity().getSupportFragmentManager().beginTransaction()
+            .addToBackStack(null)
+            .add(android.R.id.content, new DetailsFragment())
+            .commit();
       });
     }
 

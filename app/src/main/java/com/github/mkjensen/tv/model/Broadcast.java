@@ -18,7 +18,6 @@ package com.github.mkjensen.tv.model;
 
 import com.google.auto.value.AutoValue;
 
-import android.os.Parcelable;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,7 +35,7 @@ import timber.log.Timber;
  * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuProgramCard">MuProgramCard</a>
  */
 @AutoValue
-public abstract class Broadcast implements Parcelable {
+public abstract class Broadcast {
 
   @SuppressWarnings("WeakerAccess")
   @CheckResult
@@ -44,6 +43,23 @@ public abstract class Broadcast implements Parcelable {
   public static JsonAdapter<Broadcast> jsonAdapter(@NonNull Moshi moshi) {
 
     return new AutoValue_Broadcast.MoshiJsonAdapter(moshi);
+  }
+
+  @Override
+  public int hashCode() {
+
+    return getId().hashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+
+    if (!(obj instanceof Broadcast)) {
+      return false;
+    }
+
+    Broadcast other = (Broadcast) obj;
+    return getId().equals(other.getId());
   }
 
   @CheckResult
@@ -94,7 +110,7 @@ public abstract class Broadcast implements Parcelable {
    * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuAsset">MuAsset</a>
    */
   @AutoValue
-  static abstract class Asset implements Parcelable {
+  static abstract class Asset {
 
     @SuppressWarnings("WeakerAccess")
     @CheckResult

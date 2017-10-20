@@ -14,29 +14,23 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.playback;
+package com.github.mkjensen.tv.ondemand.about;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-import com.github.mkjensen.tv.backend.OnDemandRepository;
-import com.github.mkjensen.tv.model.Video;
+public abstract class AboutItem {
 
-import javax.inject.Inject;
+  public abstract void execute(@NonNull Context context);
 
-public class PlaybackViewModel extends ViewModel {
+  @Nullable
+  public abstract Drawable getIcon(@NonNull Context context);
 
-  private final OnDemandRepository onDemandRepository;
+  @Nullable
+  public abstract String getSubtitle(@NonNull Context context);
 
-  @Inject
-  PlaybackViewModel(@NonNull OnDemandRepository onDemandRepository) {
-
-    this.onDemandRepository = onDemandRepository;
-  }
-
-  LiveData<Video> getVideo(String videoUrl) {
-
-    return onDemandRepository.getVideo(videoUrl);
-  }
+  @Nullable
+  public abstract String getTitle(@NonNull Context context);
 }

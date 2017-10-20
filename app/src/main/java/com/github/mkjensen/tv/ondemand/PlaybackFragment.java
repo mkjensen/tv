@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.playback;
+package com.github.mkjensen.tv.ondemand;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import android.support.v17.leanback.media.PlaybackGlue;
 import android.support.v17.leanback.media.PlaybackGlue.PlayerCallback;
 
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
-import com.github.mkjensen.tv.model.Broadcast;
+import com.github.mkjensen.tv.ondemand.OnDemandViewModel;
 import com.github.mkjensen.tv.playback.ExoPlayerAdapter;
 import com.github.mkjensen.tv.playback.ExoPlayerAdapterPlaybackTransportControlGlue;
 
@@ -43,8 +43,6 @@ public class PlaybackFragment extends VideoSupportFragment {
   @Inject
   ExoPlayerAdapter exoPlayerAdapter;
 
-  private Broadcast broadcast;
-
   private ExoPlayerAdapterPlaybackTransportControlGlue glue;
 
   @Override
@@ -60,9 +58,9 @@ public class PlaybackFragment extends VideoSupportFragment {
 
     super.onCreate(savedInstanceState);
 
-    broadcast = getActivity().getIntent().getParcelableExtra(PlaybackActivity.BROADCAST);
-
     initializeGlue();
+
+    setControlsOverlayAutoHideEnabled(true);
   }
 
   @Override
@@ -70,9 +68,19 @@ public class PlaybackFragment extends VideoSupportFragment {
 
     super.onActivityCreated(savedInstanceState);
 
-    PlaybackViewModel viewModel = viewModelProvider.get(this, PlaybackViewModel.class);
+    OnDemandViewModel viewModel = viewModelProvider.get(this, OnDemandViewModel.class);
 
-    viewModel.getVideo(broadcast.getVideoDetailsUrl()).observe(this, video -> {
+    viewModel.getSelectedBroadcast().observe(this, broadcast -> {
+
+      if (broadcast == null) {
+        return;
+      }
+
+      glue.setSubtitle(broadcast.getSubtitle());
+      glue.setTitle(broadcast.getTitle());
+    });
+
+    viewModel.getVideo().observe(this, video -> {
 
       if (video == null) {
         return;
@@ -106,8 +114,5 @@ public class PlaybackFragment extends VideoSupportFragment {
         }
       }
     });
-
-    glue.setSubtitle(broadcast.getSubtitle());
-    glue.setTitle(broadcast.getTitle());
   }
 }

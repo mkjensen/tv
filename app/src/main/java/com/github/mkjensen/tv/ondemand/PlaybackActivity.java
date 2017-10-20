@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.playback;
+package com.github.mkjensen.tv.ondemand;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
-import com.github.mkjensen.tv.R;
-
 public class PlaybackActivity extends FragmentActivity {
-
-  public static final String BROADCAST = "broadcast";
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.ondemand_playback);
+    if (savedInstanceState == null) {
+      getSupportFragmentManager().beginTransaction()
+          .add(android.R.id.content, new PlaybackFragment())
+          .commit();
+    }
   }
 }

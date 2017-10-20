@@ -20,12 +20,6 @@ import android.arch.lifecycle.ViewModel;
 
 import com.github.mkjensen.tv.inject.FragmentScope;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelKey;
-import com.github.mkjensen.tv.ondemand.browse.BrowseFragment;
-import com.github.mkjensen.tv.ondemand.browse.BrowseViewModel;
-import com.github.mkjensen.tv.ondemand.details.DetailsFragment;
-import com.github.mkjensen.tv.ondemand.details.DetailsViewModel;
-import com.github.mkjensen.tv.ondemand.playback.PlaybackFragment;
-import com.github.mkjensen.tv.ondemand.playback.PlaybackViewModel;
 
 import javax.inject.Singleton;
 
@@ -38,33 +32,21 @@ import dagger.multibindings.IntoMap;
 @SuppressWarnings("unused")
 public interface OnDemandModule {
 
-  @FragmentScope
-  @ContributesAndroidInjector
-  BrowseFragment browseFragment();
-
   @Singleton
   @Binds
   @IntoMap
-  @ViewModelKey(BrowseViewModel.class)
-  ViewModel browseViewModel(BrowseViewModel browseViewModel);
+  @ViewModelKey(OnDemandViewModel.class)
+  ViewModel onDemandViewModel(OnDemandViewModel onDemandViewModel);
+
+  @FragmentScope
+  @ContributesAndroidInjector
+  BrowseFragment browseFragment();
 
   @FragmentScope
   @ContributesAndroidInjector
   DetailsFragment detailsFragment();
 
-  @Singleton
-  @Binds
-  @IntoMap
-  @ViewModelKey(DetailsViewModel.class)
-  ViewModel detailsViewModel(DetailsViewModel detailsViewModel);
-
   @FragmentScope
   @ContributesAndroidInjector
   PlaybackFragment playbackFragment();
-
-  @Singleton
-  @Binds
-  @IntoMap
-  @ViewModelKey(PlaybackViewModel.class)
-  ViewModel playbackViewModel(PlaybackViewModel playbackViewModel);
 }

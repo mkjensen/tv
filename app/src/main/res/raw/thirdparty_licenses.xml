@@ -40,13 +40,6 @@
     </notice>
 
     <notice>
-        <name>AutoValue: Parcel Extension</name>
-        <url>https://github.com/rharter/auto-value-parcel</url>
-        <copyright>Copyright 2015 Ryan Harter</copyright>
-        <license>Apache Software License 2.0</license>
-    </notice>
-
-    <notice>
         <name>Dagger 2</name>
         <url>https://github.com/google/dagger</url>
         <copyright>Copyright 2012 The Dagger Authors</copyright>

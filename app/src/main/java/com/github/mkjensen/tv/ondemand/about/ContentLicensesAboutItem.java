@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.browse.about;
+package com.github.mkjensen.tv.ondemand.about;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
