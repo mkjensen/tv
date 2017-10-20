@@ -50,7 +50,7 @@ public class BrowseFragment extends BrowseSupportFragment {
 
   private static final long ABOUT_HEADER_ID = 0;
 
-  private static final long CONTENT_HEADER_ID = 1;
+  private static final long DR_TV_HEADER_ID = 1;
 
   @SuppressWarnings("WeakerAccess")
   @Inject
@@ -89,7 +89,7 @@ public class BrowseFragment extends BrowseSupportFragment {
 
     ArrayObjectAdapter adapter = new ArrayObjectAdapter(new ListRowPresenter());
 
-    adapter.add(new PageRow(new HeaderItem(CONTENT_HEADER_ID, getString(R.string.ondemand_browse_content))));
+    adapter.add(new PageRow(new HeaderItem(DR_TV_HEADER_ID, getString(R.string.ondemand_browse_drtv))));
     adapter.add(new PageRow(new HeaderItem(ABOUT_HEADER_ID, getString(R.string.ondemand_browse_about))));
 
     setAdapter(adapter);
@@ -129,7 +129,7 @@ public class BrowseFragment extends BrowseSupportFragment {
     }
   }
 
-  public static final class ContentFragment extends RowsSupportFragment {
+  public static final class DrTvFragment extends RowsSupportFragment {
 
     private ArrayObjectAdapter lastChanceBroadcastsAdapter;
 
@@ -167,13 +167,13 @@ public class BrowseFragment extends BrowseSupportFragment {
       BroadcastPresenter broadcastPresenter = new BroadcastPresenter();
 
       topBroadcastsAdapter = new ArrayObjectAdapter(broadcastPresenter);
-      rowsAdapter.add(createRow(R.string.ondemand_browse_content_top, topBroadcastsAdapter));
+      rowsAdapter.add(createRow(R.string.ondemand_browse_drtv_top, topBroadcastsAdapter));
 
       latestNewsBroadcastsAdapter = new ArrayObjectAdapter(broadcastPresenter);
-      rowsAdapter.add(createRow(R.string.ondemand_browse_content_latestnews, latestNewsBroadcastsAdapter));
+      rowsAdapter.add(createRow(R.string.ondemand_browse_drtv_latestnews, latestNewsBroadcastsAdapter));
 
       lastChanceBroadcastsAdapter = new ArrayObjectAdapter(broadcastPresenter);
-      rowsAdapter.add(createRow(R.string.ondemand_browse_content_lastchance, lastChanceBroadcastsAdapter));
+      rowsAdapter.add(createRow(R.string.ondemand_browse_drtv_lastchance, lastChanceBroadcastsAdapter));
 
       setAdapter(rowsAdapter);
     }
@@ -222,8 +222,8 @@ public class BrowseFragment extends BrowseSupportFragment {
         return new AboutFragment();
       }
 
-      if (row.getId() == CONTENT_HEADER_ID) {
-        return new ContentFragment();
+      if (row.getId() == DR_TV_HEADER_ID) {
+        return new DrTvFragment();
       }
 
       return null;
