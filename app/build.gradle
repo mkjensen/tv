@@ -95,7 +95,6 @@ dependencies {
   compileOnly "com.google.auto.value:auto-value:$autoValueVersion"
   compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$autoValueMoshiVersion"
 
-  implementation "android.arch.lifecycle:common-java8:$archVersion"
   implementation "android.arch.lifecycle:extensions:$archVersion"
   implementation "com.android.support:leanback-v17:$androidSupportVersion"
   implementation "com.android.support:support-annotations:$androidSupportVersion"
