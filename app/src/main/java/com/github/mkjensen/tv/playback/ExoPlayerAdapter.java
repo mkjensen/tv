@@ -21,7 +21,6 @@ import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
@@ -81,7 +80,7 @@ public class ExoPlayerAdapter extends PlayerAdapter implements SurfaceHolder.Cal
   }
 
   /**
-   * @see com.google.android.exoplayer2.ExoPlayer#prepare(MediaSource)
+   * @see com.google.android.exoplayer2.ExoPlayer#prepare(com.google.android.exoplayer2.source.MediaSource)
    * @see HlsMediaSource
    */
   public void prepare(String url) {
