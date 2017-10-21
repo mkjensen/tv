@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.about;
+package com.github.mkjensen.tv.ondemand.settings;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
+import com.github.mkjensen.tv.BuildConfig;
 import com.github.mkjensen.tv.R;
 
-import de.psdev.licensesdialog.LicensesDialog;
-
-public class ThirdPartyLicensesAboutItem extends AboutItem {
+public class VersionSettingsItem extends SettingsItem {
 
   @Override
   public void execute(@NonNull Context context) {
 
-    new LicensesDialog.Builder(context)
-        .setNotices(R.raw.thirdparty_licenses)
-        .setTitle(R.string.ondemand_browse_about_thirdparty_title)
-        .build()
-        .show();
-
+    Toast.makeText(context, BuildConfig.VERSION_NAME, Toast.LENGTH_SHORT).show();
   }
 
   @Override
@@ -46,12 +41,12 @@ public class ThirdPartyLicensesAboutItem extends AboutItem {
   @Override
   public String getSubtitle(@NonNull Context context) {
 
-    return context.getString(R.string.ondemand_browse_about_thirdparty_subtitle);
+    return null;
   }
 
   @Override
   public String getTitle(@NonNull Context context) {
 
-    return context.getString(R.string.ondemand_browse_about_thirdparty_title);
+    return context.getString(R.string.ondemand_browse_settings_version_title);
   }
 }

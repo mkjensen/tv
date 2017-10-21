@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.about;
+package com.github.mkjensen.tv.ondemand.presenter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v17.leanback.widget.ImageCardView;
 
-public abstract class AboutItem {
+import com.github.mkjensen.tv.ondemand.settings.SettingsItem;
 
-  public abstract void execute(@NonNull Context context);
+public class SettingsItemPresenter extends AbstractImageCardViewPresenter<SettingsItem> {
 
-  @Nullable
-  public abstract Drawable getIcon(@NonNull Context context);
+  @Override
+  protected void onBindViewHolder(ImageCardView view, SettingsItem item) {
 
-  @Nullable
-  public abstract String getSubtitle(@NonNull Context context);
-
-  @Nullable
-  public abstract String getTitle(@NonNull Context context);
+    Context context = view.getContext();
+    view.setContentText(item.getSubtitle(context));
+    view.setMainImage(item.getIcon(context));
+    view.setTitleText(item.getTitle(context));
+  }
 }

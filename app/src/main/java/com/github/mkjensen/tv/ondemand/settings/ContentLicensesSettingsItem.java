@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.about;
+package com.github.mkjensen.tv.ondemand.settings;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -26,7 +26,7 @@ import de.psdev.licensesdialog.LicenseResolver;
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.License;
 
-public class ContentLicensesAboutItem extends AboutItem {
+public class ContentLicensesSettingsItem extends SettingsItem {
 
   @Override
   public void execute(@NonNull Context context) {
@@ -34,7 +34,7 @@ public class ContentLicensesAboutItem extends AboutItem {
     LicenseResolver.registerLicense(new MediaLicence());
     new LicensesDialog.Builder(context)
         .setNotices(R.raw.content_licenses)
-        .setTitle(R.string.ondemand_browse_about_content_title)
+        .setTitle(R.string.ondemand_browse_settings_content_title)
         .build()
         .show();
 
@@ -49,13 +49,13 @@ public class ContentLicensesAboutItem extends AboutItem {
   @Override
   public String getSubtitle(@NonNull Context context) {
 
-    return context.getString(R.string.ondemand_browse_about_content_subtitle);
+    return context.getString(R.string.ondemand_browse_settings_content_subtitle);
   }
 
   @Override
   public String getTitle(@NonNull Context context) {
 
-    return context.getString(R.string.ondemand_browse_about_content_title);
+    return context.getString(R.string.ondemand_browse_settings_content_title);
   }
 
   private static final class MediaLicence extends License {
@@ -72,7 +72,7 @@ public class ContentLicensesAboutItem extends AboutItem {
 
     @Override
     public String readFullTextFromResources(Context context) {
-      return context.getString(R.string.ondemand_browse_about_content_text);
+      return context.getString(R.string.ondemand_browse_settings_content_text);
     }
 
     @Override

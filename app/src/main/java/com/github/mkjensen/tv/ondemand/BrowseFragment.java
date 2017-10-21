@@ -33,12 +33,12 @@ import android.support.v17.leanback.widget.Row;
 import com.github.mkjensen.tv.R;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
 import com.github.mkjensen.tv.model.Broadcast;
-import com.github.mkjensen.tv.ondemand.about.AboutItem;
-import com.github.mkjensen.tv.ondemand.about.ContentLicensesAboutItem;
-import com.github.mkjensen.tv.ondemand.about.ThirdPartyLicensesAboutItem;
-import com.github.mkjensen.tv.ondemand.about.VersionAboutItem;
-import com.github.mkjensen.tv.ondemand.presenter.AboutItemPresenter;
 import com.github.mkjensen.tv.ondemand.presenter.BroadcastPresenter;
+import com.github.mkjensen.tv.ondemand.presenter.SettingsItemPresenter;
+import com.github.mkjensen.tv.ondemand.settings.ContentLicensesSettingsItem;
+import com.github.mkjensen.tv.ondemand.settings.SettingsItem;
+import com.github.mkjensen.tv.ondemand.settings.ThirdPartyLicensesSettingsItem;
+import com.github.mkjensen.tv.ondemand.settings.VersionSettingsItem;
 
 import java.util.List;
 
@@ -48,9 +48,9 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class BrowseFragment extends BrowseSupportFragment {
 
-  private static final long ABOUT_HEADER_ID = 0;
+  private static final long DR_TV_HEADER_ID = 0;
 
-  private static final long DR_TV_HEADER_ID = 1;
+  private static final long SETTINGS_HEADER_ID = 1;
 
   @SuppressWarnings("WeakerAccess")
   @Inject
@@ -90,43 +90,9 @@ public class BrowseFragment extends BrowseSupportFragment {
     ArrayObjectAdapter adapter = new ArrayObjectAdapter(new ListRowPresenter());
 
     adapter.add(new PageRow(new HeaderItem(DR_TV_HEADER_ID, getString(R.string.ondemand_browse_drtv))));
-    adapter.add(new PageRow(new HeaderItem(ABOUT_HEADER_ID, getString(R.string.ondemand_browse_about))));
+    adapter.add(new PageRow(new HeaderItem(SETTINGS_HEADER_ID, getString(R.string.ondemand_browse_settings))));
 
     setAdapter(adapter);
-  }
-
-  public static final class AboutFragment extends RowsSupportFragment {
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-      super.onCreate(savedInstanceState);
-
-      createAdapters();
-      createListeners();
-    }
-
-    private void createAdapters() {
-
-      ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-
-      ArrayObjectAdapter aboutItemsAdapter = new ArrayObjectAdapter(new AboutItemPresenter());
-      aboutItemsAdapter.add(new ContentLicensesAboutItem());
-      aboutItemsAdapter.add(new ThirdPartyLicensesAboutItem());
-      aboutItemsAdapter.add(new VersionAboutItem());
-      rowsAdapter.add(new ListRow(new HeaderItem(getString(R.string.ondemand_browse_about)), aboutItemsAdapter));
-
-      setAdapter(rowsAdapter);
-    }
-
-    private void createListeners() {
-
-      setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> {
-
-        AboutItem aboutItem = (AboutItem) item;
-        aboutItem.execute(getActivity());
-      });
-    }
   }
 
   public static final class DrTvFragment extends RowsSupportFragment {
@@ -211,6 +177,40 @@ public class BrowseFragment extends BrowseSupportFragment {
     }
   }
 
+  public static final class SettingsFragment extends RowsSupportFragment {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+      super.onCreate(savedInstanceState);
+
+      createAdapters();
+      createListeners();
+    }
+
+    private void createAdapters() {
+
+      ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+
+      ArrayObjectAdapter settingsItemsAdapter = new ArrayObjectAdapter(new SettingsItemPresenter());
+      settingsItemsAdapter.add(new ContentLicensesSettingsItem());
+      settingsItemsAdapter.add(new ThirdPartyLicensesSettingsItem());
+      settingsItemsAdapter.add(new VersionSettingsItem());
+      rowsAdapter.add(new ListRow(new HeaderItem(getString(R.string.ondemand_browse_settings)), settingsItemsAdapter));
+
+      setAdapter(rowsAdapter);
+    }
+
+    private void createListeners() {
+
+      setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> {
+
+        SettingsItem settingsItem = (SettingsItem) item;
+        settingsItem.execute(getActivity());
+      });
+    }
+  }
+
   private static class ListRowFragmentFactory extends BrowseSupportFragment.ListRowFragmentFactory {
 
     @Override
@@ -218,12 +218,12 @@ public class BrowseFragment extends BrowseSupportFragment {
 
       Row row = (Row) rowObject;
 
-      if (row.getId() == ABOUT_HEADER_ID) {
-        return new AboutFragment();
-      }
-
       if (row.getId() == DR_TV_HEADER_ID) {
         return new DrTvFragment();
+      }
+
+      if (row.getId() == SETTINGS_HEADER_ID) {
+        return new SettingsFragment();
       }
 
       return null;
