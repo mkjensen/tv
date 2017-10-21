@@ -18,6 +18,7 @@ package com.github.mkjensen.tv.ondemand;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -29,12 +30,14 @@ import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.PageRow;
 import android.support.v17.leanback.widget.Row;
+import android.support.v17.leanback.widget.SinglePresenterSelector;
 
 import com.github.mkjensen.tv.R;
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
 import com.github.mkjensen.tv.model.Broadcast;
 import com.github.mkjensen.tv.ondemand.presenter.BroadcastPresenter;
 import com.github.mkjensen.tv.ondemand.presenter.SettingsItemPresenter;
+import com.github.mkjensen.tv.ondemand.settings.BadgeRowHeaderPresenter;
 import com.github.mkjensen.tv.ondemand.settings.ContentLicensesSettingsItem;
 import com.github.mkjensen.tv.ondemand.settings.RefreshSettingsItem;
 import com.github.mkjensen.tv.ondemand.settings.SettingsItem;
@@ -90,8 +93,17 @@ public class BrowseFragment extends BrowseSupportFragment {
 
     ArrayObjectAdapter adapter = new ArrayObjectAdapter(new ListRowPresenter());
 
-    adapter.add(new PageRow(new HeaderItem(DR_TV_HEADER_ID, getString(R.string.ondemand_browse_drtv))));
-    adapter.add(new PageRow(new HeaderItem(SETTINGS_HEADER_ID, getString(R.string.ondemand_browse_settings))));
+    setHeaderPresenterSelector(new SinglePresenterSelector(new BadgeRowHeaderPresenter()));
+
+    Resources resources = getResources();
+
+    adapter.add(new PageRow(new BadgeHeaderItem(DR_TV_HEADER_ID,
+        resources.getString(R.string.ondemand_browse_drtv),
+        resources.getDrawable(R.drawable.ic_content))));
+
+    adapter.add(new PageRow(new BadgeHeaderItem(SETTINGS_HEADER_ID,
+        resources.getString(R.string.ondemand_browse_settings),
+        resources.getDrawable(R.drawable.ic_settings))));
 
     setAdapter(adapter);
   }
