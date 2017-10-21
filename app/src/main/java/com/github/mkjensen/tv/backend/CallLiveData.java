@@ -29,7 +29,7 @@ import timber.log.Timber;
  */
 class CallLiveData<T> extends LiveData<T> implements Callback<T> {
 
-  private final Call<T> call;
+  private Call<T> call;
 
   private CallLiveData(@NonNull Call<T> call) {
 
@@ -50,33 +50,56 @@ class CallLiveData<T> extends LiveData<T> implements Callback<T> {
   public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
 
     if (!response.isSuccessful()) {
-      Timber.e("onResponse: Call [%s] unsuccessful: %s, %s", call.request().url(), response.code(),
-          response.message());
+      Timber.e("Call [%s] was unsuccessful: %s, %s", call.request().url(), response.code(), response.message());
       // TODO: Forward error
       return;
     }
 
-    Timber.d("onResponse: Call [%s] successful", call.request().url());
+    Timber.d("Call [%s] was successful", call.request().url());
     setValue(response.body());
   }
 
   @Override
   public void onFailure(@NonNull Call<T> call, @NonNull Throwable throwable) {
 
-    Timber.e(throwable, "Call [%s] failed", call.request().url());
+    Timber.e(throwable, "Call [%s] has failed", call.request().url());
     // TODO: Forward error
   }
-
 
   @Override
   protected void onActive() {
 
-    if (call.isCanceled() || call.isExecuted()) {
-      Timber.d("onActive: Call [%s] is cancelled or has already been executed", call.request().url());
+    if (call.isCanceled()) {
+      refresh();
       return;
     }
 
-    Timber.d("onActive: Enqueuing call [%s]", call.request().url());
+    if (call.isExecuted()) {
+      Timber.d("Call [%s] has already been executed, reusing previous result", call.request().url());
+      return;
+    }
+
+    enqueueCall();
+  }
+
+  void refresh() {
+
+    if (call.isCanceled() || call.isExecuted()) {
+      Timber.d("Cloning call [%s]", call.request().url());
+      call = call.clone();
+    }
+
+    if (!hasActiveObservers()) {
+      Timber.d("Call [%s] has no active observers, postponing refresh", call.request().url());
+      return;
+    }
+
+    enqueueCall();
+  }
+
+  private void enqueueCall() {
+
+    Timber.d("Enqueuing call [%s]", call.request().url());
     call.enqueue(this);
   }
 }

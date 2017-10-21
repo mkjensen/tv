@@ -36,6 +36,7 @@ import com.github.mkjensen.tv.model.Broadcast;
 import com.github.mkjensen.tv.ondemand.presenter.BroadcastPresenter;
 import com.github.mkjensen.tv.ondemand.presenter.SettingsItemPresenter;
 import com.github.mkjensen.tv.ondemand.settings.ContentLicensesSettingsItem;
+import com.github.mkjensen.tv.ondemand.settings.RefreshSettingsItem;
 import com.github.mkjensen.tv.ondemand.settings.SettingsItem;
 import com.github.mkjensen.tv.ondemand.settings.ThirdPartyLicensesSettingsItem;
 import com.github.mkjensen.tv.ondemand.settings.VersionSettingsItem;
@@ -179,10 +180,14 @@ public class BrowseFragment extends BrowseSupportFragment {
 
   public static final class SettingsFragment extends RowsSupportFragment {
 
+    private OnDemandViewModel viewModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
       super.onCreate(savedInstanceState);
+
+      viewModel = ((BrowseFragment) getParentFragment()).viewModel;
 
       createAdapters();
       createListeners();
@@ -193,6 +198,7 @@ public class BrowseFragment extends BrowseSupportFragment {
       ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
       ArrayObjectAdapter settingsItemsAdapter = new ArrayObjectAdapter(new SettingsItemPresenter());
+      settingsItemsAdapter.add(new RefreshSettingsItem(viewModel));
       settingsItemsAdapter.add(new ContentLicensesSettingsItem());
       settingsItemsAdapter.add(new ThirdPartyLicensesSettingsItem());
       settingsItemsAdapter.add(new VersionSettingsItem());

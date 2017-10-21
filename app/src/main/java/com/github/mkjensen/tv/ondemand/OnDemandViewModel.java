@@ -43,6 +43,8 @@ public class OnDemandViewModel extends ViewModel {
 
   private final LiveData<List<Broadcast>> latestNewsBroadcasts;
 
+  private final OnDemandRepository onDemandRepository;
+
   private final MutableLiveData<Broadcast> selectedBroadcast;
 
   private final LiveData<List<Broadcast>> topBroadcasts;
@@ -51,6 +53,8 @@ public class OnDemandViewModel extends ViewModel {
 
   @Inject
   OnDemandViewModel(@NonNull OnDemandRepository onDemandRepository) {
+
+    this.onDemandRepository = onDemandRepository;
 
     LiveData<Broadcasts> broadcasts = onDemandRepository.getBroadcasts();
     this.lastChanceBroadcasts = Transformations.map(broadcasts, b -> b.getLastChanceBroadcasts().getBroadcasts());
@@ -95,6 +99,11 @@ public class OnDemandViewModel extends ViewModel {
   public LiveData<Video> getVideo() {
 
     return video;
+  }
+
+  public void refresh() {
+
+    onDemandRepository.refresh();
   }
 
   private static LiveData<Broadcast> createBroadcast(LiveData<Broadcast> broadcastTrigger,

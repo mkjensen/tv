@@ -32,6 +32,8 @@
     <string name="ondemand_browse_settings_content_subtitle">Betingelser for tilgængeligt indhold</string>
     <string name="ondemand_browse_settings_content_text">Alt tilgængeligt indhold tilhører Danmarks Radio og/eller deres leverandører.\n\nBenyttelse af indholdet er betinget af betaling af medielicens.</string>
     <string name="ondemand_browse_settings_content_title">Indholdslicenser</string>
+    <string name="ondemand_browse_settings_refresh_subtitle">Hent data igen</string>
+    <string name="ondemand_browse_settings_refresh_title">Opdater</string>
     <string name="ondemand_browse_settings_thirdparty_subtitle">Betingelser for anvendte tredjepartsværktøjer</string>
     <string name="ondemand_browse_settings_thirdparty_title">Tredjepartslicenser</string>
     <string name="ondemand_browse_settings_version_title">Version</string>

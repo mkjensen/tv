@@ -29,20 +29,20 @@ import javax.inject.Singleton;
 @Singleton
 public class OnDemandRepository {
 
-  private final LiveData<Broadcasts> broadcasts;
+  private final CallLiveData<Broadcasts> broadcasts;
 
-  private final LiveDataLruCache<BroadcastDetails> broadcastDetailsCache;
+  private final CallLiveDataLruCache<BroadcastDetails> broadcastDetailsCache;
 
-  private final LiveDataLruCache<Video> videoCache;
+  private final CallLiveDataLruCache<Video> videoCache;
 
   @Inject
   OnDemandRepository(@NonNull DrService drService) {
 
     this.broadcasts = CallLiveData.wrap(drService.getBroadcasts());
 
-    this.broadcastDetailsCache = new LiveDataLruCache<>(100, drService::getBroadcastDetails);
+    this.broadcastDetailsCache = new CallLiveDataLruCache<>(100, drService::getBroadcastDetails);
 
-    this.videoCache = new LiveDataLruCache<>(10, drService::getVideo);
+    this.videoCache = new CallLiveDataLruCache<>(10, drService::getVideo);
   }
 
   public LiveData<Broadcasts> getBroadcasts() {
@@ -58,5 +58,12 @@ public class OnDemandRepository {
   public LiveData<Video> getVideo(String videoUrl) {
 
     return videoCache.get(videoUrl);
+  }
+
+  public void refresh() {
+
+    broadcasts.refresh();
+    broadcastDetailsCache.refresh();
+    videoCache.refresh();
   }
 }
