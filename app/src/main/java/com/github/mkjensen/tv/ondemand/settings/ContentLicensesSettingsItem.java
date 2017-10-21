@@ -43,7 +43,7 @@ public class ContentLicensesSettingsItem extends SettingsItem {
   @Override
   public Drawable getIcon(@NonNull Context context) {
 
-    return context.getDrawable(R.drawable.ic_about);
+    return context.getDrawable(R.drawable.ic_copyright);
   }
 
   @Override
