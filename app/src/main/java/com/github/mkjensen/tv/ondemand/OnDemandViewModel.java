@@ -37,13 +37,13 @@ import javax.inject.Inject;
 @SuppressWarnings("WeakerAccess")
 public class OnDemandViewModel extends ViewModel {
 
+  private final LiveData<Broadcast> broadcast;
+
   private final LiveData<List<Broadcast>> lastChanceBroadcasts;
 
   private final LiveData<List<Broadcast>> latestNewsBroadcasts;
 
-  private final LiveData<Broadcast> selectedBroadcast;
-
-  private final MutableLiveData<Broadcast> selectedBroadcastTrigger;
+  private final MutableLiveData<Broadcast> selectedBroadcast;
 
   private final LiveData<List<Broadcast>> topBroadcasts;
 
@@ -57,10 +57,10 @@ public class OnDemandViewModel extends ViewModel {
     this.latestNewsBroadcasts = Transformations.map(broadcasts, b -> b.getLatestNewsBroadcasts().getBroadcasts());
     this.topBroadcasts = Transformations.map(broadcasts, b -> b.getTopBroadcasts().getBroadcasts());
 
-    this.selectedBroadcastTrigger = new MutableLiveData<>();
-    LiveData<BroadcastDetails> broadcastDetails = Transformations.switchMap(this.selectedBroadcastTrigger,
+    this.selectedBroadcast = new MutableLiveData<>();
+    LiveData<BroadcastDetails> broadcastDetails = Transformations.switchMap(this.selectedBroadcast,
         broadcast -> onDemandRepository.getBroadcastDetails(broadcast.getId()));
-    this.selectedBroadcast = createBroadcastMediator(selectedBroadcastTrigger, broadcastDetails);
+    this.broadcast = createBroadcast(selectedBroadcast, broadcastDetails);
     this.video = Transformations.switchMap(broadcastDetails,
         details -> onDemandRepository.getVideo(details.getBroadcast().getVideoDetailsUrl()));
   }
@@ -82,12 +82,14 @@ public class OnDemandViewModel extends ViewModel {
 
   LiveData<Broadcast> getSelectedBroadcast() {
 
-    return selectedBroadcast;
+    return broadcast;
   }
 
   void setSelectedBroadcast(Broadcast broadcast) {
 
-    selectedBroadcastTrigger.setValue(broadcast);
+    if (!Objects.equals(broadcast, selectedBroadcast.getValue())) {
+      selectedBroadcast.setValue(broadcast);
+    }
   }
 
   public LiveData<Video> getVideo() {
@@ -95,21 +97,19 @@ public class OnDemandViewModel extends ViewModel {
     return video;
   }
 
-  private static LiveData<Broadcast> createBroadcastMediator(LiveData<Broadcast> broadcastTrigger,
-                                                             LiveData<BroadcastDetails> broadcastDetailsTrigger) {
+  private static LiveData<Broadcast> createBroadcast(LiveData<Broadcast> broadcastTrigger,
+                                                     LiveData<BroadcastDetails> broadcastDetailsTrigger) {
 
-    MediatorLiveData<Broadcast> mediator = new MediatorLiveData<>();
+    MediatorLiveData<Broadcast> broadcast = new MediatorLiveData<>();
 
-    mediator.addSource(broadcastTrigger, broadcast -> {
+    broadcast.addSource(broadcastTrigger, broadcast::setValue);
 
-      if (!Objects.equals(broadcast, mediator.getValue())) {
-        mediator.setValue(broadcast);
+    broadcast.addSource(broadcastDetailsTrigger, broadcastDetails -> {
+      if (broadcastDetails != null) {
+        broadcast.setValue(broadcastDetails.getBroadcast());
       }
     });
 
-    mediator.addSource(broadcastDetailsTrigger,
-        broadcastDetails -> mediator.setValue(broadcastDetails != null ? broadcastDetails.getBroadcast() : null));
-
-    return mediator;
+    return broadcast;
   }
 }

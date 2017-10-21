@@ -25,7 +25,6 @@ import android.support.v17.leanback.media.PlaybackGlue;
 import android.support.v17.leanback.media.PlaybackGlue.PlayerCallback;
 
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
-import com.github.mkjensen.tv.ondemand.OnDemandViewModel;
 import com.github.mkjensen.tv.playback.ExoPlayerAdapter;
 import com.github.mkjensen.tv.playback.ExoPlayerAdapterPlaybackTransportControlGlue;
 
