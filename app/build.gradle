@@ -71,7 +71,7 @@ ext {
   crashlyticsVersion = "2.7.0@aar"
   companionlibraryVersion = "0.2"
   daggerVersion = "2.11"
-  exoplayerVersion = "r2.5.3"
+  exoplayerVersion = "r2.5.4"
   glideVersion = "4.2.0"
   googlePlayServicesVersion = "11.4.2"
   interactivemediaVersion = "3.7.4"
