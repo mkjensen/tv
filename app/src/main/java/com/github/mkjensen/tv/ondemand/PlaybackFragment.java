@@ -16,21 +16,25 @@
 
 package com.github.mkjensen.tv.ondemand;
 
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ext.leanback.LeanbackPlayerAdapter;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.upstream.DataSource;
+
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.VideoSupportFragment;
 import android.support.v17.leanback.app.VideoSupportFragmentGlueHost;
-import android.support.v17.leanback.media.PlaybackGlue;
-import android.support.v17.leanback.media.PlaybackGlue.PlayerCallback;
 
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
-import com.github.mkjensen.tv.playback.ExoPlayerAdapter;
 import com.github.mkjensen.tv.playback.ExoPlayerAdapterPlaybackTransportControlGlue;
 
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
+import timber.log.Timber;
 
 public class PlaybackFragment extends VideoSupportFragment {
 
@@ -40,7 +44,11 @@ public class PlaybackFragment extends VideoSupportFragment {
 
   @SuppressWarnings("WeakerAccess")
   @Inject
-  ExoPlayerAdapter exoPlayerAdapter;
+  SimpleExoPlayer simpleExoPlayer;
+
+  @SuppressWarnings("WeakerAccess")
+  @Inject
+  DataSource.Factory dataSourceFactory;
 
   private ExoPlayerAdapterPlaybackTransportControlGlue glue;
 
@@ -85,33 +93,51 @@ public class PlaybackFragment extends VideoSupportFragment {
         return;
       }
 
-      glue.getPlayerAdapter().prepare(video.getUrl());
+      String videoUrl = video.getUrl();
+
+      Timber.d("Preparing video: " + videoUrl);
+      HlsMediaSource mediaSource = new HlsMediaSource(Uri.parse(videoUrl), dataSourceFactory, null, null);
+      simpleExoPlayer.prepare(mediaSource);
     });
+  }
+
+  @Override
+  public void onResume() {
+
+    Timber.d("onResume");
+
+    super.onResume();
+
+    simpleExoPlayer.setPlayWhenReady(true);
   }
 
   @Override
   public void onPause() {
 
-    super.onPause();
+    Timber.d("onPause");
 
-    glue.pause();
+    if (glue.isPlaying()) {
+      glue.pause();
+    }
+
+    super.onPause();
+  }
+
+  @Override
+  public void onDestroy() {
+
+    Timber.d("onDestroy");
+
+    simpleExoPlayer.release();
+
+    super.onDestroy();
   }
 
   private void initializeGlue() {
 
     // TODO: Handle via dependency injection
-    glue = new ExoPlayerAdapterPlaybackTransportControlGlue(getActivity(), exoPlayerAdapter);
+    LeanbackPlayerAdapter leanbackPlayerAdapter = new LeanbackPlayerAdapter(getActivity(), simpleExoPlayer, 16);
+    glue = new ExoPlayerAdapterPlaybackTransportControlGlue(getActivity(), leanbackPlayerAdapter);
     glue.setHost(new VideoSupportFragmentGlueHost(this));
-    glue.addPlayerCallback(new PlayerCallback() {
-
-      @Override
-      public void onPreparedStateChanged(PlaybackGlue glue) {
-
-        if (glue.isPrepared()) {
-          glue.removePlayerCallback(this);
-          glue.play();
-        }
-      }
-    });
   }
 }

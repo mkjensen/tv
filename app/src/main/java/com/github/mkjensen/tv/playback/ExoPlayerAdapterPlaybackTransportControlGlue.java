@@ -16,6 +16,8 @@
 
 package com.github.mkjensen.tv.playback;
 
+import com.google.android.exoplayer2.ext.leanback.LeanbackPlayerAdapter;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v17.leanback.media.PlaybackTransportControlGlue;
@@ -23,14 +25,14 @@ import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.PlaybackControlsRow;
 
-public class ExoPlayerAdapterPlaybackTransportControlGlue extends PlaybackTransportControlGlue<ExoPlayerAdapter> {
+public class ExoPlayerAdapterPlaybackTransportControlGlue extends PlaybackTransportControlGlue<LeanbackPlayerAdapter> {
 
   private static final int REWIND_AND_FAST_FORWARD_TIME_IN_MILLISECONDS = 10_000;
 
   public ExoPlayerAdapterPlaybackTransportControlGlue(@NonNull Context context,
-                                                      @NonNull ExoPlayerAdapter exoPlayerAdapter) {
+                                                      @NonNull LeanbackPlayerAdapter leanbackPlayerAdapter) {
 
-    super(context, exoPlayerAdapter);
+    super(context, leanbackPlayerAdapter);
   }
 
   @Override
