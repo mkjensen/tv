@@ -70,7 +70,7 @@ ext {
   autoValueMoshiVersion = "0.4.4"
   crashlyticsVersion = "2.7.0@aar"
   companionlibraryVersion = "0.2"
-  daggerVersion = "2.11"
+  daggerVersion = "2.12"
   exoplayerVersion = "r2.5.4"
   glideVersion = "4.2.0"
   googlePlayServicesVersion = "11.4.2"
