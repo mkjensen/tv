@@ -33,6 +33,8 @@ public class ExoPlayerAdapterPlaybackTransportControlGlue extends PlaybackTransp
                                                       @NonNull LeanbackPlayerAdapter leanbackPlayerAdapter) {
 
     super(context, leanbackPlayerAdapter);
+
+    setSeekEnabled(true);
   }
 
   @Override
