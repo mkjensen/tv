@@ -21,14 +21,14 @@ apply from: rootProject.file('signing.gradle')
 
 android {
 
-  compileSdkVersion 26
-  buildToolsVersion "26.0.2"
+  compileSdkVersion 27
+  buildToolsVersion "27.0.0"
 
   defaultConfig {
 
     applicationId "com.github.mkjensen.tv"
     minSdkVersion 21
-    targetSdkVersion 26
+    targetSdkVersion 27
     versionCode 18
     versionName "0.0.18"
   }
@@ -64,7 +64,7 @@ android {
 
 ext {
 
-  androidSupportVersion = "26.1.0"
+  androidSupportVersion = "27.0.0"
   archVersion = "1.0.0-rc1"
   autoValueVersion = "1.5.1"
   autoValueMoshiVersion = "0.4.4"
@@ -120,4 +120,7 @@ dependencies {
   implementation "com.android.support:appcompat-v7:$androidSupportVersion"
   implementation "com.google.ads.interactivemedia.v3:interactivemedia:$interactivemediaVersion"
   implementation "com.google.android.gms:play-services-ads:$googlePlayServicesVersion"
+
+  // Overwrite other dependencies to avoid bugs
+  implementation "com.android.support:support-v4:$androidSupportVersion"
 }
