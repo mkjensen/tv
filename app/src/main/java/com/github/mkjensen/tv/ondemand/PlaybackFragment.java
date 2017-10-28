@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.VideoSupportFragment;
 import android.support.v17.leanback.app.VideoSupportFragmentGlueHost;
+import android.support.v17.leanback.media.PlaybackGlue;
 
 import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
 import com.github.mkjensen.tv.playback.ExoPlayerAdapterPlaybackTransportControlGlue;
@@ -66,8 +67,6 @@ public class PlaybackFragment extends VideoSupportFragment {
     super.onCreate(savedInstanceState);
 
     initializeGlue();
-
-    setControlsOverlayAutoHideEnabled(true);
   }
 
   @Override
@@ -139,5 +138,14 @@ public class PlaybackFragment extends VideoSupportFragment {
     LeanbackPlayerAdapter leanbackPlayerAdapter = new LeanbackPlayerAdapter(getActivity(), simpleExoPlayer, 16);
     glue = new ExoPlayerAdapterPlaybackTransportControlGlue(getActivity(), leanbackPlayerAdapter);
     glue.setHost(new VideoSupportFragmentGlueHost(this));
+
+    glue.addPlayerCallback(new PlaybackGlue.PlayerCallback() {
+
+      @Override
+      public void onPlayStateChanged(PlaybackGlue glue) {
+
+        setControlsOverlayAutoHideEnabled(glue.isPlaying());
+      }
+    });
   }
 }
