@@ -19,6 +19,7 @@ package com.github.mkjensen.tv.ondemand;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.WindowManager;
 
 public class PlaybackActivity extends FragmentActivity {
 
@@ -26,6 +27,8 @@ public class PlaybackActivity extends FragmentActivity {
   protected void onCreate(@Nullable Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
+
+    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     if (savedInstanceState == null) {
       getSupportFragmentManager().beginTransaction()
