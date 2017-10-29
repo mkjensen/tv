@@ -114,6 +114,8 @@ public class BrowseFragment extends BrowseSupportFragment {
 
     private ArrayObjectAdapter latestNewsBroadcastsAdapter;
 
+    private ArrayObjectAdapter mostViewedBroadcastsAdapter;
+
     private ArrayObjectAdapter topBroadcastsAdapter;
 
     private OnDemandViewModel viewModel;
@@ -135,6 +137,7 @@ public class BrowseFragment extends BrowseSupportFragment {
       viewModel = ((BrowseFragment) getParentFragment()).viewModel;
 
       viewModel.getLastChanceBroadcasts().observe(this, createBroadcastsObserver(lastChanceBroadcastsAdapter));
+      viewModel.getMostViewedBroadcasts().observe(this, createBroadcastsObserver(mostViewedBroadcastsAdapter));
       viewModel.getLatestNewsBroadcasts().observe(this, createBroadcastsObserver(latestNewsBroadcastsAdapter));
       viewModel.getTopBroadcasts().observe(this, createBroadcastsObserver(topBroadcastsAdapter));
     }
@@ -147,6 +150,9 @@ public class BrowseFragment extends BrowseSupportFragment {
 
       topBroadcastsAdapter = new ArrayObjectAdapter(broadcastPresenter);
       rowsAdapter.add(createRow(R.string.ondemand_browse_drtv_top, topBroadcastsAdapter));
+
+      mostViewedBroadcastsAdapter = new ArrayObjectAdapter(broadcastPresenter);
+      rowsAdapter.add(createRow(R.string.ondemand_browse_drtv_mostviewed, mostViewedBroadcastsAdapter));
 
       latestNewsBroadcastsAdapter = new ArrayObjectAdapter(broadcastPresenter);
       rowsAdapter.add(createRow(R.string.ondemand_browse_drtv_latestnews, latestNewsBroadcastsAdapter));

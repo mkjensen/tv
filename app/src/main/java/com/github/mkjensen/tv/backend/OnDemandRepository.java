@@ -20,6 +20,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import com.github.mkjensen.tv.model.BroadcastDetails;
+import com.github.mkjensen.tv.model.BroadcastList;
 import com.github.mkjensen.tv.model.Broadcasts;
 import com.github.mkjensen.tv.model.Video;
 
@@ -33,6 +34,8 @@ public class OnDemandRepository {
 
   private final CallLiveDataLruCache<BroadcastDetails> broadcastDetailsCache;
 
+  private final CallLiveData<BroadcastList> mostViewedBroadcasts;
+
   private final CallLiveDataLruCache<Video> videoCache;
 
   @Inject
@@ -41,6 +44,8 @@ public class OnDemandRepository {
     this.broadcasts = CallLiveData.wrap(drService.getBroadcasts());
 
     this.broadcastDetailsCache = new CallLiveDataLruCache<>(100, drService::getBroadcastDetails);
+
+    this.mostViewedBroadcasts = CallLiveData.wrap(drService.getMostViewedBroadcasts());
 
     this.videoCache = new CallLiveDataLruCache<>(10, drService::getVideo);
   }
@@ -55,6 +60,11 @@ public class OnDemandRepository {
     return broadcastDetailsCache.get(broadcastId);
   }
 
+  public CallLiveData<BroadcastList> getMostViewedBroadcasts() {
+
+    return mostViewedBroadcasts;
+  }
+
   public LiveData<Video> getVideo(String videoUrl) {
 
     return videoCache.get(videoUrl);
@@ -64,6 +74,7 @@ public class OnDemandRepository {
 
     broadcasts.refresh();
     broadcastDetailsCache.refresh();
+    mostViewedBroadcasts.refresh();
     videoCache.refresh();
   }
 }

@@ -26,6 +26,7 @@
     <string name="ondemand_browse_drtv">DR TV</string>
     <string name="ondemand_browse_drtv_lastchance">Sidste chance</string>
     <string name="ondemand_browse_drtv_latestnews">Seneste nyheder</string>
+    <string name="ondemand_browse_drtv_mostviewed">Mest sete</string>
     <string name="ondemand_browse_drtv_top">Særligt udvalgte</string>
 
     <string name="ondemand_browse_settings">Indstillinger</string>

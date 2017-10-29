@@ -26,6 +26,7 @@ import android.support.annotation.NonNull;
 import com.github.mkjensen.tv.backend.OnDemandRepository;
 import com.github.mkjensen.tv.model.Broadcast;
 import com.github.mkjensen.tv.model.BroadcastDetails;
+import com.github.mkjensen.tv.model.BroadcastList;
 import com.github.mkjensen.tv.model.Broadcasts;
 import com.github.mkjensen.tv.model.Video;
 
@@ -42,6 +43,8 @@ public class OnDemandViewModel extends ViewModel {
   private final LiveData<List<Broadcast>> lastChanceBroadcasts;
 
   private final LiveData<List<Broadcast>> latestNewsBroadcasts;
+
+  private final LiveData<List<Broadcast>> mostViewedBroadcasts;
 
   private final OnDemandRepository onDemandRepository;
 
@@ -61,6 +64,9 @@ public class OnDemandViewModel extends ViewModel {
     this.latestNewsBroadcasts = Transformations.map(broadcasts, b -> b.getLatestNewsBroadcasts().getBroadcasts());
     this.topBroadcasts = Transformations.map(broadcasts, b -> b.getTopBroadcasts().getBroadcasts());
 
+    this.mostViewedBroadcasts = Transformations.map(onDemandRepository.getMostViewedBroadcasts(),
+        BroadcastList::getBroadcasts);
+
     this.selectedBroadcast = new MutableLiveData<>();
     LiveData<BroadcastDetails> broadcastDetails = Transformations.switchMap(this.selectedBroadcast,
         broadcast -> onDemandRepository.getBroadcastDetails(broadcast.getId()));
@@ -77,6 +83,11 @@ public class OnDemandViewModel extends ViewModel {
   LiveData<List<Broadcast>> getLatestNewsBroadcasts() {
 
     return latestNewsBroadcasts;
+  }
+
+  LiveData<List<Broadcast>> getMostViewedBroadcasts() {
+
+    return mostViewedBroadcasts;
   }
 
   LiveData<List<Broadcast>> getTopBroadcasts() {

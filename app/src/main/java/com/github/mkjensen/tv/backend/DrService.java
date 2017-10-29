@@ -20,6 +20,7 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
 import com.github.mkjensen.tv.model.BroadcastDetails;
+import com.github.mkjensen.tv.model.BroadcastList;
 import com.github.mkjensen.tv.model.Broadcasts;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
@@ -67,6 +68,15 @@ public interface DrService {
   @GET("page/tv/front")
   @NonNull
   Call<Broadcasts> getBroadcasts();
+
+  /**
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-list-view-mostviewed_channel_channelType_limit_offset">Gets
+   * a paged list of most viewed programcards within the latest 7 days filtered by channel and channeltype</a>
+   */
+  @CheckResult
+  @GET("list/view/mostviewed")
+  @NonNull
+  Call<BroadcastList> getMostViewedBroadcasts();
 
   /**
    * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-1.4-page-tv-player-programcardId_seriesId_seasonId_includeitemsWithoutPublicPrimaryAsset_onlyIncludeItemsFromSameSeason">Endpoint
