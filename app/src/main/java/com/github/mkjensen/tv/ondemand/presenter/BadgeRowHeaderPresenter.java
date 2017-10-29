@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.settings;
+package com.github.mkjensen.tv.ondemand.presenter;
 
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;

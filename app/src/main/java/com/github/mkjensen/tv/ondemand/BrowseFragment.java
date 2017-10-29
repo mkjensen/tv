@@ -37,7 +37,7 @@ import com.github.mkjensen.tv.inject.viewmodel.ViewModelProvider;
 import com.github.mkjensen.tv.model.Broadcast;
 import com.github.mkjensen.tv.ondemand.presenter.BroadcastPresenter;
 import com.github.mkjensen.tv.ondemand.presenter.SettingsItemPresenter;
-import com.github.mkjensen.tv.ondemand.settings.BadgeRowHeaderPresenter;
+import com.github.mkjensen.tv.ondemand.presenter.BadgeRowHeaderPresenter;
 import com.github.mkjensen.tv.ondemand.settings.ContentLicensesSettingsItem;
 import com.github.mkjensen.tv.ondemand.settings.RefreshSettingsItem;
 import com.github.mkjensen.tv.ondemand.settings.SettingsItem;
