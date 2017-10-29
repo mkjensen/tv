@@ -29,14 +29,14 @@ import com.squareup.moshi.Moshi;
  * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-1.4-page-tv-front">FrontpageViewModel</a>
  */
 @AutoValue
-public abstract class Broadcasts {
+public abstract class MainBroadcasts {
 
   @SuppressWarnings("WeakerAccess")
   @CheckResult
   @NonNull
-  public static JsonAdapter<Broadcasts> jsonAdapter(@NonNull Moshi moshi) {
+  public static JsonAdapter<MainBroadcasts> jsonAdapter(@NonNull Moshi moshi) {
 
-    return new AutoValue_Broadcasts.MoshiJsonAdapter(moshi);
+    return new AutoValue_MainBroadcasts.MoshiJsonAdapter(moshi);
   }
 
   @CheckResult

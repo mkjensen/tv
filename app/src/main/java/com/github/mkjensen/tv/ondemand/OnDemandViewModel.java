@@ -27,7 +27,7 @@ import com.github.mkjensen.tv.backend.OnDemandRepository;
 import com.github.mkjensen.tv.model.Broadcast;
 import com.github.mkjensen.tv.model.BroadcastDetails;
 import com.github.mkjensen.tv.model.BroadcastList;
-import com.github.mkjensen.tv.model.Broadcasts;
+import com.github.mkjensen.tv.model.MainBroadcasts;
 import com.github.mkjensen.tv.model.Video;
 
 import java.util.List;
@@ -59,10 +59,10 @@ public class OnDemandViewModel extends ViewModel {
 
     this.onDemandRepository = onDemandRepository;
 
-    LiveData<Broadcasts> broadcasts = onDemandRepository.getBroadcasts();
-    this.lastChanceBroadcasts = Transformations.map(broadcasts, b -> b.getLastChanceBroadcasts().getBroadcasts());
-    this.latestNewsBroadcasts = Transformations.map(broadcasts, b -> b.getLatestNewsBroadcasts().getBroadcasts());
-    this.topBroadcasts = Transformations.map(broadcasts, b -> b.getTopBroadcasts().getBroadcasts());
+    LiveData<MainBroadcasts> mainBroadcasts = onDemandRepository.getMainBroadcasts();
+    this.lastChanceBroadcasts = Transformations.map(mainBroadcasts, b -> b.getLastChanceBroadcasts().getBroadcasts());
+    this.latestNewsBroadcasts = Transformations.map(mainBroadcasts, b -> b.getLatestNewsBroadcasts().getBroadcasts());
+    this.topBroadcasts = Transformations.map(mainBroadcasts, b -> b.getTopBroadcasts().getBroadcasts());
 
     this.mostViewedBroadcasts = Transformations.map(onDemandRepository.getMostViewedBroadcasts(),
         BroadcastList::getBroadcasts);

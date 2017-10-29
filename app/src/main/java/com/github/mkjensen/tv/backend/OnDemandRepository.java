@@ -21,7 +21,7 @@ import android.support.annotation.NonNull;
 
 import com.github.mkjensen.tv.model.BroadcastDetails;
 import com.github.mkjensen.tv.model.BroadcastList;
-import com.github.mkjensen.tv.model.Broadcasts;
+import com.github.mkjensen.tv.model.MainBroadcasts;
 import com.github.mkjensen.tv.model.Video;
 
 import javax.inject.Inject;
@@ -30,9 +30,9 @@ import javax.inject.Singleton;
 @Singleton
 public class OnDemandRepository {
 
-  private final CallLiveData<Broadcasts> broadcasts;
-
   private final CallLiveDataLruCache<BroadcastDetails> broadcastDetailsCache;
+
+  private final CallLiveData<MainBroadcasts> mainBroadcasts;
 
   private final CallLiveData<BroadcastList> mostViewedBroadcasts;
 
@@ -41,23 +41,23 @@ public class OnDemandRepository {
   @Inject
   OnDemandRepository(@NonNull DrService drService) {
 
-    this.broadcasts = CallLiveData.wrap(drService.getBroadcasts());
-
     this.broadcastDetailsCache = new CallLiveDataLruCache<>(100, drService::getBroadcastDetails);
+
+    this.mainBroadcasts = CallLiveData.wrap(drService.getMainBroadcasts());
 
     this.mostViewedBroadcasts = CallLiveData.wrap(drService.getMostViewedBroadcasts());
 
     this.videoCache = new CallLiveDataLruCache<>(10, drService::getVideo);
   }
 
-  public LiveData<Broadcasts> getBroadcasts() {
-
-    return broadcasts;
-  }
-
   public LiveData<BroadcastDetails> getBroadcastDetails(String broadcastId) {
 
     return broadcastDetailsCache.get(broadcastId);
+  }
+
+  public LiveData<MainBroadcasts> getMainBroadcasts() {
+
+    return mainBroadcasts;
   }
 
   public CallLiveData<BroadcastList> getMostViewedBroadcasts() {
@@ -72,8 +72,8 @@ public class OnDemandRepository {
 
   public void refresh() {
 
-    broadcasts.refresh();
     broadcastDetailsCache.refresh();
+    mainBroadcasts.refresh();
     mostViewedBroadcasts.refresh();
     videoCache.refresh();
   }

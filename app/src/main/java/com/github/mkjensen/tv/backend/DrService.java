@@ -21,9 +21,9 @@ import android.support.annotation.NonNull;
 
 import com.github.mkjensen.tv.model.BroadcastDetails;
 import com.github.mkjensen.tv.model.BroadcastList;
-import com.github.mkjensen.tv.model.Broadcasts;
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
+import com.github.mkjensen.tv.model.MainBroadcasts;
 import com.github.mkjensen.tv.model.Video;
 
 import java.util.List;
@@ -40,6 +40,8 @@ public interface DrService {
    * @see <a href="https://www.dr.dk/mu-online/Help/1.4">DR MU-online API documentation - v. 1.4</a>
    */
   String BASE_URL = "https://www.dr.dk/mu-online/api/1.4/";
+
+  // Live
 
   /**
    * @see <a href="http://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-channel-all-active-dr-tv-channels">Gets
@@ -60,23 +62,7 @@ public interface DrService {
   Call<DrSchedule> getScheduleForChannel(@Path("channelId") String channelId,
                                          @Query("broadcastdate") String date);
 
-  /**
-   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-1.4-page-tv-front">Endpoint for
-   * data necessary to build a DRTV Frontpage</a>
-   */
-  @CheckResult
-  @GET("page/tv/front")
-  @NonNull
-  Call<Broadcasts> getBroadcasts();
-
-  /**
-   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-list-view-mostviewed_channel_channelType_limit_offset">Gets
-   * a paged list of most viewed programcards within the latest 7 days filtered by channel and channeltype</a>
-   */
-  @CheckResult
-  @GET("list/view/mostviewed")
-  @NonNull
-  Call<BroadcastList> getMostViewedBroadcasts();
+  // On-demand
 
   /**
    * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-1.4-page-tv-player-programcardId_seriesId_seasonId_includeitemsWithoutPublicPrimaryAsset_onlyIncludeItemsFromSameSeason">Endpoint
@@ -86,6 +72,24 @@ public interface DrService {
   @GET("page/tv/player/{broadcastId}")
   @NonNull
   Call<BroadcastDetails> getBroadcastDetails(@Path("broadcastId") String broadcastId);
+
+  /**
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-1.4-page-tv-front">Endpoint for
+   * data necessary to build a DRTV Frontpage</a>
+   */
+  @CheckResult
+  @GET("page/tv/front")
+  @NonNull
+  Call<MainBroadcasts> getMainBroadcasts();
+
+  /**
+   * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-list-view-mostviewed_channel_channelType_limit_offset">Gets
+   * a paged list of most viewed programcards within the latest 7 days filtered by channel and channeltype</a>
+   */
+  @CheckResult
+  @GET("list/view/mostviewed")
+  @NonNull
+  Call<BroadcastList> getMostViewedBroadcasts();
 
   /**
    * @see <a href="https://www.dr.dk/mu-online/Help/1.4/ResourceModel?modelName=MuAsset">MuAsset</a>
