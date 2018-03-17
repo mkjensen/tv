@@ -29,8 +29,8 @@ android {
     applicationId "com.github.mkjensen.tv"
     minSdkVersion 21
     targetSdkVersion 27
-    versionCode 19
-    versionName "0.0.19"
+    versionCode 20
+    versionName "0.0.20"
   }
 
   compileOptions {
