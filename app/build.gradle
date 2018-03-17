@@ -60,6 +60,18 @@ android {
     // Travis CI: https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI
     preDexLibraries = preDexEnabled && !travisBuild
   }
+
+  packagingOptions {
+
+    // Avoid build errors like: Error:Execution failed for task ':app:transformResourcesWithMergeJavaResForDebug'. > More than one file was found with OS independent path 'META-INF/android.arch.lifecycle_runtime.version'
+    exclude 'META-INF/android.arch.lifecycle_runtime.version'
+    exclude 'META-INF/com.android.support_support-compat.version'
+    exclude 'META-INF/com.android.support_support-core-ui.version'
+    exclude 'META-INF/com.android.support_support-core-utils.version'
+    exclude 'META-INF/com.android.support_support-fragment.version'
+    exclude 'META-INF/com.android.support_support-media-compat.version'
+    exclude 'META-INF/com.android.support_support-v4.version'
+  }
 }
 
 ext {
