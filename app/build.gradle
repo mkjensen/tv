@@ -77,7 +77,7 @@ ext {
   moshiVersion = "1.5.0"
   okhttpVersion = "3.10.0"
   retrofitVersion = "2.4.0"
-  timberVersion = "4.5.1"
+  timberVersion = "4.6.1"
 }
 
 dependencies {
