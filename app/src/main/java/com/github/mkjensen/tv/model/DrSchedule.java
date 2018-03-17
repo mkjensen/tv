@@ -32,7 +32,7 @@ import java.util.List;
 import timber.log.Timber;
 
 /**
- * @see <a href="http://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-schedule-id_broadcastDate_onlinegenretext">Gets
+ * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-schedule-id_broadcastDate_onlinegenretext">Gets
  * a schedule for a given channel and broadcast date.</a>
  */
 @AutoValue
