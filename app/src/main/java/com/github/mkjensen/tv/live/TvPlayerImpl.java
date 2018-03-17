@@ -17,13 +17,9 @@
 package com.github.mkjensen.tv.live;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.Player.EventListener;
+import com.google.android.exoplayer2.Player.DefaultEventListener;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.media.tv.companionlibrary.TvPlayer;
 
@@ -42,7 +38,7 @@ import timber.log.Timber;
 import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
 import static com.google.android.exoplayer2.Player.STATE_READY;
 
-class TvPlayerImpl implements TvPlayer, EventListener {
+class TvPlayerImpl extends DefaultEventListener implements TvPlayer {
 
   private final DataSource.Factory dataSourceFactory;
 
@@ -144,13 +140,6 @@ class TvPlayerImpl implements TvPlayer, EventListener {
   }
 
   @Override
-  public void onLoadingChanged(boolean isLoading) {
-
-    Timber.d("onLoadingChanged: " + isLoading);
-    // Do nothing.
-  }
-
-  @Override
   public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 
     Timber.d("onPlayerStateChanged: " + playWhenReady + ", " + playbackState);
@@ -179,37 +168,9 @@ class TvPlayerImpl implements TvPlayer, EventListener {
   }
 
   @Override
-  public void onTimelineChanged(@Nullable Timeline timeline, @Nullable Object manifest) {
-
-    Timber.d("onTimelineChanged: " + timeline + ", " + manifest);
-    // Do nothing.
-  }
-
-  @Override
-  public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-    Timber.d("onTracksChanged: " + trackGroups + ", " + trackSelections);
-    // Do nothing.
-  }
-
-  @Override
   public void onPlayerError(@NonNull ExoPlaybackException error) {
 
     Timber.e(error, "An error occurred during playback");
     session.notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_UNKNOWN);
-  }
-
-  @Override
-  public void onPositionDiscontinuity() {
-
-    Timber.d("onPositionDiscontinuity");
-    // Do nothing.
-  }
-
-  @Override
-  public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
-    Timber.d("onPlaybackParametersChanged: " + playbackParameters);
-    // Do nothing.
   }
 }
