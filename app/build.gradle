@@ -72,7 +72,7 @@ ext {
   daggerVersion = "2.15"
   exoplayerVersion = "2.7.1"
   googlePlayServicesVersion = "11.8.0"
-  interactivemediaVersion = "3.7.4"
+  interactivemediaVersion = "3.8.2"
   licensesDialogVersion = "1.8.3"
   moshiVersion = "1.5.0"
   okhttpVersion = "3.9.0"
