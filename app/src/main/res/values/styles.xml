@@ -24,15 +24,6 @@
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
 
-        <item name="imageCardViewImageStyle">@style/tv.imageCardViewImageStyle</item>
-
-    </style>
-
-    <style name="tv.imageCardViewImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
-
-        <item name="android:layout_width">@dimen/image_card_width</item>
-        <item name="android:layout_height">@dimen/image_card_height</item>
-
     </style>
 
 </resources>

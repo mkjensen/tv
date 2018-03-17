@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Martin Kamp Jensen
+ * Copyright 2018 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.mkjensen.tv.ondemand.presenter;
+package com.github.mkjensen.tv.about;
 
-import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v17.leanback.app.GuidedStepFragment;
 
-import com.github.mkjensen.tv.model.Broadcast;
-
-public class BroadcastDetailsDescriptionPresenter extends AbstractDetailsDescriptionPresenter {
+public class AboutActivity extends Activity {
 
   @Override
-  protected void onBindDescription(ViewHolder vh, Object item) {
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-    Broadcast broadcast = (Broadcast) item;
+    super.onCreate(savedInstanceState);
 
-    vh.getTitle().setText(broadcast.getTitle());
-    vh.getSubtitle().setText(broadcast.getSubtitle());
-    vh.getBody().setText(broadcast.getDescription());
+    if (savedInstanceState == null) {
+      GuidedStepFragment.addAsRoot(this, new AboutFragment(), android.R.id.content);
+    }
   }
 }

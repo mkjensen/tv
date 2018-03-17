@@ -18,27 +18,21 @@
 
 <resources>
 
+    <string name="about_breadcrumb">Om…</string>
+    <string name="about_description">Start \"Tv-kanaler\" appen på hovedskærmen for at benytte Dansk TV</string>
+
+    <string name="about_content_description">Betingelser for tilgængeligt indhold</string>
+    <string name="about_content_title">Indholdslicenser</string>
+    <string name="about_content_text">Alt tilgængeligt indhold tilhører Danmarks Radio og/eller deres leverandører.\n\nBenyttelse af indholdet er betinget af betaling af medielicens.</string>
+
+    <string name="about_thirdparty_description">Betingelser for anvendte tredjepartsværktøjer</string>
+    <string name="about_thirdparty_title">Tredjepartslicenser</string>
+
+    <string name="about_version_title">Version</string>
+
     <string name="app_name">Dansk TV</string>
 
     <string name="live_setup_cancel">Annuller</string>
     <string name="live_setup_loading">Indlæser kanaler…</string>
-
-    <string name="ondemand_browse_drtv">DR TV</string>
-    <string name="ondemand_browse_drtv_lastchance">Sidste chance</string>
-    <string name="ondemand_browse_drtv_latestnews">Seneste nyheder</string>
-    <string name="ondemand_browse_drtv_mostviewed">Mest sete</string>
-    <string name="ondemand_browse_drtv_top">Særligt udvalgte</string>
-
-    <string name="ondemand_browse_settings">Indstillinger</string>
-    <string name="ondemand_browse_settings_content_subtitle">Betingelser for tilgængeligt indhold</string>
-    <string name="ondemand_browse_settings_content_text">Alt tilgængeligt indhold tilhører Danmarks Radio og/eller deres leverandører.\n\nBenyttelse af indholdet er betinget af betaling af medielicens.</string>
-    <string name="ondemand_browse_settings_content_title">Indholdslicenser</string>
-    <string name="ondemand_browse_settings_refresh_subtitle">Hent data igen</string>
-    <string name="ondemand_browse_settings_refresh_title">Opdater</string>
-    <string name="ondemand_browse_settings_thirdparty_subtitle">Betingelser for anvendte tredjepartsværktøjer</string>
-    <string name="ondemand_browse_settings_thirdparty_title">Tredjepartslicenser</string>
-    <string name="ondemand_browse_settings_version_title">Version</string>
-
-    <string name="ondemand_details_play">Afspil</string>
 
 </resources>

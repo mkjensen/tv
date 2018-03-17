@@ -18,9 +18,7 @@ package com.github.mkjensen.tv.inject;
 
 import com.github.mkjensen.tv.TvApplication;
 import com.github.mkjensen.tv.backend.BackendModule;
-import com.github.mkjensen.tv.inject.viewmodel.ViewModelModule;
 import com.github.mkjensen.tv.live.LiveModule;
-import com.github.mkjensen.tv.ondemand.OnDemandModule;
 import com.github.mkjensen.tv.playback.PlaybackModule;
 
 import javax.inject.Singleton;
@@ -34,9 +32,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     ApplicationModule.class,
     BackendModule.class,
     LiveModule.class,
-    OnDemandModule.class,
     PlaybackModule.class,
-    ViewModelModule.class
 })
 @Singleton
 interface TvComponent extends AndroidInjector<TvApplication> {
