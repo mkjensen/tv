@@ -67,7 +67,7 @@ ext {
   androidSupportVersion = "27.1.0"
   autoValueVersion = "1.5.4"
   autoValueMoshiVersion = "0.4.5"
-  crashlyticsVersion = "2.7.0@aar"
+  crashlyticsVersion = "2.9.1@aar"
   companionlibraryVersion = "0.2"
   daggerVersion = "2.15"
   exoplayerVersion = "2.7.1"
