@@ -64,7 +64,7 @@ android {
 
 ext {
 
-  androidSupportVersion = "27.0.0"
+  androidSupportVersion = "27.1.0"
   autoValueVersion = "1.5.1"
   autoValueMoshiVersion = "0.4.4"
   crashlyticsVersion = "2.7.0@aar"
