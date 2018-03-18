@@ -106,7 +106,7 @@ public abstract class DrSchedule {
         return announcedEndTime;
       }
 
-      Timber.e("Both actual and announced end times are null for: " + getTitle());
+      Timber.e("Both actual and announced end times are null for: %s", getTitle());
       return new Date();
     }
 
@@ -126,7 +126,7 @@ public abstract class DrSchedule {
         return announcedStartTime;
       }
 
-      Timber.e("Both actual and announced start times are null for: " + getTitle());
+      Timber.e("Both actual and announced start times are null for: %s", getTitle());
       return new Date();
     }
 

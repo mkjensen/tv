@@ -80,7 +80,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
     }
 
     if (!response.isSuccessful()) {
-      Timber.e("Error while fetching channels: " + response.message());
+      Timber.e("Error while fetching channels: %s", response.message());
       return Collections.emptyList();
     }
 
@@ -132,7 +132,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
     String streamUrl = drChannel.getStreamUrl();
 
     if (streamUrl == null) {
-      Timber.w("Did not find stream URL for channel: " + drChannel.getId());
+      Timber.w("Did not find stream URL for channel: %s", drChannel.getId());
       return null;
     }
 
@@ -153,7 +153,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
   public List<Program> getProgramsForChannel(@NonNull Uri channelUri, @NonNull Channel channel,
                                              long startMs, long endMs) {
 
-    Timber.d("Getting programs for channel: " + channel);
+    Timber.d("Getting programs for channel: %s", channel);
 
     String drChannelId = getDrChannelId(channel);
 
@@ -171,7 +171,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
       response = drService.getScheduleForChannel(drChannelId, formattedStartDate).execute();
 
     } catch (IOException ex) {
-      Timber.e(ex, "Error while fetching schedule for channel: " + channel);
+      Timber.e(ex, "Error while fetching schedule for channel: %s", channel);
       return Collections.emptyList();
     }
 
@@ -207,7 +207,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
       }
     }
 
-    Timber.d("Finished getting programs for channel: " + channel);
+    Timber.d("Finished getting programs for channel: %s", channel);
 
     return programs;
   }

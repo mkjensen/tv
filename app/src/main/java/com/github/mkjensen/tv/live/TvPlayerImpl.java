@@ -128,14 +128,14 @@ class TvPlayerImpl extends DefaultEventListener implements TvPlayer {
   @Override
   public void registerCallback(@NonNull Callback callback) {
 
-    Timber.d("registerCallback: " + callback);
+    Timber.d("registerCallback: %s", callback);
     // Do nothing.
   }
 
   @Override
   public void unregisterCallback(@NonNull Callback callback) {
 
-    Timber.d("unregisterCallback: " + callback);
+    Timber.d("unregisterCallback: %s", callback);
     // Do nothing.
   }
 
@@ -163,7 +163,7 @@ class TvPlayerImpl extends DefaultEventListener implements TvPlayer {
   @Override
   public void onRepeatModeChanged(int repeatMode) {
 
-    Timber.d("onRepeatModeChanged: " + repeatMode);
+    Timber.d("onRepeatModeChanged: %s", repeatMode);
     // Do nothing.
   }
 
