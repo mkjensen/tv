@@ -22,10 +22,10 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
+import android.support.v4.app.FragmentActivity;
 
 import com.github.mkjensen.tv.BuildConfig;
 import com.github.mkjensen.tv.R;
@@ -36,7 +36,7 @@ import de.psdev.licensesdialog.licenses.License;
 
 import java.util.List;
 
-public class AboutFragment extends GuidedStepFragment {
+public class AboutFragment extends GuidedStepSupportFragment {
 
   private static final long CONTENT_ID = 0;
 
@@ -44,7 +44,7 @@ public class AboutFragment extends GuidedStepFragment {
 
   @NonNull
   @Override
-  public GuidanceStylist.Guidance onCreateGuidance(@Nullable Bundle savedInstanceState) {
+  public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
 
     Resources resources = getResources();
 
@@ -57,8 +57,7 @@ public class AboutFragment extends GuidedStepFragment {
   }
 
   @Override
-  public void onCreateActions(@NonNull List<GuidedAction> actions,
-                              @Nullable Bundle savedInstanceState) {
+  public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
 
     Activity activity = getActivity();
 
@@ -82,19 +81,25 @@ public class AboutFragment extends GuidedStepFragment {
   }
 
   @Override
-  public void onGuidedActionClicked(@NonNull GuidedAction action) {
+  public void onGuidedActionClicked(GuidedAction action) {
+
+    FragmentActivity activity = getActivity();
+
+    if (activity == null) {
+      return;
+    }
 
     long actionId = action.getId();
 
     if (actionId == CONTENT_ID) {
       LicenseResolver.registerLicense(new MediaLicence());
-      new LicensesDialog.Builder(getActivity())
+      new LicensesDialog.Builder(activity)
           .setNotices(R.raw.content_licenses)
           .setTitle(R.string.about_content_title)
           .build()
           .show();
     } else if (actionId == THIRD_PARTY_ID) {
-      new LicensesDialog.Builder(getActivity())
+      new LicensesDialog.Builder(activity)
           .setNotices(R.raw.thirdparty_licenses)
           .setTitle(R.string.about_thirdparty_title)
           .build()

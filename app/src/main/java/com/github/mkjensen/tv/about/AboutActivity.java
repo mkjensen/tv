@@ -16,12 +16,12 @@
 
 package com.github.mkjensen.tv.about;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import android.support.v17.leanback.app.GuidedStepSupportFragment;
+import android.support.v4.app.FragmentActivity;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends FragmentActivity {
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class AboutActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     if (savedInstanceState == null) {
-      GuidedStepFragment.addAsRoot(this, new AboutFragment(), android.R.id.content);
+      GuidedStepSupportFragment.addAsRoot(this, new AboutFragment(), android.R.id.content);
     }
   }
 }
