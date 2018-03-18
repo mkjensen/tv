@@ -16,31 +16,39 @@
 
 package com.github.mkjensen.tv.live;
 
-import com.google.android.media.tv.companionlibrary.BaseTvInputService;
-import com.google.android.media.tv.companionlibrary.TvPlayer;
-import com.google.android.media.tv.companionlibrary.model.InternalProviderData;
-import com.google.android.media.tv.companionlibrary.model.Program;
-import com.google.android.media.tv.companionlibrary.model.RecordedProgram;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.media.tv.companionlibrary.model.Channel;
+import com.google.android.media.tv.companionlibrary.utils.TvContractUtils;
 
 import android.content.Context;
 import android.media.tv.TvInputManager;
+import android.media.tv.TvInputService;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import java.util.Objects;
+import android.view.Surface;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
 
-public class TvInputServiceImpl extends BaseTvInputService {
+import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
+import static com.google.android.exoplayer2.Player.STATE_READY;
+
+public class TvInputServiceImpl extends TvInputService {
 
   @SuppressWarnings("WeakerAccess")
   @Inject
-  Provider<TvPlayerImpl> playerProvider;
+  HlsMediaSource.Factory hlsMediaSourceFactory;
+
+  @SuppressWarnings("WeakerAccess")
+  @Inject
+  SimpleExoPlayer simpleExoPlayer;
 
   @Override
   public void onCreate() {
@@ -52,82 +60,135 @@ public class TvInputServiceImpl extends BaseTvInputService {
 
   @Nullable
   @Override
-  public Session onCreateSession(@NonNull String inputId) {
+  public Session onCreateSession(String inputId) {
 
-    return sessionCreated(new SessionImpl(this, inputId));
+    Timber.d("onCreateSession: %s", inputId);
+
+    return new TvInputServiceSessionImpl(this, hlsMediaSourceFactory, simpleExoPlayer);
   }
 
-  private class SessionImpl extends BaseTvInputService.Session {
+  private static final class TvInputServiceSessionImpl extends TvInputService.Session {
 
-    private final TvPlayerImpl player;
+    private final Context context;
 
-    private String currentUrl;
+    private final HlsMediaSource.Factory hlsMediaSourceFactory;
 
-    SessionImpl(@NonNull Context context, @NonNull String inputId) {
+    private final Player.EventListener playerEventListener;
 
-      super(context, inputId);
+    private final SimpleExoPlayer simpleExoPlayer;
 
-      player = playerProvider.get();
-      player.setSession(this);
+    private TvInputServiceSessionImpl(@NonNull Context context, @NonNull HlsMediaSource.Factory hlsMediaSourceFactory,
+                                      @NonNull SimpleExoPlayer simpleExoPlayer) {
+
+      super(context);
+
+      this.context = context;
+      this.hlsMediaSourceFactory = hlsMediaSourceFactory;
+      this.playerEventListener = new PlayerEventListener(this);
+      this.simpleExoPlayer = simpleExoPlayer;
+
+      simpleExoPlayer.addListener(playerEventListener);
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         notifyTimeShiftStatusChanged(TvInputManager.TIME_SHIFT_STATUS_UNSUPPORTED);
       }
     }
 
-    @NonNull
     @Override
-    public TvPlayer getTvPlayer() {
+    public void onRelease() {
 
-      return player;
+      Timber.d("onRelease");
+
+      simpleExoPlayer.removeListener(playerEventListener);
+      simpleExoPlayer.release();
     }
 
     @Override
-    public boolean onPlayProgram(@Nullable Program program, long startPosMs) {
+    public boolean onSetSurface(@Nullable Surface surface) {
 
-      Timber.d("onPlayProgram: " + program + ", " + startPosMs);
+      Timber.d("onSetSurface: %s", surface);
 
-      if (program == null) {
-        return false;
-      }
-
-      InternalProviderData internalProviderData = program.getInternalProviderData();
-
-      if (internalProviderData == null) {
-        return false;
-      }
-
-      String url = internalProviderData.getVideoUrl();
-
-      if (Objects.equals(currentUrl, url)) {
-        return true;
-      }
-
-      player.play(url);
-      currentUrl = url;
+      simpleExoPlayer.setVideoSurface(surface);
 
       return true;
     }
 
     @Override
-    public boolean onPlayRecordedProgram(@NonNull RecordedProgram recordedProgram) {
+    public void onSetStreamVolume(float volume) {
 
-      // Unsupported.
-      return false;
+      Timber.d("onSetStreamVolume: %s", volume);
+
+      simpleExoPlayer.setVolume(volume);
+    }
+
+    @Override
+    public boolean onTune(Uri channelUri) {
+
+      Timber.d("onTune, channelUri: %s", channelUri);
+
+      notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_TUNING);
+
+      Channel channel = TvContractUtils.getChannel(context.getContentResolver(), channelUri);
+      String videoUrl = channel.getInternalProviderData().getVideoUrl();
+
+      Timber.d("onTune, videoUrl: %s", videoUrl);
+
+      HlsMediaSource hlsMediaSource = hlsMediaSourceFactory.createMediaSource(Uri.parse(videoUrl));
+      simpleExoPlayer.prepare(hlsMediaSource);
+      simpleExoPlayer.setPlayWhenReady(true);
+
+      return true;
     }
 
     @Override
     public void onSetCaptionEnabled(boolean enabled) {
 
-      // Unsupported.
+      Timber.d("onSetCaptionEnabled: %s", enabled);
+
+      // Do nothing.
     }
 
-    @Override
-    public void onRelease() {
+    private static final class PlayerEventListener extends Player.DefaultEventListener {
 
-      player.release();
+      private final Session session;
 
-      super.onRelease();
+      private PlayerEventListener(@NonNull Session session) {
+
+        this.session = session;
+      }
+
+      @Override
+      public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+        Timber.d("onPlayerStateChanged: %s, %d", playWhenReady, playbackState);
+
+        if (!playWhenReady) {
+          return;
+        }
+
+        switch (playbackState) {
+
+          case STATE_BUFFERING:
+            session.notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_BUFFERING);
+            break;
+
+          case STATE_READY:
+            session.notifyVideoAvailable();
+            break;
+
+          default:
+            // Do nothing.
+            break;
+        }
+      }
+
+      @Override
+      public void onPlayerError(ExoPlaybackException error) {
+
+        Timber.e(error, "An error occurred during playback");
+
+        session.notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_UNKNOWN);
+      }
     }
   }
 }
