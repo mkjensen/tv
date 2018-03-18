@@ -16,6 +16,8 @@
 
 package com.github.mkjensen.tv.util;
 
+import android.support.annotation.NonNull;
+
 import com.crashlytics.android.Crashlytics;
 
 import timber.log.Timber;
@@ -29,7 +31,7 @@ public class CrashlyticsTimberTree extends Timber.Tree {
   private static final String MESSAGE_KEY = "message";
 
   @Override
-  protected void log(int priority, String tag, String message, Throwable throwable) {
+  protected void log(int priority, String tag, @NonNull String message, Throwable throwable) {
 
     if (priority < android.util.Log.WARN) {
       return;
