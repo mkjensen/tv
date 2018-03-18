@@ -1,12 +1,10 @@
-# Dagger: https://github.com/google/dagger/issues/645
--dontwarn com.google.errorprone.annotations.*
-
-# Fabric: https://docs.fabric.io/android/crashlytics/dex-and-proguard.html
+# Crashlytics: https://docs.fabric.io/android/crashlytics/dex-and-proguard.html
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
+
+# Dagger: https://github.com/google/dagger/issues/645
+-dontwarn com.google.errorprone.annotations.*
 
 # OkHttp: https://github.com/square/okhttp
 -dontwarn okhttp3.**
