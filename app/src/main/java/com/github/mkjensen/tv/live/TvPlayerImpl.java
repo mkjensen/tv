@@ -20,7 +20,6 @@ import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Player.DefaultEventListener;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.media.tv.companionlibrary.TvPlayer;
 
 import android.media.PlaybackParams;
@@ -40,16 +39,16 @@ import static com.google.android.exoplayer2.Player.STATE_READY;
 
 class TvPlayerImpl extends DefaultEventListener implements TvPlayer {
 
-  private final DataSource.Factory dataSourceFactory;
+  private final HlsMediaSource.Factory hlsMediaSourceFactory;
 
   private final SimpleExoPlayer simpleExoPlayer;
 
   private TvInputService.Session session;
 
   @Inject
-  TvPlayerImpl(@NonNull DataSource.Factory dataSourceFactory, @NonNull SimpleExoPlayer simpleExoPlayer) {
+  TvPlayerImpl(@NonNull HlsMediaSource.Factory hlsMediaSourceFactory, @NonNull SimpleExoPlayer simpleExoPlayer) {
 
-    this.dataSourceFactory = dataSourceFactory;
+    this.hlsMediaSourceFactory = hlsMediaSourceFactory;
     this.simpleExoPlayer = simpleExoPlayer;
     this.simpleExoPlayer.addListener(this);
   }
@@ -61,9 +60,8 @@ class TvPlayerImpl extends DefaultEventListener implements TvPlayer {
 
   void play(@NonNull String url) {
 
-    HlsMediaSource hlsMediaSource = new HlsMediaSource(
+    HlsMediaSource hlsMediaSource = hlsMediaSourceFactory.createMediaSource(
         Uri.parse(url),
-        dataSourceFactory,
         null,
         null);
 

@@ -23,6 +23,9 @@ import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
+import com.google.android.exoplayer2.source.hls.DefaultHlsDataSourceFactory;
+import com.google.android.exoplayer2.source.hls.HlsDataSourceFactory;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
@@ -94,6 +97,24 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
+  HlsDataSourceFactory exoPlayerHlsDataSourceFactory(DataSource.Factory dataSourceFactory) {
+
+    return new DefaultHlsDataSourceFactory(dataSourceFactory);
+  }
+
+  @CheckResult
+  @NonNull
+  @Provides
+  @Singleton
+  HlsMediaSource.Factory exoPlayerHlsMediaSourceFactory(HlsDataSourceFactory hlsDataSourceFactory) {
+
+    return new HlsMediaSource.Factory(hlsDataSourceFactory);
+  }
+
+  @CheckResult
+  @NonNull
+  @Provides
+  @Singleton
   LoadControl exoPlayerLoadControl() {
 
     return new DefaultLoadControl();
@@ -136,8 +157,7 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  TransferListener<? super DataSource> exoPlayerTransferListener(
-      @NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
+  TransferListener<? super DataSource> exoPlayerTransferListener(@NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
 
     return defaultBandwidthMeter;
   }
