@@ -48,12 +48,12 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
-            android:name="google_analytics_adid_collection_enabled"
+            android:name="firebase_crashlytics_collection_enabled"
             android:value="false" />
 
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="cd179272d10d855792901db4beafe5dc826e8c6e" />
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
 
         <activity android:name=".about.AboutActivity">
 
