@@ -21,7 +21,7 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.media.tv.companionlibrary.model.Channel;
-import com.google.android.media.tv.companionlibrary.utils.TvContractUtils;
+import com.google.android.media.tv.companionlibrary.model.ModelUtils;
 
 import android.content.Context;
 import android.media.tv.TvInputManager;
@@ -128,7 +128,7 @@ public class TvInputServiceImpl extends TvInputService {
 
       notifyVideoUnavailable(TvInputManager.VIDEO_UNAVAILABLE_REASON_TUNING);
 
-      Channel channel = TvContractUtils.getChannel(context.getContentResolver(), channelUri);
+      Channel channel = ModelUtils.getChannel(context.getContentResolver(), channelUri);
       String videoUrl = channel.getInternalProviderData().getVideoUrl();
 
       Timber.d("onTune, videoUrl: %s", videoUrl);

@@ -16,8 +16,8 @@
 
 package com.github.mkjensen.tv.live;
 
-import com.google.android.media.tv.companionlibrary.ChannelSetupFragment;
-import com.google.android.media.tv.companionlibrary.EpgSyncJobService;
+import com.google.android.media.tv.companionlibrary.setup.ChannelSetupFragment;
+import com.google.android.media.tv.companionlibrary.sync.EpgSyncJobService;
 
 import android.app.Activity;
 import android.content.ComponentName;

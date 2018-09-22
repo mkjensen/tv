@@ -49,12 +49,6 @@ import okhttp3.internal.Version;
 @Module
 public class PlaybackModule {
 
-  /**
-   * The maximum bitrate in bits per second that should be assumed when a bandwidth estimate is
-   * unavailable for {@link AdaptiveTrackSelection}.
-   */
-  private static final int ADAPTIVE_TRACK_SELECTION_MAX_INITIAL_BITRATE = 10 * 1024 * 1024;
-
   @CheckResult
   @NonNull
   @Provides
@@ -90,7 +84,9 @@ public class PlaybackModule {
   @Singleton
   DefaultBandwidthMeter exoPlayerDefaultBandwidthMeter() {
 
-    return new DefaultBandwidthMeter();
+    return new DefaultBandwidthMeter.Builder()
+        .setInitialBitrateEstimate(10 * 1024 * 1024)
+        .build();
   }
 
   @CheckResult
@@ -144,13 +140,7 @@ public class PlaybackModule {
   @Singleton
   TrackSelection.Factory exoPlayerTrackSelectionFactory(BandwidthMeter bandwidthMeter) {
 
-    return new AdaptiveTrackSelection.Factory(
-        bandwidthMeter,
-        ADAPTIVE_TRACK_SELECTION_MAX_INITIAL_BITRATE,
-        AdaptiveTrackSelection.DEFAULT_MIN_DURATION_FOR_QUALITY_INCREASE_MS,
-        AdaptiveTrackSelection.DEFAULT_MAX_DURATION_FOR_QUALITY_DECREASE_MS,
-        AdaptiveTrackSelection.DEFAULT_MIN_DURATION_TO_RETAIN_AFTER_DISCARD_MS,
-        AdaptiveTrackSelection.DEFAULT_BANDWIDTH_FRACTION);
+    return new AdaptiveTrackSelection.Factory(bandwidthMeter);
   }
 
   @CheckResult

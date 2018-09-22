@@ -21,14 +21,14 @@ apply from: rootProject.file('signing.gradle')
 
 android {
 
-  compileSdkVersion 27
-  buildToolsVersion "27.0.3"
+  compileSdkVersion 28
+  buildToolsVersion "28.0.2"
 
   defaultConfig {
 
     applicationId "com.github.mkjensen.tv"
     minSdkVersion 21
-    targetSdkVersion 27
+    targetSdkVersion 28
     versionCode 21
     versionName "0.0.21"
   }
@@ -76,20 +76,18 @@ android {
 
 ext {
 
-  androidSupportVersion = "27.1.0"
-  autoValueVersion = "1.5.4"
+  androidSupportVersion = "28.0.0"
+  autoValueVersion = "1.6.2"
   autoValueMoshiVersion = "0.4.5"
-  crashlyticsVersion = "2.9.1@aar"
-  companionlibraryVersion = "0.2"
-  daggerVersion = "2.15"
-  exoplayerVersion = "2.7.1"
-  googlePlayServicesVersion = "11.8.0"
-  interactivemediaVersion = "3.8.2"
+  crashlyticsVersion = "2.9.5@aar"
+  companionlibraryVersion = "0.4.1"
+  daggerVersion = "2.17"
+  exoplayerVersion = "2.8.4"
   licensesDialogVersion = "1.8.3"
-  moshiVersion = "1.5.0"
-  okhttpVersion = "3.10.0"
+  moshiVersion = "1.6.0"
+  okhttpVersion = "3.11.0"
   retrofitVersion = "2.4.0"
-  timberVersion = "4.6.1"
+  timberVersion = "4.7.1"
 }
 
 dependencies {
@@ -99,7 +97,10 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
   annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$autoValueMoshiVersion"
 
-  compileOnly "com.google.auto.value:auto-value:$autoValueVersion"
+  // Workaround for https://github.com/rharter/auto-value-moshi/issues/106
+  annotationProcessor "com.google.auto.value:auto-value-annotations:$autoValueVersion"
+
+  compileOnly "com.google.auto.value:auto-value-annotations:$autoValueVersion"
   compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$autoValueMoshiVersion"
 
   implementation "com.android.support:leanback-v17:$androidSupportVersion"
@@ -110,7 +111,11 @@ dependencies {
   implementation "com.google.android.exoplayer:exoplayer-core:$exoplayerVersion"
   implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayerVersion"
   implementation "com.google.android.exoplayer:extension-okhttp:$exoplayerVersion"
-  implementation "com.google.android.libraries.tv:companionlibrary:$companionlibraryVersion"
+  implementation("com.google.android.libraries.tv:companionlibrary:$companionlibraryVersion") {
+    exclude group: "com.android.support"
+    exclude group: "com.google.ads.interactivemedia.v3"
+    exclude group: "com.google.android.gms"
+  }
   implementation "com.google.dagger:dagger:$daggerVersion"
   implementation "com.google.dagger:dagger-android:$daggerVersion"
   implementation "com.google.dagger:dagger-android-support:$daggerVersion"
@@ -122,11 +127,7 @@ dependencies {
   implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
   implementation "de.psdev.licensesdialog:licensesdialog:$licensesDialogVersion"
 
-  // Overwrite TIF Companion Library dependencies to avoid bugs
-  implementation "com.android.support:appcompat-v7:$androidSupportVersion"
-  implementation "com.google.ads.interactivemedia.v3:interactivemedia:$interactivemediaVersion"
-  implementation "com.google.android.gms:play-services-ads:$googlePlayServicesVersion"
-
   // Overwrite other dependencies to avoid bugs
+  implementation "com.android.support:appcompat-v7:$androidSupportVersion"
   implementation "com.android.support:support-v4:$androidSupportVersion"
 }

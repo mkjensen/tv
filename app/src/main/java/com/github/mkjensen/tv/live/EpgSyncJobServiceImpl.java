@@ -16,10 +16,10 @@
 
 package com.github.mkjensen.tv.live;
 
-import com.google.android.media.tv.companionlibrary.EpgSyncJobService;
 import com.google.android.media.tv.companionlibrary.model.Channel;
 import com.google.android.media.tv.companionlibrary.model.InternalProviderData;
 import com.google.android.media.tv.companionlibrary.model.Program;
+import com.google.android.media.tv.companionlibrary.sync.EpgSyncJobService;
 
 import android.media.tv.TvContract;
 import android.net.Uri;
