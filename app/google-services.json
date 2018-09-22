@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "799100470715",
+    "firebase_url": "https://dansk-tv.firebaseio.com",
+    "project_id": "dansk-tv",
+    "storage_bucket": "dansk-tv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799100470715:android:01ee70c83b440091",
+        "android_client_info": {
+          "package_name": "com.github.mkjensen.tv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799100470715-mifousbl788m8cokd2qlt3id07lsahr6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.mkjensen.tv",
+            "certificate_hash": "8e10b526c3c051250cbc0f16a80b8f9a804e93ea"
+          }
+        },
+        {
+          "client_id": "799100470715-cht7jekrc2v2tt85h12v5otc159ngr8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3wmIm-p6opxYhIp5XEDiH3tuHAIiUPWw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799100470715-cht7jekrc2v2tt85h12v5otc159ngr8v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799100470715:android:b5452383dee81f6a",
+        "android_client_info": {
+          "package_name": "com.github.mkjensen.tv.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799100470715-q34ocbq9osok79gi4docuj19vc0mln30.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.mkjensen.tv.debug",
+            "certificate_hash": "2bd6ebea039f27087fbe7caa5e63a22cf9188e22"
+          }
+        },
+        {
+          "client_id": "799100470715-cht7jekrc2v2tt85h12v5otc159ngr8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3wmIm-p6opxYhIp5XEDiH3tuHAIiUPWw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799100470715-cht7jekrc2v2tt85h12v5otc159ngr8v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
