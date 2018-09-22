@@ -23,3 +23,6 @@
 }
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+# TV Input Framework Companion Library: Do not warn about missing advertising libraries that has been excluded.
+-dontwarn com.google.ads.**
