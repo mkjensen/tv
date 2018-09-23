@@ -40,7 +40,9 @@ public class AboutFragment extends GuidedStepSupportFragment {
 
   private static final long CONTENT_ID = 0;
 
-  private static final long THIRD_PARTY_ID = 1;
+  private static final long PRIVACY_ID = 1;
+
+  private static final long THIRD_PARTY_ID = 2;
 
   @NonNull
   @Override
@@ -65,6 +67,12 @@ public class AboutFragment extends GuidedStepSupportFragment {
         .description(R.string.about_content_description)
         .id(CONTENT_ID)
         .title(R.string.about_content_title)
+        .build());
+
+    actions.add(new GuidedAction.Builder(activity)
+        .description(R.string.about_privacy_description)
+        .id(PRIVACY_ID)
+        .title(R.string.about_privacy_title)
         .build());
 
     actions.add(new GuidedAction.Builder(activity)
@@ -96,6 +104,13 @@ public class AboutFragment extends GuidedStepSupportFragment {
       new LicensesDialog.Builder(activity)
           .setNotices(R.raw.content_licenses)
           .setTitle(R.string.about_content_title)
+          .build()
+          .show();
+    } else if (actionId == PRIVACY_ID) {
+      LicenseResolver.registerLicense(new PrivacyLicense());
+      new LicensesDialog.Builder(activity)
+          .setNotices(R.raw.privacy_policy)
+          .setTitle(R.string.about_privacy_title)
           .build()
           .show();
     } else if (actionId == THIRD_PARTY_ID) {
@@ -132,6 +147,34 @@ public class AboutFragment extends GuidedStepSupportFragment {
     @Override
     public String getUrl() {
       return "https://www.dr.dk/om-dr/licens";
+    }
+  }
+
+  private static final class PrivacyLicense extends License {
+
+    @Override
+    public String getName() {
+      return "Privacy policy";
+    }
+
+    @Override
+    public String readSummaryTextFromResources(Context context) {
+      return readFullTextFromResources(context);
+    }
+
+    @Override
+    public String readFullTextFromResources(Context context) {
+      return context.getString(R.string.about_privacy_text);
+    }
+
+    @Override
+    public String getVersion() {
+      return "1.0";
+    }
+
+    @Override
+    public String getUrl() {
+      return "https://mkjensen.github.io/tv";
     }
   }
 }

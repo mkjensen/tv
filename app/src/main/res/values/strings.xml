@@ -22,8 +22,15 @@
     <string name="about_description">Start \"Tv-kanaler\" appen på hovedskærmen for at benytte Dansk TV</string>
 
     <string name="about_content_description">Betingelser for tilgængeligt indhold</string>
-    <string name="about_content_title">Indholdslicenser</string>
     <string name="about_content_text">Alt tilgængeligt indhold tilhører Danmarks Radio og/eller deres leverandører.\n\nBenyttelse af indholdet er betinget af betaling af medielicens.</string>
+    <string name="about_content_title">Indholdslicenser</string>
+
+    <string name="about_privacy_description">Dansk TVs privatlivspolitik</string>
+    <string name="about_privacy_text">Ingen oplysninger indsamles direkte af Dansk TV.
+\n\nNedenstående tredjepartsværktøjer benyttes til at få besked, hvis Dansk TV lukker ned pga. en uventet fejl.
+\n\nTredjepartsværktøjerne anonymiserer den data, de indsamler, således at det kun fremgår, hvor i Dansk TV fejlen opstod, og hvilken type enhed fejlen opstod på.
+    </string>
+    <string name="about_privacy_title">Privatlivspolitik</string>
 
     <string name="about_thirdparty_description">Betingelser for anvendte tredjepartsværktøjer</string>
     <string name="about_thirdparty_title">Tredjepartslicenser</string>
