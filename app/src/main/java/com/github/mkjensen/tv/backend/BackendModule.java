@@ -23,7 +23,7 @@ import android.support.annotation.NonNull;
 import com.github.mkjensen.tv.model.JsonAdapterFactory;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import com.squareup.moshi.Rfc3339DateJsonAdapter;
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
 
 import java.util.Date;
 
