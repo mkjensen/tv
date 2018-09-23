@@ -17,7 +17,7 @@ android:
     - sys-img-x86-android-tv-28
 
 before_install:
-   - openssl aes-256-cbc -K $encrypted_9daa82660324_key -iv $encrypted_9daa82660324_iv -in google-services.json.enc -out app/google-services.json -d
+   - openssl aes-256-cbc -K $encrypted_9daa82660324_key -iv $encrypted_9daa82660324_iv -in app/google-services.json.enc -out app/google-services.json -d
 
 script:
    - ./gradlew build connectedCheck
