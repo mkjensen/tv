@@ -86,7 +86,7 @@ ext {
   firebaseCoreVersion = "16.0.7"
   licensesDialogVersion = "1.8.3"
   moshiVersion = "1.6.0"
-  okhttpVersion = "3.11.0"
+  okhttpVersion = "3.13.1"
   retrofitVersion = "2.4.0"
   timberVersion = "4.7.1"
 }
