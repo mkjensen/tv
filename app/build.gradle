@@ -82,7 +82,7 @@ ext {
   crashlyticsVersion = "2.9.9"
   companionlibraryVersion = "0.4.1"
   daggerVersion = "2.21"
-  exoplayerVersion = "2.8.4"
+  exoplayerVersion = "2.9.4"
   firebaseCoreVersion = "16.0.7"
   licensesDialogVersion = "1.8.3"
   moshiVersion = "1.6.0"

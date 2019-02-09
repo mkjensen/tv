@@ -53,10 +53,21 @@ public class PlaybackModule {
   @NonNull
   @Provides
   // Not a singleton because the player cannot be used after release() has been called.
-  SimpleExoPlayer exoPlayer(@NonNull RenderersFactory renderersFactory,
-                            @NonNull LoadControl loadControl, @NonNull TrackSelector trackSelector) {
+  SimpleExoPlayer exoPlayer(
+      @NonNull Context context,
+      @NonNull RenderersFactory renderersFactory,
+      @NonNull LoadControl loadControl,
+      @NonNull TrackSelector trackSelector,
+      @NonNull BandwidthMeter bandwidthMeter) {
 
-    return ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector, loadControl);
+    return ExoPlayerFactory.newSimpleInstance(
+        context,
+        renderersFactory,
+        trackSelector,
+        loadControl,
+        null,
+        bandwidthMeter
+    );
   }
 
   @CheckResult
@@ -72,8 +83,9 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  DataSource.Factory exoPlayerDataSourceFactory(@NonNull OkHttpClient okHttpClient,
-                                                @NonNull TransferListener<? super DataSource> transferListener) {
+  DataSource.Factory exoPlayerDataSourceFactory(
+      @NonNull OkHttpClient okHttpClient,
+      @NonNull TransferListener transferListener) {
 
     return new OkHttpDataSourceFactory(okHttpClient, Version.userAgent(), transferListener);
   }
@@ -82,9 +94,9 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  DefaultBandwidthMeter exoPlayerDefaultBandwidthMeter() {
+  DefaultBandwidthMeter exoPlayerDefaultBandwidthMeter(@NonNull Context context) {
 
-    return new DefaultBandwidthMeter.Builder()
+    return new DefaultBandwidthMeter.Builder(context)
         .setInitialBitrateEstimate(10 * 1024 * 1024)
         .build();
   }
@@ -93,7 +105,7 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  HlsDataSourceFactory exoPlayerHlsDataSourceFactory(DataSource.Factory dataSourceFactory) {
+  HlsDataSourceFactory exoPlayerHlsDataSourceFactory(@NonNull DataSource.Factory dataSourceFactory) {
 
     return new DefaultHlsDataSourceFactory(dataSourceFactory);
   }
@@ -102,7 +114,7 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  HlsMediaSource.Factory exoPlayerHlsMediaSourceFactory(HlsDataSourceFactory hlsDataSourceFactory) {
+  HlsMediaSource.Factory exoPlayerHlsMediaSourceFactory(@NonNull HlsDataSourceFactory hlsDataSourceFactory) {
 
     return new HlsMediaSource.Factory(hlsDataSourceFactory);
   }
@@ -129,7 +141,7 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  TrackSelector exoPlayerTrackSelector(TrackSelection.Factory trackSelectionFactory) {
+  TrackSelector exoPlayerTrackSelector(@NonNull TrackSelection.Factory trackSelectionFactory) {
 
     return new DefaultTrackSelector(trackSelectionFactory);
   }
@@ -138,16 +150,16 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  TrackSelection.Factory exoPlayerTrackSelectionFactory(BandwidthMeter bandwidthMeter) {
+  TrackSelection.Factory exoPlayerTrackSelectionFactory() {
 
-    return new AdaptiveTrackSelection.Factory(bandwidthMeter);
+    return new AdaptiveTrackSelection.Factory();
   }
 
   @CheckResult
   @NonNull
   @Provides
   @Singleton
-  TransferListener<? super DataSource> exoPlayerTransferListener(@NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
+  TransferListener exoPlayerTransferListener(@NonNull DefaultBandwidthMeter defaultBandwidthMeter) {
 
     return defaultBandwidthMeter;
   }
