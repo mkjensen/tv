@@ -72,7 +72,7 @@ ext {
   daggerVersion = "2.21"
   exoplayerVersion = "2.9.4"
   firebaseCoreVersion = "16.0.7"
-  licensesDialogVersion = "1.8.3"
+  licensesDialogVersion = "2.0.0"
   moshiVersion = "1.6.0"
   okhttpVersion = "3.13.1"
   retrofitVersion = "2.5.0"

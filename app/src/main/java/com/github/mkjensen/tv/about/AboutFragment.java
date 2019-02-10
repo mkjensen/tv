@@ -32,6 +32,7 @@ import de.psdev.licensesdialog.licenses.License;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.FragmentActivity;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.leanback.widget.GuidanceStylist;
@@ -98,24 +99,26 @@ public class AboutFragment extends GuidedStepSupportFragment {
       return;
     }
 
+    Context context = new ContextThemeWrapper(activity, R.style.Theme_AppCompat);
+
     long actionId = action.getId();
 
     if (actionId == CONTENT_ID) {
       LicenseResolver.registerLicense(new MediaLicence());
-      new LicensesDialog.Builder(activity)
+      new LicensesDialog.Builder(context)
           .setNotices(R.raw.content_licenses)
           .setTitle(R.string.about_content_title)
           .build()
           .show();
     } else if (actionId == PRIVACY_ID) {
       LicenseResolver.registerLicense(new PrivacyLicense());
-      new LicensesDialog.Builder(activity)
+      new LicensesDialog.Builder(context)
           .setNotices(R.raw.privacy_policy)
           .setTitle(R.string.about_privacy_title)
           .build()
           .show();
     } else if (actionId == THIRD_PARTY_ID) {
-      new LicensesDialog.Builder(activity)
+      new LicensesDialog.Builder(context)
           .setNotices(R.raw.thirdparty_licenses)
           .setTitle(R.string.about_thirdparty_title)
           .build()
