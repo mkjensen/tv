@@ -150,8 +150,11 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
   @NonNull
   @Override
-  public List<Program> getProgramsForChannel(@NonNull Uri channelUri, @NonNull Channel channel,
-                                             long startMs, long endMs) {
+  public List<Program> getProgramsForChannel(
+      @NonNull Uri channelUri,
+      @NonNull Channel channel,
+      long startMs,
+      long endMs) throws EpgSyncException {
 
     Timber.d("Getting programs for channel: %s", channel);
 
@@ -163,8 +166,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     Date startDate = new Date(startMs);
     String formattedStartDate = DATE_FORMAT.format(startDate);
-    Timber.d("getProgramsForChannel for channel [%s] and start date [%s]",
-        channelUri, formattedStartDate);
+    Timber.d("getProgramsForChannel for channel [%s] and start date [%s]", channelUri, formattedStartDate);
     Response<DrSchedule> response;
 
     try {
@@ -172,13 +174,12 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     } catch (IOException ex) {
       Timber.e(ex, "Error while fetching schedule for channel: %s", channel);
-      return Collections.emptyList();
+      throw new EpgSyncException(EpgSyncJobService.ERROR_NO_PROGRAMS);
     }
 
     if (!response.isSuccessful()) {
-      Timber.e("Error while fetching schedule for channel [%s]: %s",
-          channel, response.message());
-      return Collections.emptyList();
+      Timber.e("Error while fetching schedule for channel [%s]: %s", channel, response.message());
+      throw new EpgSyncException(EpgSyncJobService.ERROR_NO_PROGRAMS);
     }
 
     List<Program> programs = new ArrayList<>();
