@@ -65,7 +65,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
   @NonNull
   @Override
-  public List<Channel> getChannels() {
+  public List<Channel> getChannels() throws EpgSyncException {
 
     Timber.d("Getting channels");
 
@@ -76,12 +76,12 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
 
     } catch (IOException ex) {
       Timber.e(ex, "Error while fetching channels");
-      return Collections.emptyList();
+      throw new EpgSyncException(EpgSyncJobService.ERROR_NO_CHANNELS);
     }
 
     if (!response.isSuccessful()) {
       Timber.e("Error while fetching channels: %s", response.message());
-      return Collections.emptyList();
+      throw new EpgSyncException(EpgSyncJobService.ERROR_NO_CHANNELS);
     }
 
     List<DrChannel> drChannels = response.body();
