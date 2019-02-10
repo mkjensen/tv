@@ -18,6 +18,7 @@ package com.github.mkjensen.tv.model;
 
 import com.google.auto.value.AutoValue;
 
+import com.github.mkjensen.tv.util.DrDecryption;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -66,7 +67,7 @@ public abstract class DrChannel {
       }
 
       int bestKilobitRate = 0;
-      String bestManifest = null;
+      Server.Quality.Stream bestStream = null;
 
       for (Server.Quality quality : server.getQualities()) {
 
@@ -75,12 +76,25 @@ public abstract class DrChannel {
         if (kilobitRate > bestKilobitRate) {
           bestKilobitRate = kilobitRate;
           List<Server.Quality.Stream> streams = quality.getStreams();
-          bestManifest = streams.get(0).getManifest();
+          bestStream = streams.get(0);
         }
       }
 
-      if (bestManifest != null) {
-        return String.format("%s/%s", server.getBaseUrl(), bestManifest);
+      if (bestStream != null) {
+
+        String baseUrl = server.getBaseUrl();
+
+        if (baseUrl == null) {
+          baseUrl = DrDecryption.decrypt(server.getEncryptedBaseUrl());
+        }
+
+        String manifest = bestStream.getManifest();
+
+        if (manifest == null) {
+          manifest = DrDecryption.decrypt(bestStream.getEncryptedManifest());
+        }
+
+        return String.format("%s/%s", baseUrl, manifest);
       }
     }
 
@@ -133,8 +147,13 @@ public abstract class DrChannel {
 
     @CheckResult
     @Json(name = "Server")
-    @NonNull
+    @Nullable
     abstract String getBaseUrl();
+
+    @CheckResult
+    @Json(name = "EncryptedServer")
+    @Nullable
+    abstract String getEncryptedBaseUrl();
 
     @AutoValue
     static abstract class Quality {
@@ -167,8 +186,13 @@ public abstract class DrChannel {
 
         @CheckResult
         @Json(name = "Stream")
-        @NonNull
+        @Nullable
         abstract String getManifest();
+
+        @CheckResult
+        @Json(name = "EncryptedStream")
+        @Nullable
+        abstract String getEncryptedManifest();
       }
     }
   }
