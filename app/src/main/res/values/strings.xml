@@ -39,7 +39,12 @@
 
     <string name="app_name">Dansk TV</string>
 
-    <string name="live_setup_cancel">Annuller</string>
-    <string name="live_setup_loading">Indlæser kanaler…</string>
+    <string name="tif_channel_error_unknown">Ukendt fejl</string>
+    <string name="tif_channel_error_no_channels">Ingen kanaler fundet</string>
+    <string name="tif_channel_error_no_programs">Ingen programmer fundet</string>
+    <string name="tif_channel_scan_canceled">Anulleret</string>
+    <string name="tif_channel_setup_cancel">Annuller</string>
+    <string name="tif_channel_setup_description">Indlæser kanaler, vent venligst et øjeblik.</string>
+    <string name="tif_channel_setup_title">Dansk TV</string>
 
 </resources>

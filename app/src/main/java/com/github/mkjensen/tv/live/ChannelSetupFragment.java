@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Martin Kamp Jensen
+ * Copyright 2019 Martin Kamp Jensen
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,27 @@
 
 package com.github.mkjensen.tv.live;
 
-import android.os.Bundle;
+import com.google.android.media.tv.companionlibrary.setup.ChannelSetupStepSupportFragment;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
-import androidx.leanback.app.GuidedStepSupportFragment;
+import java.util.concurrent.TimeUnit;
 
-public class ChannelSetupActivity extends FragmentActivity {
+public class ChannelSetupFragment extends ChannelSetupStepSupportFragment<EpgSyncJobServiceImpl> {
 
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
+  public Class<EpgSyncJobServiceImpl> getEpgSyncJobServiceClass() {
 
-    super.onCreate(savedInstanceState);
+    return EpgSyncJobServiceImpl.class;
+  }
 
-    if (savedInstanceState == null) {
-      GuidedStepSupportFragment.addAsRoot(this, new ChannelSetupFragment(), android.R.id.content);
-    }
+  @Override
+  public long getFullSyncWindowSec() {
+
+    return TimeUnit.DAYS.toMillis(1);
+  }
+
+  @Override
+  public long getFullSyncFrequencyMillis() {
+
+    return TimeUnit.HOURS.toMillis(6);
   }
 }
