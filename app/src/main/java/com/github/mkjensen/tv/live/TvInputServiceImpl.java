@@ -148,7 +148,7 @@ public class TvInputServiceImpl extends TvInputService {
       // Do nothing.
     }
 
-    private static final class PlayerEventListener extends Player.DefaultEventListener {
+    private static final class PlayerEventListener implements Player.EventListener {
 
       private final Session session;
 
