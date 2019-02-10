@@ -16,14 +16,13 @@
 
 package com.github.mkjensen.tv.backend;
 
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
-
 import com.github.mkjensen.tv.model.DrChannel;
 import com.github.mkjensen.tv.model.DrSchedule;
 
 import java.util.List;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

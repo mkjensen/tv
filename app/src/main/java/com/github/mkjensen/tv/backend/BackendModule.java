@@ -17,8 +17,6 @@
 package com.github.mkjensen.tv.backend;
 
 import android.app.Application;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
 
 import com.github.mkjensen.tv.model.JsonAdapterFactory;
 import com.squareup.moshi.JsonAdapter;
@@ -29,6 +27,8 @@ import java.util.Date;
 
 import javax.inject.Singleton;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;

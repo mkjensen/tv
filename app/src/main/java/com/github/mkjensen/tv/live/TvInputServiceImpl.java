@@ -28,12 +28,12 @@ import android.media.tv.TvInputManager;
 import android.media.tv.TvInputService;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.Surface;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import dagger.android.AndroidInjection;
 import timber.log.Timber;
 

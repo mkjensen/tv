@@ -18,10 +18,6 @@ package com.github.mkjensen.tv.model;
 
 import com.google.auto.value.AutoValue;
 
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -29,6 +25,9 @@ import com.squareup.moshi.Moshi;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**

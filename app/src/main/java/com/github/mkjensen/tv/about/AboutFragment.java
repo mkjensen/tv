@@ -21,11 +21,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v17.leanback.app.GuidedStepSupportFragment;
-import android.support.v17.leanback.widget.GuidanceStylist;
-import android.support.v17.leanback.widget.GuidedAction;
-import android.support.v4.app.FragmentActivity;
 
 import com.github.mkjensen.tv.BuildConfig;
 import com.github.mkjensen.tv.R;
@@ -35,6 +30,12 @@ import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.License;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.leanback.app.GuidedStepSupportFragment;
+import androidx.leanback.widget.GuidanceStylist;
+import androidx.leanback.widget.GuidedAction;
 
 public class AboutFragment extends GuidedStepSupportFragment {
 

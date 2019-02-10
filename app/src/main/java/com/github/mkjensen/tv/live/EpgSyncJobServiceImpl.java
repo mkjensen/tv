@@ -23,8 +23,6 @@ import com.google.android.media.tv.companionlibrary.sync.EpgSyncJobService;
 
 import android.media.tv.TvContract;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.github.mkjensen.tv.backend.DrService;
 import com.github.mkjensen.tv.model.DrChannel;
@@ -41,6 +39,8 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import dagger.android.AndroidInjection;
 import retrofit2.Response;
 import timber.log.Timber;

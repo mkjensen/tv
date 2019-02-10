@@ -36,11 +36,11 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.TransferListener;
 
 import android.content.Context;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
 
 import javax.inject.Singleton;
 
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;

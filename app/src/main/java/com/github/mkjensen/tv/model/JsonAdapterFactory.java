@@ -16,11 +16,11 @@
 
 package com.github.mkjensen.tv.model;
 
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
-
 import com.ryanharter.auto.value.moshi.MoshiAdapterFactory;
 import com.squareup.moshi.JsonAdapter;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
 
 @MoshiAdapterFactory
 public abstract class JsonAdapterFactory implements JsonAdapter.Factory {

@@ -16,10 +16,9 @@
 
 package com.github.mkjensen.tv.util;
 
-import android.support.annotation.NonNull;
-
 import com.crashlytics.android.Crashlytics;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public class CrashlyticsTimberTree extends Timber.Tree {
