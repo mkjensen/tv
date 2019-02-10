@@ -23,8 +23,6 @@ import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory;
-import com.google.android.exoplayer2.source.hls.DefaultHlsDataSourceFactory;
-import com.google.android.exoplayer2.source.hls.HlsDataSourceFactory;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -105,18 +103,9 @@ public class PlaybackModule {
   @NonNull
   @Provides
   @Singleton
-  HlsDataSourceFactory exoPlayerHlsDataSourceFactory(@NonNull DataSource.Factory dataSourceFactory) {
+  HlsMediaSource.Factory exoPlayerHlsMediaSourceFactory(@NonNull DataSource.Factory dataSourceFactory) {
 
-    return new DefaultHlsDataSourceFactory(dataSourceFactory);
-  }
-
-  @CheckResult
-  @NonNull
-  @Provides
-  @Singleton
-  HlsMediaSource.Factory exoPlayerHlsMediaSourceFactory(@NonNull HlsDataSourceFactory hlsDataSourceFactory) {
-
-    return new HlsMediaSource.Factory(hlsDataSourceFactory);
+    return new HlsMediaSource.Factory(dataSourceFactory);
   }
 
   @CheckResult
