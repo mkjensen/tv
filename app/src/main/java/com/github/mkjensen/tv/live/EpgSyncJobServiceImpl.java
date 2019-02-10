@@ -189,12 +189,26 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
     if (drSchedule != null) {
       for (DrSchedule.DrProgram drProgram : drSchedule.getProgrammes()) {
 
+        long startTime = drProgram.getStartTime().getTime();
+        long endTime = drProgram.getEndTime().getTime();
+
+        if (startTime >= endTime) {
+          Timber.w(
+              "Start time [%d] for program [%s] on channel [%s] was >= end time [%d], adjusting end time",
+              startTime,
+              drProgram.getTitle(),
+              channel.getDisplayName(),
+              endTime
+          );
+          endTime = startTime + 1;
+        }
+
         Program.Builder builder = new Program.Builder()
             .setChannelId(channel.getId())
             .setDescription(drProgram.getDescription())
-            .setEndTimeUtcMillis(drProgram.getEndTime().getTime())
+            .setEndTimeUtcMillis(endTime)
             .setInternalProviderData(channel.getInternalProviderData())
-            .setStartTimeUtcMillis(drProgram.getStartTime().getTime())
+            .setStartTimeUtcMillis(startTime)
             .setTitle(drProgram.getTitle());
 
         DrSchedule.DrProgram.DrProgramDetails details = drProgram.getDetails();
