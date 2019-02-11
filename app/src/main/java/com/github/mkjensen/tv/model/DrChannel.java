@@ -28,6 +28,7 @@ import java.util.List;
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 /**
  * @see <a href="https://www.dr.dk/mu-online/Help/1.4/Api/GET-api-apiVersion-channel-all-active-dr-tv-channels">Gets
@@ -35,8 +36,6 @@ import androidx.annotation.Nullable;
  */
 @AutoValue
 public abstract class DrChannel {
-
-  private String streamUrl;
 
   @CheckResult
   @NonNull
@@ -49,16 +48,9 @@ public abstract class DrChannel {
   @Nullable
   public String getStreamUrl() {
 
-    if (streamUrl == null) {
-      streamUrl = findStreamUrl();
-    }
-
-    return streamUrl;
-  }
-
-  @CheckResult
-  @Nullable
-  private String findStreamUrl() {
+    int bestKilobitRate = 0;
+    Server bestServer = null;
+    Server.Quality.Stream bestStream = null;
 
     for (Server server : getServers()) {
 
@@ -66,39 +58,54 @@ public abstract class DrChannel {
         continue;
       }
 
-      int bestKilobitRate = 0;
-      Server.Quality.Stream bestStream = null;
-
       for (Server.Quality quality : server.getQualities()) {
 
         int kilobitRate = quality.getKilobitRate();
 
         if (kilobitRate > bestKilobitRate) {
           bestKilobitRate = kilobitRate;
-          List<Server.Quality.Stream> streams = quality.getStreams();
-          bestStream = streams.get(0);
+          bestServer = server;
+          bestStream = quality.getStreams().get(0);
         }
-      }
-
-      if (bestStream != null) {
-
-        String baseUrl = server.getBaseUrl();
-
-        if (baseUrl == null) {
-          baseUrl = DrDecryption.decrypt(server.getEncryptedBaseUrl());
-        }
-
-        String manifest = bestStream.getManifest();
-
-        if (manifest == null) {
-          manifest = DrDecryption.decrypt(bestStream.getEncryptedManifest());
-        }
-
-        return String.format("%s/%s", baseUrl, manifest);
       }
     }
 
-    return null;
+    return extractStreamUrl(bestServer, bestStream);
+  }
+
+  @CheckResult
+  @Nullable
+  private static String extractStreamUrl(Server server, Server.Quality.Stream stream) {
+
+    if (server == null || stream == null) {
+      return null;
+    }
+
+    String baseUrl = server.getBaseUrl();
+
+    if (baseUrl == null) {
+      Timber.i("Base URL unavailable, using encrypted base URL");
+      baseUrl = DrDecryption.decrypt(server.getEncryptedBaseUrl());
+    }
+
+    if (baseUrl == null) {
+      Timber.e("Encrypted base URL unavailable, cannot extract stream URL");
+      return null;
+    }
+
+    String manifest = stream.getManifest();
+
+    if (manifest == null) {
+      Timber.i("Manifest unavailable, using encrypted manifest");
+      manifest = DrDecryption.decrypt(stream.getEncryptedManifest());
+    }
+
+    if (manifest == null) {
+      Timber.e("Encrypted manifest unavailable, cannot extract stream URL");
+      return null;
+    }
+
+    return String.format("%s/%s", baseUrl, manifest);
   }
 
   @CheckResult

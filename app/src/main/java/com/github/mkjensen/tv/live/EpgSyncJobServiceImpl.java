@@ -105,6 +105,7 @@ public class EpgSyncJobServiceImpl extends EpgSyncJobService {
       InternalProviderData internalProviderData = createInternalProviderData(drChannel);
 
       if (internalProviderData == null) {
+        Timber.i("Skipping channel: %s", drChannel.getId());
         continue;
       }
 
