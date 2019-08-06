@@ -35,9 +35,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
     PlaybackModule.class,
 })
 @Singleton
-interface TvComponent extends AndroidInjector<TvApplication> {
+public interface TvComponent extends AndroidInjector<TvApplication> {
 
-  @Component.Builder
-  abstract class Builder extends AndroidInjector.Builder<TvApplication> {
+  @Component.Factory
+  interface Factory extends AndroidInjector.Factory<TvApplication> {
   }
 }

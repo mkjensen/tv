@@ -41,7 +41,7 @@ public class TvApplication extends DaggerApplication {
   @Override
   protected AndroidInjector<TvApplication> applicationInjector() {
 
-    return DaggerTvComponent.builder().create(this);
+    return DaggerTvComponent.factory().create(this);
   }
 
   private void initializeCrashlytics() {

@@ -64,19 +64,20 @@ android {
 
 ext {
 
-  androidXVersion = '1.0.0'
-  autoValueVersion = "1.6.3"
-  autoValueMoshiVersion = "0.4.5"
-  crashlyticsVersion = "2.9.9"
+  androidXLeanbackVersion = '1.0.0'
+  androidXAnnotationVersion = '1.1.0'
+  autoValueVersion = "1.6.5"
+  autoValueMoshiVersion = "0.4.7"
+  crashlyticsVersion = "2.10.1"
   companionlibraryVersion = "0.4.1"
-  daggerVersion = "2.21"
-  exoplayerVersion = "2.9.4"
-  firebaseCoreVersion = "16.0.7"
-  junitVersion = "5.4.0"
+  daggerVersion = "2.24"
+  exoplayerVersion = "2.10.3"
+  firebaseCoreVersion = "17.0.1"
+  junitVersion = "5.5.1"
   licensesDialogVersion = "2.0.0"
   moshiVersion = "1.8.0"
-  okhttpVersion = "3.13.1"
-  retrofitVersion = "2.5.0"
+  okhttpVersion = "4.0.1"
+  retrofitVersion = "2.6.0"
   timberVersion = "4.7.1"
 }
 
@@ -87,14 +88,11 @@ dependencies {
   annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
   annotationProcessor "com.ryanharter.auto.value:auto-value-moshi:$autoValueMoshiVersion"
 
-  // Workaround for https://github.com/rharter/auto-value-moshi/issues/106
-  annotationProcessor "com.google.auto.value:auto-value-annotations:$autoValueVersion"
-
-  compileOnly "com.google.auto.value:auto-value-annotations:$autoValueVersion"
+  api "com.google.auto.value:auto-value-annotations:$autoValueVersion"
   compileOnly "com.ryanharter.auto.value:auto-value-moshi-annotations:$autoValueMoshiVersion"
 
-  implementation "androidx.annotation:annotation:$androidXVersion"
-  implementation "androidx.leanback:leanback:$androidXVersion"
+  implementation "androidx.annotation:annotation:$androidXAnnotationVersion"
+  implementation "androidx.leanback:leanback:$androidXLeanbackVersion"
   implementation "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion"
   implementation "com.google.android.exoplayer:exoplayer-core:$exoplayerVersion"
   implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayerVersion"

@@ -85,7 +85,7 @@ public class PlaybackModule {
       @NonNull OkHttpClient okHttpClient,
       @NonNull TransferListener transferListener) {
 
-    return new OkHttpDataSourceFactory(okHttpClient, Version.userAgent(), transferListener);
+    return new OkHttpDataSourceFactory(okHttpClient, Version.userAgent, transferListener);
   }
 
   @CheckResult
