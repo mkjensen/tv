@@ -4,6 +4,10 @@
 
 Dansk TV is an app for [Android TV](https://android.com/tv) that provides access to TV channels available to everyone that pays the [Danish media licence](https://en.wikipedia.org/wiki/Television_licence#Denmark). For more information about the media licence including, but not limited to, rules and how to pay, read the [media licence page](https://www.dr.dk/om-dr/licens/licens-english) maintained by the Danish Broadcasting Corporation.
 
+##### Official Android TV app
+
+The Danish Broadcasting Corporation added an [official Android TV app](https://play.google.com/store/apps/details?id=dk.dr.tvplayer) in June 2020.
+
 ##### Phones and tablets
 
 If you want an app that supports [Android phones](https://android.com/phones) and [Android tablets](https://android.com/tablets), you should check out the [official app](https://play.google.com/store/apps/details?id=dk.dr.webplayer) from the Danish Broadcasting Corporation.
